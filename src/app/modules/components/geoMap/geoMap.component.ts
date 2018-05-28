@@ -21,10 +21,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 
   public selectedMoments = [
     new Date(2018, 1, 12, 10, 30),
-    new Date(2018, 3, 21, 20, 30)
+    new Date(2018, 6, 20, 20, 30)
 ];
 
-	vertices = 0;
+  positionsInArea : number = 0;
+	vertices : number = 0;
   truePolygon : boolean;
 	shape : Shape;
 	// Open Street Map and Open Cycle Map definitions
@@ -72,7 +73,10 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 		center: L.latLng(45.0642791, 7.65603950000002)
 	};
 
-	constructor(private changeDetectorRef:ChangeDetectorRef, private positionService: PositionService) {
+  constructor(
+    private changeDetectorRef:ChangeDetectorRef, 
+    private positionService: PositionService,
+  ) {
     this.apply();
 
   } 
@@ -106,7 +110,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
         this.truePolygon = true;
         this.changeDetectorRef.detectChanges();
       }
-      console.log(this.truePolygon);
+      //console.log(this.truePolygon);
     });
 
   }
@@ -126,9 +130,14 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 	}
 	sendPositions(){
 
-    console.log("working " + this.selectedMoments );
-    this.positionService.debug();
-    this.positionService.getPositions();
+    // get time in milliseconds and then parse in seconds
+    let s1 = "" + this.selectedMoments[0].getTime();;
+    s1 = s1.slice(0,-3);
+    let startDate = parseInt(s1);
+
+    let s2 = "" + this.selectedMoments[1].getTime();;
+    s2 = s2.slice(0,-3);
+    let endDate = parseInt(s2);
 
     //first point and last point MUST be equal (closed polygon)
     let polygonWellFormatted = [];
@@ -137,9 +146,25 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     }
     polygonWellFormatted.push(this.polygonTest[0]);
 
-		this.shape = new Shape('Polygon', [polygonWellFormatted]);
-		console.log(JSON.stringify(this.shape));
-		alert(JSON.stringify(this.shape));
-	}
+    this.shape = new Shape('Polygon', [polygonWellFormatted]);
+    
+    //console.log(startDate + " " + endDate);
+    this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
+		//console.log ("Trovate: " + this.positionsInArea);
+    
+  }
+
+  cancel(){
+   
+  }
+  buy(){
+    let positionsBought;
+    alert("inside Polygon Area: \n" +
+     JSON.stringify(this.polygonTest) +
+      "\n Buying Positions: \n" +
+       positionsBought);
+  }
 
 }
+
+

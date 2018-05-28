@@ -8,6 +8,8 @@ import { PositionService } from './services/position.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { GeoMapComponent } from './modules/components/geoMap/geoMap.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MaterialModule } from './modules/components/material/material/material.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { GeoMapComponent } from './modules/components/geoMap/geoMap.component';
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule 
   ],
   providers: [PositionService],
   bootstrap: [AppComponent]
