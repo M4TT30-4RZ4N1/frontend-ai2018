@@ -24,6 +24,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     new Date(2018, 6, 20, 20, 30)
 ];
 
+  geoMap: L.Map
   positionsInArea : number = 0;
 	vertices : number = 0;
   truePolygon : boolean;
@@ -82,6 +83,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   } 
 
   onMapReady(map: L.Map) {
+    this.geoMap = map;
     map.on('click', (e : LeafletMouseEvent) => {
       //alert(e.latlng);
       //console.log("Adding new point: "+e.latlng);
@@ -131,20 +133,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 	sendPositions(){
 
     // get time in milliseconds and then parse in seconds
-    let s1 = "" + this.selectedMoments[0].getTime();;
-    s1 = s1.slice(0,-3);
-    let startDate = parseInt(s1);
-
-    let s2 = "" + this.selectedMoments[1].getTime();;
-    s2 = s2.slice(0,-3);
-    let endDate = parseInt(s2);
+    let startDate = this.convertDate(this.selectedMoments[0].getTime());
+    let endDate = this.convertDate(this.selectedMoments[1].getTime());
 
     //first point and last point MUST be equal (closed polygon)
-    let polygonWellFormatted = [];
-    for(let i =0; i<this.polygonTest.length; i++){
-      polygonWellFormatted.push(this.polygonTest[i]);
-    }
-    polygonWellFormatted.push(this.polygonTest[0]);
+    let polygonWellFormatted = this.formatPolygon(this.polygonTest);
 
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
     
@@ -155,14 +148,46 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   cancel(){
+  
+    this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
+    this.polygonTest = [];
+    this.vertices = 0;
+    this.truePolygon = false;
+    this.positionsInArea = 0;
    
   }
   buy(){
-    let positionsBought;
-    alert("inside Polygon Area: \n" +
+    // get time in milliseconds and then parse in seconds
+    let startDate = this.convertDate(this.selectedMoments[0].getTime());
+    let endDate = this.convertDate(this.selectedMoments[1].getTime());
+    //  get polyogn wellformatted
+    let polygonWellFormatted = this.formatPolygon(this.polygonTest);
+
+    let positionsBought = this.positionService.buyPositions(startDate, endDate, polygonWellFormatted);
+    alert("Polygon Area selected: \n" +
      JSON.stringify(this.polygonTest) +
-      "\n Buying Positions: \n" +
-       positionsBought);
+      "\n Position Bought: \n" +
+      JSON.stringify(positionsBought));
+
+    this.cancel();
+  }
+
+  convertDate(date :  number) : number{
+    let s = "" + date;
+    s = s.slice(0,-3);
+    let onlySeconds= parseInt(s);
+    return onlySeconds;
+  }
+
+  formatPolygon(polygon : any[]) : any[]{
+    let polygonWellFormatted = [];
+
+    for(let i =0; i< polygon.length; i++){
+      polygonWellFormatted.push(polygon[i]);
+    }
+    polygonWellFormatted.push(polygon[0]);
+
+    return polygonWellFormatted;
   }
 
 }

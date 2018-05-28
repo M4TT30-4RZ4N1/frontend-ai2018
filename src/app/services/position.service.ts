@@ -18,8 +18,10 @@ getPositions(startDate : number, endDate : number, coordinates : number[][]) : n
     return totPositions;
 }
 
-buyPositions(){
-    
+buyPositions(startDate : number, endDate : number, coordinates : number[][]){
+    let database = new Database();
+    let positions = database.getPositionInsidePolygon(coordinates, startDate, endDate);
+    return positions;
 }
 
 }
