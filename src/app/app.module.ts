@@ -6,14 +6,17 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { PositionService } from './services/position.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { GeoMapComponent } from './modules/components/geoMap/geoMap.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GeoMapComponent
   ],
   imports: [
     BrowserModule,
+    LeafletModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     OwlDateTimeModule, 
