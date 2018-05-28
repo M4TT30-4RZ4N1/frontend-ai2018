@@ -5,26 +5,26 @@
   <mat-card-content>
       <label>
           Stard Date:
-          <mat-form-field>
-          <input matInput class="center"
+          
+          <input class="center"
                 [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
                 [(ngModel)]="selectedMoments"
                 [selectMode]="'rangeFrom'"
                 [ngModelOptions]="{standalone: true}">
           <owl-date-time #dt12></owl-date-time>
-          </mat-form-field>
+          
       </label>
       
       <label>
           End Date:
-          <mat-form-field>
-          <input matInput class="center"
+          
+          <input class="center"
                 [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
                 [(ngModel)]="selectedMoments"
                 [selectMode]="'rangeTo'"
                 [ngModelOptions]="{standalone: true}">
           <owl-date-time #dt13></owl-date-time>
-          </mat-form-field>
+          
       </label> 
       <button mat-button  #sendButton [disabled] = "!truePolygon" (click)="sendPositions()">Retrieve Positions</button>
       </mat-card-content>
