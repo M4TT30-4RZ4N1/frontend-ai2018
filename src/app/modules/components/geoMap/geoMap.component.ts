@@ -24,12 +24,19 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     new Date(2018, 6, 20, 20, 30)
 ];
 
-  geoMap: L.Map
+  geoMap: L.Map;
+  layerOfMarkers : L.Layer;
+  markerLayers = new Array<any>();
   positionsInArea : number = 0;
 	vertices : number = 0;
   truePolygon : boolean;
 	shape : Shape;
-	// Open Street Map and Open Cycle Map definitions
+  // Open Street Map and Open Cycle Map definitions
+  greenIcon = L.icon({
+    iconUrl: '/assets/redMarker.png',
+
+    iconSize:     [35, 35], // size of the icon
+});
 	LAYER_OCM = {
 		id: 'opencyclemap',
 		name: 'Open Cycle Map',
@@ -143,17 +150,22 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     
     //console.log(startDate + " " + endDate);
     this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
-		//console.log ("Trovate: " + this.positionsInArea);
+    
+    //console.log ("Trovate: " + this.positionsInArea);
     
   }
 
   cancel(){
-  
+    
+    if(this.layerOfMarkers !== null && this.layerOfMarkers !== undefined){
+      this.geoMap.removeLayer(this.layerOfMarkers);
+    }
     this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
     this.polygonTest = [];
     this.vertices = 0;
     this.truePolygon = false;
     this.positionsInArea = 0;
+    
    
   }
   buy(){
@@ -164,12 +176,28 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let polygonWellFormatted = this.formatPolygon(this.polygonTest);
 
     let positionsBought = this.positionService.buyPositions(startDate, endDate, polygonWellFormatted);
+    
+    for(let i=0 ; i< positionsBought.length; i++){
+      let lat = positionsBought[i].getLat();
+      let lng = positionsBought[i].getLng();
+      // add each marker as a layer
+      this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
+    }
+    // add all layers as a single array to layer
+    this.layerOfMarkers = L.layerGroup(this.markerLayers);
+    this.geoMap.addLayer(this.layerOfMarkers);
+    
+    
     alert("Polygon Area selected: \n" +
      JSON.stringify(this.polygonTest) +
       "\n Position Bought: \n" +
       JSON.stringify(positionsBought));
 
-    this.cancel();
+    this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
+    this.polygonTest = [];
+    this.vertices = 0;
+    this.truePolygon = false;
+    this.positionsInArea = 0;
   }
 
   convertDate(date :  number) : number{

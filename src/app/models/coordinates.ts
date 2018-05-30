@@ -28,4 +28,14 @@ export class Coordinate {
       
       return inside;
     }
+
+    getLat(){
+      return this.latitude;
+    }
+    getLng(){
+      return this.longitude;
+    }
+    getTimestamp(){
+      return this.timestamp;
+    }
 }
