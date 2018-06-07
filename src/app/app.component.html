@@ -3,7 +3,15 @@
   <h1>
     Welcome to {{ title }}!
   </h1>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="active">Home</a>
+    <a routerLink="/login" routerLinkActive="active">Login</a>
+    <a routerLink="/admin" routerLinkActive="active">Admin</a>
+    <a routerLink="/user" routerLinkActive="active">User</a>
+    <a routerLink="/customer" routerLinkActive="active">Customer</a>
+</nav>
   
-  <app-geoMap></app-geoMap>
+  <router-outlet></router-outlet>
  
   

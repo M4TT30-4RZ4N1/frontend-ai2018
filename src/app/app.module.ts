@@ -7,14 +7,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PositionService } from './services/position.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { GeoMapComponent } from './modules/components/geoMap/geoMap.component';
+import { GeoMapComponent } from './modules/components/customer/geoMap/geoMap.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { MaterialModule } from './modules/components/material/material/material.module';
+import { MaterialModule } from './modules/shared/material/material/material.module';
+import { AppRoutingModule } from './/app-routing.module';
+import { LoginComponent } from './modules/components/login/login.component';
+import { AdminComponent } from './modules/components/admin/admin.component';
+import { UserComponent } from './modules/components/user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GeoMapComponent
+    GeoMapComponent,
+    LoginComponent,
+    AdminComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +32,8 @@ import { MaterialModule } from './modules/components/material/material/material.
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MaterialModule 
+    MaterialModule,
+    AppRoutingModule 
   ],
   providers: [PositionService],
   bootstrap: [AppComponent]
