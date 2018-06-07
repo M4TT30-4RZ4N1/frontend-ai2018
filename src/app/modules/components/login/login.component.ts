@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
+  disableButton : boolean = false;
   @Input()
   set pending(isPending: boolean) {
     if (isPending) {
@@ -24,16 +26,16 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor() { }
+  constructor(private authService : AuthService) { }
 
   ngOnInit() { }
 
   submit_login() {
-    console.log("entro nel login");
+    
     if (this.form.valid) {
-      console.log("entro nel valid");
-      console.log("credenziali inserite:"+ this.form.controls.username.value +" | " + this.form.controls.password.value);
-     // call service
+     this.form.disable();
+     this.disableButton = true;
+     this.authService.login(this.form.controls.username.value , this.form.controls.password.value);
     }
 }
 

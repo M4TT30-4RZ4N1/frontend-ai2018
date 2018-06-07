@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Shape } from '../models/shape';
 import { Database } from '../mock/database';
 
 @Injectable()
 export class PositionService {
 
-constructor(private http: HttpClient) { }
+constructor() { }
 
 debug(){console.log("Position Service Working");}
 

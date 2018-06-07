@@ -1,0 +1,20 @@
+<ng-template  [ngxPermissionsOnly]="['ROLE_ADMIN','ROLE_USER', 'ROLE_CUSTOMER']">
+<nav>
+    <a routerLink="/" routerLinkActive="active">Home</a>
+  
+    <ng-template ngxPermissionsOnly="ROLE_ADMIN">
+      <a routerLink="/admin" routerLinkActive="active">Admin</a>
+    </ng-template>
+  
+    <ng-template ngxPermissionsOnly="ROLE_USER">
+      <a routerLink="/user" routerLinkActive="active">User</a>
+    </ng-template>
+  
+    <ng-template ngxPermissionsOnly="ROLE_CUSTOMER">
+      <a routerLink="/customer" routerLinkActive="active">Customer</a>
+    </ng-template>
+    
+    <a routerLink="/logout" routerLinkActive="active">Logout</a>
+  </nav>
+
+</ng-template>

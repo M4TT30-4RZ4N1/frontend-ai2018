@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API_URL : "https://cors-anywhere.herokuapp.com/http://159.122.181.42:31266/"
 };
+

@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { PositionService } from './services/position.service';
-import { HttpClientModule } from '@angular/common/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { GeoMapComponent } from './modules/components/customer/geoMap/geoMap.component';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -14,12 +13,25 @@ import { AppRoutingModule } from './/app-routing.module';
 import { LoginComponent } from './modules/components/login/login.component';
 import { AdminComponent } from './modules/components/admin/admin.component';
 import { UserComponent } from './modules/components/user/user.component';
+import { AuthService } from './services/auth.service';
+import { Http, HttpModule } from '@angular/http';
+import { HomeComponent } from './modules/components/home/home.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { JwtManagementService } from './services/jwt-management.service';
+import { LogoutComponent } from './modules/components/logout/logout.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './services/interceptor.service';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { SidebarComponent } from './modules/components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SidebarComponent,
+    HomeComponent,
     GeoMapComponent,
     LoginComponent,
+    LogoutComponent,
     AdminComponent,
     UserComponent
   ],
@@ -31,11 +43,18 @@ import { UserComponent } from './modules/components/user/user.component';
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
-    HttpClientModule,
+    HttpModule,
     MaterialModule,
-    AppRoutingModule 
+    AppRoutingModule,
+    NgxPermissionsModule.forRoot()
   ],
-  providers: [PositionService],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
+    PositionService, 
+    AuthService, 
+    AuthGuardService, 
+    JwtManagementService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

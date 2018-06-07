@@ -11,11 +11,7 @@
     </mat-input-container>
   </p>
 
-  <p *ngIf="errorMessage" class="loginError">
-    {{ errorMessage }}
-  </p>
-
   <p class="loginButtons">
-    <button type="submit" mat-button>Login</button>
+    <button type="submit" mat-button [disabled]='disableButton'>Login</button>
   </p>
 </form>
