@@ -1,0 +1,11 @@
+<mat-card>  
+  
+  <mat-card-title>Users Data</mat-card-title>
+   <mat-card-content>
+        <!-- Map -->
+        <div leaflet style="height: 45vh;"
+        (leafletMapReady)="onMapReady($event)"
+        [leafletOptions]="options"
+        [leafletLayers]="layers">
+        </div>
+  </mat-card-content>

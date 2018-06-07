@@ -1,3 +1,8 @@
+<mat-card>  
+  
+  <mat-card-title>Login</mat-card-title>
+
+  <mat-card-content>
 <form [formGroup]="form" (ngSubmit)="submit_login()">
   <p>
     <mat-input-container>
@@ -15,3 +20,6 @@
     <button type="submit" mat-button [disabled]='disableButton'>Login</button>
   </p>
 </form>
+
+</mat-card-content>
+</mat-card>

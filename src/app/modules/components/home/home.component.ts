@@ -8,7 +8,8 @@ import { JwtManagementService } from '../../../services/jwt/jwt-management.servi
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  title = 'Laboratorio 4 - Gruppo #5 ';
+  
   constructor(private permissionsService: NgxPermissionsService, private jwtManagementService:  JwtManagementService) { }
 
   ngOnInit() {

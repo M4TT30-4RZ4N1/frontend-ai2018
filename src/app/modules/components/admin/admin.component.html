@@ -1,3 +1,9 @@
-<p>
-  admin works!
-</p>
+<nav>
+  <a routerLink="/admin/usersData" routerLinkActive="active">Search User Data</a>
+  <a routerLink="/admin/customersData" routerLinkActive="active">Search Customer Data</a>
+</nav>
+
+<app-customer-data></app-customer-data>
+<app-user-data></app-user-data>
+
+<router-outlet></router-outlet>

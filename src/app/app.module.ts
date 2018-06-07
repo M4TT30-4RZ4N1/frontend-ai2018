@@ -19,10 +19,17 @@ import { HomeComponent } from './modules/components/home/home.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { JwtManagementService } from './services/jwt/jwt-management.service';
 import { LogoutComponent } from './modules/components/logout/logout.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { SidebarComponent } from './modules/components/sidebar/sidebar.component';
+import { UserDataComponent } from './modules/components/admin/user-data/user-data.component';
+import { CustomerDataComponent } from './modules/components/admin/customer-data/customer-data.component';
+import { SearchComponent } from './modules/components/user/search/search.component';
+import { InsertComponent } from './modules/components/user/insert/insert.component';
+import { AdminService } from './services/admin/admin.service';
+import { UserService } from './services/user/user.service';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +40,11 @@ import { SidebarComponent } from './modules/components/sidebar/sidebar.component
     LoginComponent,
     LogoutComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    UserDataComponent,
+    CustomerDataComponent,
+    SearchComponent,
+    InsertComponent
   ],
   imports: [
     BrowserModule,
@@ -44,13 +55,17 @@ import { SidebarComponent } from './modules/components/sidebar/sidebar.component
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
     HttpModule,
+    HttpClientModule,
     MaterialModule,
     AppRoutingModule,
     NgxPermissionsModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
-    PositionService, 
+    HttpClient,
+    PositionService,
+    AdminService, 
+    UserService, 
     AuthService, 
     AuthGuardService, 
     JwtManagementService

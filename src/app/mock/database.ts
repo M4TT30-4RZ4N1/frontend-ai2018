@@ -24,4 +24,8 @@ export class Database {
       });
   }
 
+  public getPositions():Coordinate[]{
+    return this.coordinates;
+  }
+
 }

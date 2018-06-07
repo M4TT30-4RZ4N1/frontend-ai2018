@@ -8,16 +8,20 @@ import { HomeComponent } from './modules/components/home/home.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { LogoutComponent } from './modules/components/logout/logout.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { UserDataComponent } from './modules/components/admin/user-data/user-data.component';
+import { CustomerDataComponent } from './modules/components/admin/customer-data/customer-data.component';
+import { SearchComponent } from './modules/components/user/search/search.component';
+import { InsertComponent } from './modules/components/user/insert/insert.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent,},
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuardService]},
   { path: '', component: HomeComponent, canActivate:[AuthGuardService]},
   { path: 'admin', component: AdminComponent, 
-  canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_ADMIN', redirectTo: ''}}
+  canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_ADMIN', redirectTo: ''}},
   },
   { path: 'user', component: UserComponent, 
-    canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_USER', redirectTo: ''}}
+    canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_USER', redirectTo: ''}},
   },
   { path: 'customer', component: GeoMapComponent, 
     canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_CUSTOMER', redirectTo: ''}}

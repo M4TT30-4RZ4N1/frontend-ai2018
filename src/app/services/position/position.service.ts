@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Shape } from '../../models/shape';
+import { Observable } from 'rxjs/Rx';
 import { Database } from '../../mock/database';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PositionService {
 
-constructor() { }
+constructor(private http: HttpClient) { }
 
 debug(){console.log("Position Service Working");}
+
+
+getAllPositions(){
+    let database = new Database();
+    let positions = database.getPositions();
+    return Observable.of(positions);
+}
 
 getPositions(startDate : number, endDate : number, coordinates : number[][]) : number{
     let totPositions = 0;
