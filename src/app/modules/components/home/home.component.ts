@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { JwtManagementService } from '../../../services/jwt-management.service';
+import { JwtManagementService } from '../../../services/jwt/jwt-management.service';
 
 @Component({
   selector: 'app-home',

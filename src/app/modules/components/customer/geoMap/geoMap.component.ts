@@ -3,7 +3,7 @@ import { Shape } from '../../../../models/shape';
 import * as L from 'leaflet';
 import { LeafletLayersModel } from '../../../../models/leafletLayers';
 import { polygon, LeafletMouseEvent, LatLngTuple, LatLngExpression, geoJSON } from 'leaflet';
-import { PositionService } from '../../../../services/position.service';
+import { PositionService } from '../../../../services/position/position.service';
 import { NgModel } from '@angular/forms';
 
 @Component({

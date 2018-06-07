@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PositionService } from './services/position.service';
+import { PositionService } from './services/position/position.service';
 
 
 @Component({

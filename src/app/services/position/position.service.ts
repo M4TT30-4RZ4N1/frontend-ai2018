@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Shape } from '../models/shape';
-import { Database } from '../mock/database';
+import { Shape } from '../../models/shape';
+import { Database } from '../../mock/database';
 
 @Injectable()
 export class PositionService {

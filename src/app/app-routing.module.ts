@@ -5,7 +5,7 @@ import { UserComponent } from './modules/components/user/user.component';
 import { LoginComponent } from './modules/components/login/login.component';
 import { GeoMapComponent } from './modules/components/customer/geoMap/geoMap.component';
 import { HomeComponent } from './modules/components/home/home.component';
-import { AuthGuardService } from './services/auth-guard.service';
+import { AuthGuardService } from './services/auth/auth-guard.service';
 import { LogoutComponent } from './modules/components/logout/logout.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 
