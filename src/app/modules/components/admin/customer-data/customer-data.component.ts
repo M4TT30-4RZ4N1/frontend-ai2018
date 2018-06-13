@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../../../../services/admin/admin.service';
 import { Observable } from 'rxjs/Observable';
 import { Transaction } from '../../../../models/transaction';
-import { AdminService } from '../../../../services/admin/admin.service';
 
 @Component({
   selector: 'app-customer-data',

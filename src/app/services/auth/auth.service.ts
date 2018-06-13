@@ -19,7 +19,6 @@ login( username : string, password : string) {
     let result = false;
 
     let headers = new Headers( );
-        headers.append('Access-Control-Request-Headers', 'x-requested-with');
         headers.append( 'Content-Type', 'application/x-www-form-urlencoded' );
         headers.append('authorization','Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=');
     
@@ -32,7 +31,7 @@ login( username : string, password : string) {
     let opts = new RequestOptions();
     opts.headers = headers;    
 
-    let targetUrl = this.basic_url + "oauth/token";
+    let targetUrl = this.basic_url + "/oauth/token";
 
     let postObservable: Observable<any> = this.http.post(
         targetUrl,

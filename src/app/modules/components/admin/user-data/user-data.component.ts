@@ -1,13 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { AdminService } from '../../../../services/admin/admin.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { LatLngExpression, LeafletMouseEvent } from 'leaflet';
 import * as L from 'leaflet';
 import { Shape } from '../../../../models/shape';
 import { LeafletLayersModel } from '../../../../models/leafletLayers';
-import { Coordinate } from '../../../../models/coordinates';
-import { AdminService } from '../../../../services/admin/admin.service';
 import { PositionService } from '../../../../services/position/position.service';
+import { Coordinate } from '../../../../models/coordinates';
 
 @Component({
   selector: 'app-user-data',
@@ -16,7 +16,7 @@ import { PositionService } from '../../../../services/position/position.service'
 })
 export class UserDataComponent implements OnInit {
   userSub : Subscription;
-  positions : Coordinate[];
+  positions : Coordinate[] = [];
   constructor(
     private adminService: AdminService,
     private positionService : PositionService
@@ -29,7 +29,8 @@ export class UserDataComponent implements OnInit {
   ngOnInit() {
   }
   ngOnDestroy() { 
-    this.userSub.unsubscribe(); 
+    if(this.userSub != null)
+      this.userSub.unsubscribe(); 
    }
   
 
@@ -98,10 +99,16 @@ export class UserDataComponent implements OnInit {
 
    onMapReady(map: L.Map) {
     this.geoMap = map;
-    this.userSub = this.positionService.getAllPositions()//.adminService.getUserData()
+    this.userSub = this.adminService.getUserData()
                                         .subscribe( (data) => 
                                                   { console.dir(data); 
-                                                    this.positions = data;
+                                                    for(let i = 0; i < data.length; i++){
+                                                      let c = new Coordinate(data[i].point.coordinates[0], 
+                                                                              data[i].point.coordinates[1], 
+                                                                              data[i].timestamp);
+                                                      console.dir(c);
+                                                      this.positions.push(c);
+                                                    }
                                                     this.addMarkerToMap();
                                                   } );
     //this.positions = this.positionService.getAllPositions();

@@ -3,8 +3,9 @@ import { Shape } from '../../../../models/shape';
 import * as L from 'leaflet';
 import { LeafletLayersModel } from '../../../../models/leafletLayers';
 import { polygon, LeafletMouseEvent, LatLngTuple, LatLngExpression, geoJSON } from 'leaflet';
-import { NgModel } from '@angular/forms';
 import { PositionService } from '../../../../services/position/position.service';
+import { NgModel } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-geoMap',
@@ -13,8 +14,6 @@ import { PositionService } from '../../../../services/position/position.service'
 })
 export class GeoMapComponent implements OnInit {
 
-  ngOnInit() {
-  }
 
   
 changeDetectorRefs :ChangeDetectorRef[] = [];
@@ -28,6 +27,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   layerOfMarkers : L.Layer;
   markerLayers = new Array<any>();
   positionsInArea : number = 0;
+  positionsSub : Subscription;
+  buySub : Subscription;
 	vertices : number = 0;
   truePolygon : boolean;
 	shape : Shape;
@@ -88,6 +89,15 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     this.apply();
 
   } 
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    if(this.positionsSub != null)
+      this.positionsSub.unsubscribe();
+    if(this.positionsSub != null)
+      this.buySub.unsubscribe();
+  }
 
   onMapReady(map: L.Map) {
     this.geoMap = map;
@@ -149,8 +159,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
     
     //console.log(startDate + " " + endDate);
-    this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
-    
+    //this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
+    this.positionsSub = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0])
+                            .subscribe((data) => {
+                              this.positionsInArea = data;
+                            });
     //console.log ("Trovate: " + this.positionsInArea);
     
   }
@@ -175,29 +188,32 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     //  get polyogn wellformatted
     let polygonWellFormatted = this.formatPolygon(this.polygonTest);
 
-    let positionsBought = this.positionService.buyPositions(startDate, endDate, polygonWellFormatted);
-    
-    for(let i=0 ; i< positionsBought.length; i++){
-      let lat = positionsBought[i].getLat();
-      let lng = positionsBought[i].getLng();
-      // add each marker as a layer
-      this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
-    }
-    // add all layers as a single array to layer
-    this.layerOfMarkers = L.layerGroup(this.markerLayers);
-    this.geoMap.addLayer(this.layerOfMarkers);
-    
-    
-    alert("Polygon Area selected: \n" +
-     JSON.stringify(this.polygonTest) +
-      "\n Position Bought: \n" +
-      JSON.stringify(positionsBought));
-
-    this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
-    this.polygonTest = [];
-    this.vertices = 0;
-    this.truePolygon = false;
-    this.positionsInArea = 0;
+    //
+    this.buySub = this.positionService.buyPositions(startDate, endDate, polygonWellFormatted)
+                  .subscribe((data) => {
+                    let positionsBought = data;
+                    for(let i=0 ; i< positionsBought.length; i++){
+                      let lat = positionsBought[i].getLat();
+                      let lng = positionsBought[i].getLng();
+                      // add each marker as a layer
+                      this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
+                    }
+                    // add all layers as a single array to layer
+                    this.layerOfMarkers = L.layerGroup(this.markerLayers);
+                    this.geoMap.addLayer(this.layerOfMarkers);
+                    
+                    
+                    alert("Polygon Area selected: \n" +
+                     JSON.stringify(this.polygonTest) +
+                      "\n Position Bought: \n" +
+                      JSON.stringify(positionsBought));
+                
+                    this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
+                    this.polygonTest = [];
+                    this.vertices = 0;
+                    this.truePolygon = false;
+                    this.positionsInArea = 0;
+                  });
   }
 
   convertDate(date :  number) : number{

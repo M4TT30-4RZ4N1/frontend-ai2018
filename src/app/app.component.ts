@@ -10,8 +10,8 @@ import { PositionService } from './services/position/position.service';
 })
 export class AppComponent implements OnInit {
   title = 'Laboratorio 4 - Gruppo #5 ';
- 
-  constructor(){}
+
+  constructor() {}
   ngOnInit(): void {
    
   }

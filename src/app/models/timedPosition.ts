@@ -1,14 +1,19 @@
 import { Shape } from "./shape";
+import { Coordinate } from "./coordinates";
+import { Point } from "./point";
 
 export class TimedPosition {
-    private id: String;
-    private point : Shape;
-    private user : String;
-    private timestamp : number;
-    public constructor(id: String, point : Shape, user : String, timestamp : number){
-        this.id=id;
+    point : Point;
+    user : String;
+    timestamp : number;
+    public constructor(point : Point, user : String, timestamp: any){
         this.user=user;
-        this.point=point;
-        this.timestamp=timestamp;
-      }
+        this.point = point;
+        if(typeof timestamp === 'number') this.timestamp=timestamp;
+        else if(timestamp instanceof Date) this.timestamp=Math.round(timestamp.getTime()/1000);
+        else if(typeof timestamp === 'string') this.timestamp=Math.round(new Date(timestamp).getTime()/1000);
+    }
+    public getPointCoordinate() : Coordinate{
+        return new Coordinate(this.point.coordinates[0], this.point.coordinates[1], this.timestamp);
+    }
 }

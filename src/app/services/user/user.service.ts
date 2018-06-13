@@ -1,28 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
 import { Coordinate } from '../../models/coordinates';
+import { Observable } from 'rxjs/Rx';
 import { TimedPosition } from '../../models/timedPosition';
-
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class UserService {
 
-  serverAddress : String = "";
-  searchPath : String = "";
-  insertPath : String = "";
+  //serverAddress : String = "http://localhost:8080/users";
+  serverAddress : String = environment.API_URL+"/users";
+  searchPath : String = "/positions";
+  insertPath : String = "/positions";
 
-  constructor(private http : HttpClient) { 
+  constructor(private webclient : HttpClient) { 
 
   }
 
-  searchPositions(startDate : number, endDate : number) : Observable<Coordinate[]>{
-      //return this.webclient.get<Coordinate[]>(this.serverAddress+""+this.searchPath+"?start="+startDate+"&end="+endDate);
-      return Observable.of([]);
+  searchPositions(startDate : number, endDate : number) : Observable<TimedPosition[]>{
+      return this.webclient.get<TimedPosition[]>(this.serverAddress+""+this.searchPath+"?after="+startDate+"&before="+endDate);
+      //return Observable.of([]);
     }
 
   sendPositions(positionToSend : TimedPosition[]){
-      return this.http.post(this.serverAddress+""+this.insertPath, JSON.stringify(positionToSend));
+      alert("Sending JSON: " + JSON.stringify(positionToSend));
+      return this.webclient.post(this.serverAddress+""+this.insertPath, JSON.stringify(positionToSend));
   }
 
 }

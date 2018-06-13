@@ -1,11 +1,13 @@
 export class Coordinate {
-    private latitude:number;
-    private longitude:number;
+    private lat:number;
+    private lng:number;
     private timestamp:number;
-    public constructor(latitude:number,longitude:number,timestamp:number){
-      this.latitude=latitude;
-      this.timestamp=timestamp;
-      this.longitude=longitude;
+    public constructor(latitude:number,longitude:number,timestamp:any){
+      this.lat=latitude;
+      this.lng=longitude;
+      if(typeof timestamp === 'number') this.timestamp=timestamp;
+      else if(timestamp instanceof Date) this.timestamp=Math.round(timestamp.getTime()/1000);
+      else if(typeof timestamp === 'string') this.timestamp=Math.round(new Date(timestamp).getTime()/1000);
     }
     public isBetweenDate(start:number,end:number):boolean{
       return this.timestamp>=start && this.timestamp<=end;
@@ -14,7 +16,7 @@ export class Coordinate {
       // ray-casting algorithm based on
       // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
       
-      var x = this.longitude, y = this.latitude;
+      var x = this.lng, y = this.lat;
       
       var inside = false;
       for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
@@ -30,10 +32,10 @@ export class Coordinate {
     }
 
     getLat(){
-      return this.latitude;
+      return this.lat;
     }
     getLng(){
-      return this.longitude;
+      return this.lng;
     }
     getTimestamp(){
       return this.timestamp;

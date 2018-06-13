@@ -2,15 +2,16 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Shape } from '../../../../models/shape';
 import { LeafletLayersModel } from '../../../../models/leafletLayers';
 import * as L from 'leaflet';
+import { PositionService } from '../../../../services/position/position.service';
 import { LeafletMouseEvent } from 'leaflet';
 import { Subscription } from 'rxjs/Subscription';
 import { Coordinate } from '../../../../models/coordinates';
-import { TimedPosition } from '../../../../models/timedPosition';
 import { UserService } from '../../../../services/user/user.service';
-import { PositionService } from '../../../../services/position/position.service';
+import { TimedPosition } from '../../../../models/timedPosition';
+import { Point } from '../../../../models/point';
 
 @Component({
-  selector: 'app-user-insert',
+  selector: 'app-insert',
   templateUrl: './insert.component.html',
   styleUrls: ['./insert.component.css']
 })
@@ -75,16 +76,17 @@ export class InsertComponent implements OnInit {
     ngOnInit() {
     }
     ngOnDestroy(): void {
-      //this.positionSub.unsubscribe();
+      if(this.positionSub != null)
+        this.positionSub.unsubscribe();
     }
   
     onMapReady(map: L.Map) {
       this.geoMap = map;
       map.on('click', (e : LeafletMouseEvent) => {
         // add all layers as a single array to layer
-        let p : Shape = new Shape("Point", [[[e.latlng.lat, e.latlng.lng]]]);
         let timestamp = new Date().getTime();
-        let timedPosition : TimedPosition = new TimedPosition("", p, "", timestamp);
+        let p : Point = new Point("Point", [e.latlng.lat, e.latlng.lng]);
+        let timedPosition : TimedPosition = new TimedPosition(p,"",timestamp);
         this.positionToSend.push(timedPosition);
 
         this.markerLayers.push(L.marker(e.latlng, {icon: this.greenIcon}));
@@ -115,6 +117,7 @@ export class InsertComponent implements OnInit {
                                                   },
                                                 (error) =>
                                                   {
+                                                    console.log(error);
                                                     alert("Error during the request")
                                                   } );    
     }

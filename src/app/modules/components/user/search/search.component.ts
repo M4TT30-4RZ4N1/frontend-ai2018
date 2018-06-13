@@ -2,14 +2,13 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Shape } from '../../../../models/shape';
 import { LeafletLayersModel } from '../../../../models/leafletLayers';
 import * as L from 'leaflet';
+import { PositionService } from '../../../../services/position/position.service';
 import { LeafletMouseEvent } from 'leaflet';
 import { Subscription } from 'rxjs/Subscription';
 import { Coordinate } from '../../../../models/coordinates';
-import { PositionService } from '../../../../services/position/position.service';
 import { UserService } from '../../../../services/user/user.service';
-
 @Component({
-  selector: 'app-user-search',
+  selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
@@ -52,7 +51,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 		})
 	};
   
-  positions : Coordinate[];
+  positions : Coordinate[] = [];
 
 	// Form model object
 	model = new LeafletLayersModel(
@@ -105,12 +104,21 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 	searchPositions(){
 
     // get time in milliseconds and then parse in seconds
-    let startDate = this.convertDate(this.selectedMoments[0].getTime());
-    let endDate = this.convertDate(this.selectedMoments[1].getTime());
-    this.positionSub = this.positionService.getAllPositions()//.userService.searchPositions(startDate,endDate)
+    //let startDate = this.convertDate(this.selectedMoments[0].getTime());
+    //let endDate = this.convertDate(this.selectedMoments[1].getTime());
+    let startDate = this.selectedMoments[0].getTime();
+    let endDate = this.selectedMoments[1].getTime();
+    this.positionSub = this.userService.searchPositions(startDate,endDate)
                                       .subscribe( (data) => 
                                                 { console.dir(data); 
-                                                  this.positions = data;
+                                                  for(let i = 0; i < data.length; i++){
+                                                    //console.dir(data[i].getPointCoordinate());
+                                                    let c = new Coordinate(data[i].point.coordinates[0], 
+                                                                            data[i].point.coordinates[1], 
+                                                                            data[i].timestamp);
+                                                    //console.dir(c);
+                                                    this.positions.push(c);
+                                                  }
                                                   this.addMarkerToMap();
                                                 } );    
   }
@@ -120,7 +128,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     for(let i=0 ; i< this.positions.length; i++){
       let lat = this.positions[i].getLat();
       let lng = this.positions[i].getLng();
-      let timestamp = this.positions[i].getTimestamp()*1000;
+      let timestamp = this.positions[i].getTimestamp();
       // add each marker as a layer
       this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
       this.markerLayers[i].bindPopup("<b>User:</b><br>Timestamp:"+ (new Date(timestamp)).toString());
@@ -128,6 +136,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     // add all layers as a single array to layer
     this.layerOfMarkers = L.layerGroup(this.markerLayers);
     this.geoMap.addLayer(this.layerOfMarkers);
+    this.changeDetectorRef.detectChanges();
+    alert("Recieved: " + JSON.stringify(this.positions));
    }
 
   cancel(){

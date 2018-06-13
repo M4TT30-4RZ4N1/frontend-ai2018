@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
-  API_URL : "https://cors-anywhere.herokuapp.com/http://159.122.181.42:31266/"
+  API_URL : "http://159.122.181.42:30748"
+  //API_URL : "https://cors-anywhere.herokuapp.com/http://159.122.181.42:31266/"
 };
 
