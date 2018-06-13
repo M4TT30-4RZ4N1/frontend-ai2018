@@ -6,19 +6,25 @@
 <form [formGroup]="form" (ngSubmit)="submit_login()">
   <p>
     <mat-input-container>
-      <input type="text" matInput placeholder="Username" formControlName="username">
+      <input type="text" matInput placeholder="Username" formControlName="username" required>
     </mat-input-container>
   </p>
 
   <p>
     <mat-input-container>
-      <input type="password" matInput placeholder="Password" formControlName="password">
+      <input type="password" matInput placeholder="Password" formControlName="password" required>
     </mat-input-container>
   </p>
 
-  <p class="loginButtons">
-    <button type="submit" mat-button [disabled]='disableButton'>Login</button>
+  <p class="error message">
+    {{errorMessage}}
   </p>
+
+  <p class="loginButtons">
+    <button type="submit" mat-button [disabled]='disableButton || form.invalid'>Login</button>
+  </p>
+
+
 </form>
 
 </mat-card-content>

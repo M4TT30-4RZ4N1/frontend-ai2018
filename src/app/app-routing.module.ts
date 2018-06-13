@@ -12,6 +12,7 @@ import { UserDataComponent } from './modules/components/admin/user-data/user-dat
 import { CustomerDataComponent } from './modules/components/admin/customer-data/customer-data.component';
 import { SearchComponent } from './modules/components/user/search/search.component';
 import { InsertComponent } from './modules/components/user/insert/insert.component';
+import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNotFound.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent,},
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'customer', component: GeoMapComponent, 
     canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_CUSTOMER', redirectTo: ''}}
   },
-  { path: '**', redirectTo: '/login', pathMatch: 'full'}
+  { path: '404NotFound', component: PageNotFoundComponent,  pathMatch: 'full'},
+  { path: '**', redirectTo: '404NotFound', pathMatch: 'full'}
 ];
 
 @NgModule({

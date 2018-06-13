@@ -50,9 +50,14 @@ login( username : string, password : string) {
         console.log(json.access_token);
         window.localStorage.setItem('ai-token', json.access_token);
         this.router.navigate(['/']);
+    }, error => {
+        console.log('error!!!');
+        window.localStorage.setItem('error-login','Invalid Credentials');
+        window.location.reload();
     });
 
 }
 
 
 }
+ 

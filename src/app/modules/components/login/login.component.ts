@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  @Input() errorMessage: string | null;
+  errorMessage: string | null;
 
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
@@ -28,7 +28,10 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService : AuthService) { }
 
-  ngOnInit() { }
+  ngOnInit() {  
+    this.errorMessage = window.localStorage.getItem('error-login');
+    window.localStorage.removeItem('error-login');
+  }
 
   submit_login() {
     

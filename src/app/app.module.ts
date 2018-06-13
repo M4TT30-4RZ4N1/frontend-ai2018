@@ -29,6 +29,7 @@ import { SearchComponent } from './modules/components/user/search/search.compone
 import { InsertComponent } from './modules/components/user/insert/insert.component';
 import { AdminService } from './services/admin/admin.service';
 import { UserService } from './services/user/user.service';
+import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNotFound.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { UserService } from './services/user/user.service';
     AppComponent,
     SidebarComponent,
     HomeComponent,
+    PageNotFoundComponent,
     GeoMapComponent,
     LoginComponent,
     LogoutComponent,

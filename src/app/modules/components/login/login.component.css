@@ -15,15 +15,18 @@
     justify-content: center;
   }
 
-  .loginError {
-    padding: 16px;
-    width: 300px;
-    color: white;
-    background-color: red;
-  }
 
   .loginButtons {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.error{
+  background-color: #de4343;
+  border-color: #c43d3d;
+}
+
+.message h3{
+  margin: 0 0 5px 0;                                                  
 }
