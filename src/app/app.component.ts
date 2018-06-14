@@ -9,7 +9,7 @@ import { PositionService } from './services/position/position.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Laboratorio 4 - Gruppo #5 ';
+  title = 'Laboratorio 5 - Gruppo #5 ';
 
   constructor() {}
   ngOnInit(): void {

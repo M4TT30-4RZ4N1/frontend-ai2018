@@ -6,7 +6,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { PositionService } from './services/position/position.service';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { GeoMapComponent } from './modules/components/customer/geoMap/geoMap.component';
+import { GeoMapComponent } from './modules/components/customer/customerGeoMap/customerGeoMap.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MaterialModule } from './modules/shared/material/material.module';
 import { AppRoutingModule } from './/app-routing.module';
@@ -21,7 +21,7 @@ import { JwtManagementService } from './services/jwt/jwt-management.service';
 import { LogoutComponent } from './modules/components/logout/logout.component';
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor/interceptor.service';
-import { NgxPermissionsModule } from 'ngx-permissions';
+import { NgxPermissionsModule, NgxPermissionsGuard } from 'ngx-permissions';
 import { SidebarComponent } from './modules/components/sidebar/sidebar.component';
 import { UserDataComponent } from './modules/components/admin/user-data/user-data.component';
 import { CustomerDataComponent } from './modules/components/admin/customer-data/customer-data.component';
@@ -30,6 +30,8 @@ import { InsertComponent } from './modules/components/user/insert/insert.compone
 import { AdminService } from './services/admin/admin.service';
 import { UserService } from './services/user/user.service';
 import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNotFound.component';
+import { CustomerComponent } from './modules/components/customer/customer.component';
+import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
 
 
 @NgModule({
@@ -43,6 +45,7 @@ import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNot
     LogoutComponent,
     AdminComponent,
     UserComponent,
+    CustomerComponent,
     UserDataComponent,
     CustomerDataComponent,
     SearchComponent,
@@ -70,7 +73,8 @@ import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNot
     UserService, 
     AuthService, 
     AuthGuardService, 
-    JwtManagementService
+    JwtManagementService,
+    NoAuthGuardService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,13 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Laboratorio4</title>
+  <title>Laboratorio5</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+      * { padding: 0; margin: 0; }
+
+      html, body {
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      body > * {
+        flex-shrink: 0;
+      }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <mat-app-background></mat-app-background>
+  <app-root style="height: 100%;"></app-root>
 </body>
 </html>

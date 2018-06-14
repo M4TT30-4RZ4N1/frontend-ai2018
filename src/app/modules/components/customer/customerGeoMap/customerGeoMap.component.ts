@@ -6,11 +6,12 @@ import { polygon, LeafletMouseEvent, LatLngTuple, LatLngExpression, geoJSON } fr
 import { PositionService } from '../../../../services/position/position.service';
 import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
+import { OpaqueTransaction } from '../../../../models/opaqueTransaction';
 
 @Component({
   selector: 'app-geoMap',
-  templateUrl: './geoMap.component.html',
-  styleUrls: ['./geoMap.component.css']
+  templateUrl: './customerGeoMap.component.html',
+  styleUrls: ['./customerGeoMap.component.css']
 })
 export class GeoMapComponent implements OnInit {
 
@@ -27,6 +28,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   layerOfMarkers : L.Layer;
   markerLayers = new Array<any>();
   positionsInArea : number = 0;
+  lastOpaqueTransaction : OpaqueTransaction;
   positionsSub : Subscription;
   buySub : Subscription;
 	vertices : number = 0;
@@ -93,9 +95,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   ngOnDestroy() {
-    if(this.positionsSub != null)
+    if(this.positionsSub !== null && this.positionsSub !== undefined)
       this.positionsSub.unsubscribe();
-    if(this.positionsSub != null)
+    if(this.buySub !== null && this.buySub !== undefined)
       this.buySub.unsubscribe();
   }
 
@@ -149,9 +151,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 	}
 	sendPositions(){
 
-    // get time in milliseconds and then parse in seconds
-    let startDate = this.convertDate(this.selectedMoments[0].getTime());
-    let endDate = this.convertDate(this.selectedMoments[1].getTime());
+    // get time in milliseconds
+    let startDate = this.selectedMoments[0].getTime();
+    let endDate = this.selectedMoments[1].getTime();
 
     //first point and last point MUST be equal (closed polygon)
     let polygonWellFormatted = this.formatPolygon(this.polygonTest);
@@ -162,7 +164,10 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     //this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
     this.positionsSub = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0])
                             .subscribe((data) => {
-                              this.positionsInArea = data;
+                              console.log(data);
+                              this.lastOpaqueTransaction = data;
+                              this.positionsInArea = data.nPositions;
+                              this.changeDetectorRef.detectChanges();
                             });
     //console.log ("Trovate: " + this.positionsInArea);
     
@@ -182,37 +187,21 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
    
   }
   buy(){
-    // get time in milliseconds and then parse in seconds
-    let startDate = this.convertDate(this.selectedMoments[0].getTime());
-    let endDate = this.convertDate(this.selectedMoments[1].getTime());
-    //  get polyogn wellformatted
-    let polygonWellFormatted = this.formatPolygon(this.polygonTest);
-
-    //
-    this.buySub = this.positionService.buyPositions(startDate, endDate, polygonWellFormatted)
+    
+    this.buySub = this.positionService.buyPositions(this.lastOpaqueTransaction)
                   .subscribe((data) => {
-                    let positionsBought = data;
-                    for(let i=0 ; i< positionsBought.length; i++){
-                      let lat = positionsBought[i].getLat();
-                      let lng = positionsBought[i].getLng();
-                      // add each marker as a layer
-                      this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
-                    }
-                    // add all layers as a single array to layer
-                    this.layerOfMarkers = L.layerGroup(this.markerLayers);
-                    this.geoMap.addLayer(this.layerOfMarkers);
                     
-                    
-                    alert("Polygon Area selected: \n" +
-                     JSON.stringify(this.polygonTest) +
-                      "\n Position Bought: \n" +
-                      JSON.stringify(positionsBought));
+                    alert("Transaction complete with success!");
                 
                     this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
                     this.polygonTest = [];
                     this.vertices = 0;
                     this.truePolygon = false;
                     this.positionsInArea = 0;
+                  },
+                  (error) => {
+                      alert("Transaction Error!");
+                      console.dir(error);   
                   });
   }
 

@@ -1,0 +1,13 @@
+.container {
+    height: 90%;
+  }
+
+  .sidenav-content {
+    text-align:center;
+  }
+  
+  .sidenav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }

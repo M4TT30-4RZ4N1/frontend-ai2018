@@ -1,12 +1,12 @@
 export class Transaction {
-    private customerId : String;
-    private userId : String;
-    private nPosition : number;
-    private price : number;
-    public constructor(customerId:String,userId:string,nPosition:number,price:number){
+    customerId : String;
+    userId : String;
+    nPositions : number;
+    price : number;
+    constructor(customerId:String,userId:string,nPositions:number,price:number){
         this.customerId=customerId;
         this.userId=userId;
-        this.nPosition=nPosition;
+        this.nPositions=nPositions;
         this.price=price;
       }
 }

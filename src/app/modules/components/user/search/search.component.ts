@@ -7,6 +7,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import { Subscription } from 'rxjs/Subscription';
 import { Coordinate } from '../../../../models/coordinates';
 import { UserService } from '../../../../services/user/user.service';
+import { TimedPosition } from '../../../../models/timedPosition';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -51,7 +52,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 		})
 	};
   
-  positions : Coordinate[] = [];
+  positions : TimedPosition[] = [];
 
 	// Form model object
 	model = new LeafletLayersModel(
@@ -80,7 +81,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   ngOnInit() {
   }
   ngOnDestroy(): void {
-    if(this.positionSub != null)
+    if(this.positionSub !== null && this.positionSub !== undefined)
       this.positionSub.unsubscribe();
   }
 
@@ -113,11 +114,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
                                                 { console.dir(data); 
                                                   for(let i = 0; i < data.length; i++){
                                                     //console.dir(data[i].getPointCoordinate());
-                                                    let c = new Coordinate(data[i].point.coordinates[0], 
-                                                                            data[i].point.coordinates[1], 
-                                                                            data[i].timestamp);
                                                     //console.dir(c);
-                                                    this.positions.push(c);
+                                                    this.positions.push(data[i]);
                                                   }
                                                   this.addMarkerToMap();
                                                 } );    
@@ -126,18 +124,19 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   addMarkerToMap(){
     this.cancel();
     for(let i=0 ; i< this.positions.length; i++){
-      let lat = this.positions[i].getLat();
-      let lng = this.positions[i].getLng();
-      let timestamp = this.positions[i].getTimestamp();
+      let lat = this.positions[i].point.coordinates[0];
+      let lng = this.positions[i].point.coordinates[1];
+      let timestamp = this.positions[i].timestamp;
+      let user = this.positions[i].user;
       // add each marker as a layer
       this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
-      this.markerLayers[i].bindPopup("<b>User:</b><br>Timestamp:"+ (new Date(timestamp)).toString());
+      this.markerLayers[i].bindPopup("<b>User:</b> "+ user + "<br>Timestamp:"+ (new Date(timestamp)).toString());
     }
     // add all layers as a single array to layer
     this.layerOfMarkers = L.layerGroup(this.markerLayers);
     this.geoMap.addLayer(this.layerOfMarkers);
     this.changeDetectorRef.detectChanges();
-    alert("Recieved: " + JSON.stringify(this.positions));
+    //alert("Recieved: " + JSON.stringify(this.positions));
    }
 
   cancel(){

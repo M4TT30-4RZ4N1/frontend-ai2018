@@ -8,6 +8,8 @@ import { Shape } from '../../../../models/shape';
 import { LeafletLayersModel } from '../../../../models/leafletLayers';
 import { PositionService } from '../../../../services/position/position.service';
 import { Coordinate } from '../../../../models/coordinates';
+import { TimedPosition } from '../../../../models/timedPosition';
+import { Point } from '../../../../models/point';
 
 @Component({
   selector: 'app-user-data',
@@ -16,7 +18,7 @@ import { Coordinate } from '../../../../models/coordinates';
 })
 export class UserDataComponent implements OnInit {
   userSub : Subscription;
-  positions : Coordinate[] = [];
+  positions : TimedPosition[] = [];
   constructor(
     private adminService: AdminService,
     private positionService : PositionService
@@ -29,7 +31,7 @@ export class UserDataComponent implements OnInit {
   ngOnInit() {
   }
   ngOnDestroy() { 
-    if(this.userSub != null)
+    if(this.userSub !== null && this.userSub !==undefined)
       this.userSub.unsubscribe(); 
    }
   
@@ -101,13 +103,10 @@ export class UserDataComponent implements OnInit {
     this.geoMap = map;
     this.userSub = this.adminService.getUserData()
                                         .subscribe( (data) => 
-                                                  { console.dir(data); 
+                                                  { //console.dir(data); 
                                                     for(let i = 0; i < data.length; i++){
-                                                      let c = new Coordinate(data[i].point.coordinates[0], 
-                                                                              data[i].point.coordinates[1], 
-                                                                              data[i].timestamp);
-                                                      console.dir(c);
-                                                      this.positions.push(c);
+                                                      //console.dir(data[i]);
+                                                      this.positions.push(data[i]);
                                                     }
                                                     this.addMarkerToMap();
                                                   } );
@@ -117,12 +116,13 @@ export class UserDataComponent implements OnInit {
 
    addMarkerToMap(){
     for(let i=0 ; i< this.positions.length; i++){
-      let lat = this.positions[i].getLat();
-      let lng = this.positions[i].getLng();
-      let timestamp = this.positions[i].getTimestamp()*1000;
+      let lat = this.positions[i].point.coordinates[0];
+      let lng = this.positions[i].point.coordinates[1];
+      let timestamp = this.positions[i].timestamp;
+      let user = this.positions[i].user;
       // add each marker as a layer
       this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
-      this.markerLayers[i].bindPopup("<b>User:</b><br>Timestamp:"+ (new Date(timestamp)).toString());
+      this.markerLayers[i].bindPopup("<b>User:</b> "+user+"<br><b>Timestamp:</b> "+ (new Date(timestamp)).toString());
     }
     // add all layers as a single array to layer
     this.layerOfMarkers = L.layerGroup(this.markerLayers);

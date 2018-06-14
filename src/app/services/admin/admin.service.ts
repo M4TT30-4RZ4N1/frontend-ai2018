@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
+import { map } from 'rxjs/operators';
 import { Coordinate } from '../../models/coordinates';
 import { Shape } from '../../models/shape';
 import { Transaction } from '../../models/transaction';

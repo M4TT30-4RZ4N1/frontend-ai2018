@@ -1,20 +1,30 @@
 <ng-template  [ngxPermissionsOnly]="['ROLE_ADMIN','ROLE_USER', 'ROLE_CUSTOMER']">
 <nav>
-    <a routerLink="/" routerLinkActive="active">Home</a>
+    <button type="button" mat-button routerLink="/home" routerLinkActive="active"><i class="material-icons">
+        home
+        </i>Home</button><br>
   
     <ng-template ngxPermissionsOnly="ROLE_ADMIN">
-      <a routerLink="/admin" routerLinkActive="active">Admin</a>
+      <button type="button" mat-button routerLink="/admin" routerLinkActive="active"><i class="material-icons">
+          supervised_user_circle
+          </i>Admin</button><br>
     </ng-template>
   
     <ng-template ngxPermissionsOnly="ROLE_USER">
-      <a routerLink="/user" routerLinkActive="active">User</a>
+      <button type="button" mat-button routerLink="/user" routerLinkActive="active"><i class="material-icons">
+          assignment_ind
+          </i>User</button><br>
     </ng-template>
   
     <ng-template ngxPermissionsOnly="ROLE_CUSTOMER">
-      <a routerLink="/customer" routerLinkActive="active">Customer</a>
+      <button type="button" mat-button routerLink="/customer" routerLinkActive="active"><i class="material-icons">
+          store
+          </i>Customer</button><br>
     </ng-template>
     
-    <a routerLink="/logout" routerLinkActive="active">Logout</a>
+    <button type="button" mat-button routerLink="/logout" routerLinkActive="active"><i class="material-icons">
+        exit_to_app
+        </i>Logout</button>
   </nav>
 
 </ng-template>

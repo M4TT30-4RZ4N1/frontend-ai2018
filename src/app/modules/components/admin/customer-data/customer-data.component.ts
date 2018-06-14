@@ -9,12 +9,14 @@ import { Transaction } from '../../../../models/transaction';
   styleUrls: ['./customer-data.component.css']
 })
 export class CustomerDataComponent implements OnInit {
+  counter: number;
   transaction$ : Observable<Transaction[]>
   constructor( private adminService: AdminService) { 
     this.transaction$ = this.adminService.getCustomerData();
   }
 
   ngOnInit() {
+    this.counter = 0;
   }
 
 }

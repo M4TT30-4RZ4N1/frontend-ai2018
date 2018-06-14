@@ -23,7 +23,7 @@ export class UserService {
     }
 
   sendPositions(positionToSend : TimedPosition[]){
-      alert("Sending JSON: " + JSON.stringify(positionToSend));
+      //alert("Sending JSON: " + JSON.stringify(positionToSend));
       return this.webclient.post(this.serverAddress+""+this.insertPath, JSON.stringify(positionToSend));
   }
 

@@ -76,7 +76,7 @@ export class InsertComponent implements OnInit {
     ngOnInit() {
     }
     ngOnDestroy(): void {
-      if(this.positionSub != null)
+      if(this.positionSub !== null && this.positionSub !== undefined)
         this.positionSub.unsubscribe();
     }
   
@@ -114,11 +114,12 @@ export class InsertComponent implements OnInit {
       this.positionSub = this.userService.sendPositions(this.positionToSend)
                                         .subscribe( (data) => 
                                                   { 
+                                                    alert("Positions sent");
                                                   },
                                                 (error) =>
                                                   {
                                                     console.log(error);
-                                                    alert("Error during the request")
+                                                    alert("Error during the request");
                                                   } );    
     }
 

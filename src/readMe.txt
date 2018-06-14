@@ -1,6 +1,22 @@
 Lab 5 - Angular 2 - Group #5
 
-[STRUCTURE]--------------------------------------------------------------------------------------------
+[START THE APPLICATION]--------------------------------------------------------------------------------------------
+
+1) Open a command shell inside the main directory of the project and run:
+
+	> docker-compose up
+
+This will start the REST Server on http://localhost:8080/
+
+
+2) Open visual studio code or a command shell inside the directory of the project and run:
+
+	> npm install
+	> npm start
+
+The client-application will start on http://localhost:4200/.
+
+[CREDENTIALS]--------------------------------------------------------------------------------------------
 
 The application first load a login page in case the applicant is not logged in yet.
 There can be 3 different possibilities on login:
@@ -8,6 +24,8 @@ There can be 3 different possibilities on login:
 	- { username: testadmin , password: testpassword}
 	- { username: testcustomer , password: testpassword}
 	- { username: testuser , password: testpassword}
+
+[STRUCTURE]--------------------------------------------------------------------------------------------
 
 Each different role is enabled to view an Home Page with a simple welcome message and a dashBoard that help to navigate.
 There are different contents based on the roles:
@@ -32,7 +50,7 @@ It's possible in general to store the jwt inside a cookie or inside the localSto
 	- localStorage: is accessible through JavaScript on the same domain and because of this can be vulnerable to cross-site scripting (XSS) attacks.
 			As a storage mechanism, Web Storage does not enforce any secure standards during transfer. 
 			Whoever reads Web Storage and uses it must do their due diligence to ensure they always send the JWT over HTTPS and never HTTP.
-			Angular sanitizes and escapes untrusted values (Sanitization is the inspection of an untrusted value, turning it into a value that’s safe to insert into the DOM),
+			Angular sanitizes and escapes untrusted values (Sanitization is the inspection of an untrusted value, turning it into a value thatï¿½s safe to insert into the DOM),
 			so the framework protect the applicatio from XSS attacks.
 			
 	--> Our team has chosen the localStorage method to store the jwt.

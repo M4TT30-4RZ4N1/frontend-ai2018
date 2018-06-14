@@ -8,13 +8,14 @@ import { JwtManagementService } from '../../../services/jwt/jwt-management.servi
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  title = 'Laboratorio 4 - Gruppo #5 ';
+  title = 'Laboratorio 5 - Gruppo #5';
   
   constructor(private permissionsService: NgxPermissionsService, private jwtManagementService:  JwtManagementService) { }
 
   ngOnInit() {
     const token = window.localStorage.getItem('ai-token');
     let roles = this.jwtManagementService.getJwtRoles(token);
+    window.localStorage.setItem('ai-roles', roles);
     this.permissionsService.loadPermissions(roles); //ROLE_ADMIN, ROLE_USER, ROLE_CUSTOMER
   }
 
