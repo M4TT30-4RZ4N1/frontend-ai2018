@@ -13,14 +13,19 @@ export class NoAuthGuardService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
         let token = window.localStorage.getItem('ai-token');
 
+    
         let iCan = this.jwtManagementService.checkAuthTimeExpired(token);
 
         // reverse guardian of authentication
         if (iCan === false) {
             iCan = true;
+            this.permissionsService.flushPermissions();
         }
         else{
             iCan = false;
+            console.log("DEBUG ");
+            this.router.navigateByUrl('/404NotFound');
+            
         }
 
         return Observable.of(iCan);

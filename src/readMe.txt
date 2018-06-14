@@ -2,6 +2,14 @@ Lab 5 - Angular 2 - Group #5
 
 [START THE APPLICATION]--------------------------------------------------------------------------------------------
 
+0) If you are running docker on windows follow this sequence:
+	
+		- open the virtual box
+		- go on the VM used by Docker
+		- Settings --> Network --> Advanced
+		- click Port Forwarding 
+		- add new rule: (name, protocol, ip host, port host, ip guest, port guest) = (rule 1, TCP, 127.0.0.1, 8080,  ,8080) 
+
 1) Open a command shell inside the main directory of the project and run:
 
 	> docker-compose up

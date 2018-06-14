@@ -17,17 +17,21 @@ import { CustomerComponent } from './modules/components/customer/customer.compon
 import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate:[NoAuthGuardService]},
-  { path: 'logout', component: LogoutComponent, canActivate:[AuthGuardService]},
-  { path: 'home', component: HomeComponent, canActivate:[AuthGuardService]},
+
+  { path: 'login', component: LoginComponent, canActivate:[NoAuthGuardService], pathMatch: 'full'},
+  { path: 'logout', component: LogoutComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
+  { path: 'home', component: HomeComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
   { path: 'admin', component: AdminComponent, 
-  canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_ADMIN', redirectTo: 'home'}},
+  canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_ADMIN', redirectTo: 'home'}
+  , pathMatch: 'full'},
   },
   { path: 'user', component: UserComponent, 
-    canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_USER', redirectTo: 'home'}},
+    canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_USER', redirectTo: 'home'}
+    , pathMatch: 'full'},
   },
   { path: 'customer', component: CustomerComponent, 
-    canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_CUSTOMER', redirectTo: 'home'}}
+    canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_CUSTOMER', redirectTo: 'home'}
+    , pathMatch: 'full'}
   },
   { path: '404NotFound', component: PageNotFoundComponent,  pathMatch: 'full'},
   { path: '**', redirectTo: '404NotFound', pathMatch: 'full'}
