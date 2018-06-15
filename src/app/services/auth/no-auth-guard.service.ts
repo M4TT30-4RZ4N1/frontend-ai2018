@@ -23,8 +23,7 @@ export class NoAuthGuardService implements CanActivate {
         }
         else{
             iCan = false;
-            console.log("DEBUG ");
-            this.router.navigateByUrl('/404NotFound');
+            this.router.navigateByUrl('/home');
             
         }
 

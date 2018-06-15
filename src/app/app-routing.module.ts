@@ -17,7 +17,7 @@ import { CustomerComponent } from './modules/components/customer/customer.compon
 import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
 
 const routes: Routes = [
-
+  { path:'', pathMatch: 'full', redirectTo:'login'},
   { path: 'login', component: LoginComponent, canActivate:[NoAuthGuardService], pathMatch: 'full'},
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
   { path: 'home', component: HomeComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
