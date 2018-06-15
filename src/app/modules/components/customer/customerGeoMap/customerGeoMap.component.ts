@@ -164,7 +164,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     //this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
     this.positionsSub = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0])
                             .subscribe((data) => {
-                              console.log(data);
+                              //console.log(data);
                               this.lastOpaqueTransaction = data;
                               this.positionsInArea = data.nPositions;
                               this.changeDetectorRef.detectChanges();
@@ -191,7 +191,18 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     this.buySub = this.positionService.buyPositions(this.lastOpaqueTransaction)
                   .subscribe((data) => {
                     
+                    console.log(data);
+                    let allData = <any> data;
                     alert("Transaction complete with success!");
+                    for(let i=0 ; i< allData.length; i++){
+                      let lat = allData[i].point.coordinates[0];
+                      let lng = allData[i].point.coordinates[1];
+                      // add each marker as a layer
+                      this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
+                    }
+                    // add all layers as a single array to layer
+                    this.layerOfMarkers = L.layerGroup(this.markerLayers);
+                    this.geoMap.addLayer(this.layerOfMarkers);
                 
                     this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
                     this.polygonTest = [];
