@@ -4,4 +4,7 @@ node_js:
 before_script:
    - npm install -g @angular/cli
 script:
+   - npm install
    - ng build --prod
+   - cp Staticfile dist/Staticfile
+
