@@ -1,0 +1,5 @@
+---
+applications:
+- name: frontendpolito
+  memory: 512M
+  path: dist
