@@ -50,7 +50,15 @@ checkAuthTimeExpired(token : string) : boolean{
     }
     return expireTimestamp;
   }
-
+  getJwtUsername(token : string){
+    let tokenInfo = this.getDecodeJwt(token);
+    let username = null;
+  
+    if(tokenInfo !== null && tokenInfo !== undefined){
+        username = tokenInfo.user_name;
+    }
+    return username;
+  }
   getJwtRoles(token : string){
     let tokenInfo = this.getDecodeJwt(token);
     let roles = null;

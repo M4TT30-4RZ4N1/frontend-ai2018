@@ -1,15 +1,5 @@
-<mat-toolbar color="primary">
-        <button type="button" mat-button (click)="drawer.toggle()"><i class="material-icons">dashboard</i>Menu</button>
-        <span>Laboratorio 5 - Gruppo #5</span>
-</mat-toolbar>
-<mat-drawer-container class="container">
-        <mat-drawer #drawer class="sidenav" mode="side">
-            <app-sidebar></app-sidebar>
-        </mat-drawer>
-        
-        <div class="sidenav-content">
-            <router-outlet></router-outlet>
-        </div>
-</mat-drawer-container>
- 
+<div class="sidenav-content">
+     <router-outlet></router-outlet>
+</div>
+
   

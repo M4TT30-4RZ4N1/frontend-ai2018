@@ -3,3 +3,9 @@
 @import "../node_modules/leaflet/dist/leaflet.css";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "../node_modules/angular2-toaster/toaster.css";
+@import "../node_modules/admin-lte/dist/css/AdminLTE.min.css";
+@import "../node_modules/admin-lte/dist/css/skins/_all-skins.min.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/ionicons/dist/css/ionicons.min.css";

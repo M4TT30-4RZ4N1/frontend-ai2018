@@ -32,6 +32,7 @@ import { UserService } from './services/user/user.service';
 import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNotFound.component';
 import { CustomerComponent } from './modules/components/customer/customer.component';
 import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
+import { NgxAdminLteModule } from 'ngx-admin-lte';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
     HttpClientModule,
     MaterialModule,
     AppRoutingModule,
-    NgxPermissionsModule.forRoot()
+    NgxPermissionsModule.forRoot(),
+    NgxAdminLteModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
@@ -74,7 +76,8 @@ import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
     AuthService, 
     AuthGuardService, 
     JwtManagementService,
-    NoAuthGuardService
+    NoAuthGuardService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })
