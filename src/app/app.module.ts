@@ -33,6 +33,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { UploadComponent } from './modules/upload/upload.component';
 import { CheckDuplicateUsernameService } from './services/auth/checkDuplicateUsername.service';
+import { RegisterService } from './services/auth/register.service';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { CheckDuplicateUsernameService } from './services/auth/checkDuplicateUse
     AuthService,
     CheckDuplicateUsernameService,
     AuthGuardService,
+    RegisterService,
     JwtManagementService,
     NoAuthGuardService,
     UserService,

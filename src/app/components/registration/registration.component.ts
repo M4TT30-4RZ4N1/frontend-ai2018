@@ -3,8 +3,8 @@ import { User } from '../../models/user';
 import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
 import { CheckDuplicateUsernameService } from '../../services/auth/checkDuplicateUsername.service';
 import { Observable } from 'rxjs';
-import { debounce } from 'rxjs/operators';
-import { timer } from 'rxjs/observable/timer';
+import { RegisterService } from '../../services/auth/register.service';
+
 
 @Component({
   selector: 'app-registration',
@@ -18,7 +18,7 @@ export class RegistrationComponent implements OnInit {
   public captchaResult: string | null;
   public captchaSolved: boolean;
 
-  constructor(private checkDuplicateUsernameService: CheckDuplicateUsernameService) {
+  constructor(private checkDuplicateUsernameService: CheckDuplicateUsernameService,private registerService:RegisterService) {
   }
 
   ngOnInit() {
@@ -59,6 +59,9 @@ export class RegistrationComponent implements OnInit {
         this.registrationForm.controls.password.value);
 
         console.log(this.user);
+      this.registerService.register(this.user).subscribe((data)=>{if(!data){
+        this.errorMessage="Errore nella registrazione";
+      }});
 
     /*  if (this.form.valid) {
 this.submitted.emit(this.form.value);
