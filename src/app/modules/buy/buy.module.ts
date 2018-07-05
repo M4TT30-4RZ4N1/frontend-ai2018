@@ -1,11 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuyComponent } from './buy.component';
+import { MaterialModule } from '../shared/material/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GeoMapComponent } from '../../components/customer/customerGeoMap/customerGeoMap.component';
+import { CustomerComponent } from '../../components/customer/customer.component';
+import { CustomerDataComponent } from '../../components/admin/customer-data/customer-data.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
+    LeafletModule
   ],
-  declarations: [BuyComponent]
+  declarations: [
+    BuyComponent,
+    GeoMapComponent,
+    CustomerComponent,
+  
+  ]
 })
 export class BuyModule { }

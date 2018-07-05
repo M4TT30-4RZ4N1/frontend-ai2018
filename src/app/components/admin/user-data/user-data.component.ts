@@ -1,15 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { AdminService } from '../../../../services/admin/admin.service';
+import { AdminService } from '../../../services/admin/admin.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { LatLngExpression, LeafletMouseEvent } from 'leaflet';
 import * as L from 'leaflet';
-import { Shape } from '../../../../models/shape';
-import { LeafletLayersModel } from '../../../../models/leafletLayers';
-import { PositionService } from '../../../../services/position/position.service';
-import { Coordinate } from '../../../../models/coordinates';
-import { TimedPosition } from '../../../../models/timedPosition';
-import { Point } from '../../../../models/point';
+import { Shape } from '../../../models/shape';
+import { LeafletLayersModel } from '../../../models/leafletLayers';
+import { PositionService } from '../../../services/position/position.service';
+import { Coordinate } from '../../../models/coordinates';
+import { TimedPosition } from '../../../models/timedPosition';
+import { Point } from '../../../models/point';
 
 @Component({
   selector: 'app-user-data',

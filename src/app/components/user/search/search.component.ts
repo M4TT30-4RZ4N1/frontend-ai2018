@@ -1,13 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { Shape } from '../../../../models/shape';
-import { LeafletLayersModel } from '../../../../models/leafletLayers';
+import { Shape } from '../../../models/shape';
+import { LeafletLayersModel } from '../../../models/leafletLayers';
 import * as L from 'leaflet';
-import { PositionService } from '../../../../services/position/position.service';
+import { PositionService } from '../../../services/position/position.service';
 import { LeafletMouseEvent } from 'leaflet';
 import { Subscription } from 'rxjs/Subscription';
-import { Coordinate } from '../../../../models/coordinates';
-import { UserService } from '../../../../services/user/user.service';
-import { TimedPosition } from '../../../../models/timedPosition';
+import { Coordinate } from '../../../models/coordinates';
+import { UserService } from '../../../services/user/user.service';
+import { TimedPosition } from '../../../models/timedPosition';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',

@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Shape } from '../../../../models/shape';
+import { Shape } from '../../../models/shape';
 import * as L from 'leaflet';
-import { LeafletLayersModel } from '../../../../models/leafletLayers';
+import { LeafletLayersModel } from '../../../models/leafletLayers';
 import { polygon, LeafletMouseEvent, LatLngTuple, LatLngExpression, geoJSON } from 'leaflet';
-import { PositionService } from '../../../../services/position/position.service';
+import { PositionService } from '../../../services/position/position.service';
 import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
-import { OpaqueTransaction } from '../../../../models/opaqueTransaction';
+import { OpaqueTransaction } from '../../../models/opaqueTransaction';
 
 @Component({
   selector: 'app-geoMap',

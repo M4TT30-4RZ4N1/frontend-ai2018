@@ -28,7 +28,7 @@ export class AuthGuardService implements CanActivate {
         }else{
             let username= this.jwtManagementService.getJwtUsername(token);
             const user1 = new User( {
-                avatarUrl: 'assets/img/user2-160x160.jpg',
+                avatarUrl: 'assets/user.png',
                 firstname: username,
                 lastname: ''
             } );
