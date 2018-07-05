@@ -3,7 +3,7 @@
     max-height: 30vh;
 }
 .centered{
-    margin-top: 20vh;
+    margin: 0 auto;
 }
 .title{
     color: #555;
@@ -26,6 +26,7 @@ p {
 .wrap {
     position: relative;
     text-align: center;
+    margin-top: 20vh;
 }
 
 a {

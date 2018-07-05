@@ -1,0 +1,32 @@
+<form [formGroup]="registrationForm" (ngSubmit)="submit_registration()">
+
+<p>
+<mat-input-container>
+  <input type="text" matInput placeholder="Username" formControlName="username"  required>
+</mat-input-container>
+</p>
+<p>
+<mat-input-container>
+    <input type="password" id="pwd" matInput placeholder="Password" formControlName="password" required>
+</mat-input-container>
+</p>
+<p>
+<mat-input-container>
+    <input type="password" id="confirmpwd" matInput placeholder="Confirm Password" formControlName="confirmpassword" required>
+</mat-input-container>
+</p>
+
+<input type="checkbox" (click)="showHide()">Show Password 
+
+<p *ngIf="errorMessage" class="loginError">
+{{ errorMessage }}
+</p>
+
+<p class="loginButtons">
+<button type="submit" mat-button [disabled]="!registrationForm.valid">Sign-up</button>
+</p>
+
+</form>
+
+
+

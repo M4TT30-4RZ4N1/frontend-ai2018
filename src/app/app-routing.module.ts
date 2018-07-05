@@ -19,6 +19,7 @@ import { LayoutAuthComponent } from 'ngx-admin-lte';
 import { ArchiveComponent } from './modules/archive/archive.component';
 import { UploadComponent } from './modules/upload/upload.component';
 import { BuyComponent } from './modules/buy/buy.component';
+import { AuthComponent } from './modules/auth/auth.component';
 
 
 const routes: Routes = [
@@ -28,9 +29,9 @@ const routes: Routes = [
       { path:'', pathMatch: 'full', redirectTo:'home'},
       { path: 'logout', component: LogoutComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
       { path: 'home', component: HomeComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
-      { path: 'archive', component: ArchiveComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
-      { path: 'upload', component: UploadComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
-      { path: 'buy', component: BuyComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
+      { path: 'archive', component: ArchiveComponent, canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: ['ROLE_USER', 'ROLE_CUSTOMER'], redirectTo: 'home'}, pathMatch: 'full'}},
+      { path: 'upload', component: UploadComponent, canActivate:[AuthGuardService, NgxPermissionsGuard],data: {permissions: {only: ['ROLE_USER', 'ROLE_CUSTOMER'], redirectTo: 'home'}, pathMatch: 'full'}},
+      { path: 'buy', component: BuyComponent, canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: ['ROLE_USER', 'ROLE_CUSTOMER'], redirectTo: 'home'}, pathMatch: 'full'}},
 
       // OLD PATHS
       { path: 'admin', component: AdminComponent, 
@@ -67,7 +68,7 @@ const routes: Routes = [
     path: '',
   },
   { path:'', pathMatch: 'full', redirectTo:'login'},
-  { path: 'login', component: LoginComponent, canActivate:[NoAuthGuardService], pathMatch: 'full'},
+  { path: 'login', component: AuthComponent, canActivate:[NoAuthGuardService], pathMatch: 'full'},
   { path: '404NotFound', component: PageNotFoundComponent, pathMatch: 'full'},
   { path: '**', redirectTo: '404NotFound', pathMatch: 'full'},
 ];

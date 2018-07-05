@@ -35,6 +35,11 @@ export class AppComponent implements OnInit {
       'icon': 'credit-card',
       'link': ['/buy']
     },
+    {
+      'title': 'Logout',
+      'icon': 'power-off',
+      'link': ['/logout']
+    },
   ];
   constructor(private menuServ: MenuService) {}
   ngOnInit(): void {

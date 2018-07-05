@@ -36,6 +36,7 @@ import { NgxAdminLteModule } from 'ngx-admin-lte';
 import { ArchiveModule } from './modules/archive/archive.module';
 import { BuyModule } from './modules/buy/buy.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @NgModule({
@@ -45,7 +46,6 @@ import { UploadModule } from './modules/upload/upload.module';
     HomeComponent,
     PageNotFoundComponent,
     GeoMapComponent,
-    LoginComponent,
     LogoutComponent,
     AdminComponent,
     UserComponent,
@@ -72,6 +72,7 @@ import { UploadModule } from './modules/upload/upload.module';
     ArchiveModule,
     UploadModule,
     BuyModule,
+    AuthModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
