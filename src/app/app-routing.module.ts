@@ -16,6 +16,9 @@ import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNot
 import { CustomerComponent } from './modules/components/customer/customer.component';
 import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
 import { LayoutAuthComponent } from 'ngx-admin-lte';
+import { ArchiveComponent } from './modules/archive/archive.component';
+import { UploadComponent } from './modules/upload/upload.component';
+import { BuyComponent } from './modules/buy/buy.component';
 
 
 const routes: Routes = [
@@ -25,6 +28,11 @@ const routes: Routes = [
       { path:'', pathMatch: 'full', redirectTo:'home'},
       { path: 'logout', component: LogoutComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
       { path: 'home', component: HomeComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
+      { path: 'archive', component: ArchiveComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
+      { path: 'upload', component: UploadComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
+      { path: 'buy', component: BuyComponent, canActivate:[AuthGuardService], pathMatch: 'full'},
+
+      // OLD PATHS
       { path: 'admin', component: AdminComponent, 
       canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_ADMIN', redirectTo: 'home'}
       , pathMatch: 'full'},
@@ -44,22 +52,17 @@ const routes: Routes = [
       'display_tasks': false,
       'display_notifications': false,
       'display_menu_search': false,
-      'display_menu_user': false,
+      'display_menu_user': true,
       'display_messages': false,
       'display_control': false,
+      'display_user': false,
       /*
       // USE THIS IS YOU WANT TO HIDE SOME TEMPLATE PART
       'boxed_style': false,
-
-      
-      'display_user': false,
-      
-
-
-
       'display_logout': true,
       header_components: []
       */
+
     }],
     path: '',
   },

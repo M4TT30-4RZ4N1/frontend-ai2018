@@ -10,10 +10,10 @@ import { MenuService} from 'ngx-admin-lte';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Laboratorio 5 - Gruppo #5 ';
+  title = 'Mobile Data Marketplace - Gruppo #5 ';
   private mylinks: any = [
     {
-      'header': 'Custom Header'
+      'header': 'Mobile Data Marketplace'
     },
     {
       'title': 'Home',
@@ -36,10 +36,9 @@ export class AppComponent implements OnInit {
       'link': ['/buy']
     },
   ];
-  constructor( private menuServ: MenuService) {}
+  constructor(private menuServ: MenuService) {}
   ngOnInit(): void {
     this.menuServ.setCurrent(this.mylinks);
-
   }
   
 }

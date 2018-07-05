@@ -33,6 +33,9 @@ import { PageNotFoundComponent } from './modules/components/pageNotFound/pageNot
 import { CustomerComponent } from './modules/components/customer/customer.component';
 import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
 import { NgxAdminLteModule } from 'ngx-admin-lte';
+import { ArchiveModule } from './modules/archive/archive.module';
+import { BuyModule } from './modules/buy/buy.module';
+import { UploadModule } from './modules/upload/upload.module';
 
 
 @NgModule({
@@ -66,6 +69,9 @@ import { NgxAdminLteModule } from 'ngx-admin-lte';
     AppRoutingModule,
     NgxPermissionsModule.forRoot(),
     NgxAdminLteModule,
+    ArchiveModule,
+    UploadModule,
+    BuyModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
@@ -83,4 +89,3 @@ import { NgxAdminLteModule } from 'ngx-admin-lte';
 })
 export class AppModule { }
 
-//Matteo Arzani 236462

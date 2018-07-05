@@ -5,7 +5,6 @@
 
 export const environment = {
   production: false,
-  //API_URL : "http://159.122.181.42:30748"
-  API_URL : "http://localhost:8080"
+  API_URL : "https://backendpolito.eu-de.mybluemix.net"
 };
 
