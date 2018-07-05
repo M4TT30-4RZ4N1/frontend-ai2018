@@ -1,47 +1,34 @@
-<mat-card>  
-  <mat-card-title>Customer Transaction</mat-card-title>
+<mat-card-title>
+    Customer Transaction</mat-card-title>
+<br>
+<mat-card-content>
+    <label>
+        Stard Date:
 
-  <mat-card-content>
-      <label>
-          Stard Date:
-          
-          <input class="center"
-                [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
-                [(ngModel)]="selectedMoments"
-                [selectMode]="'rangeFrom'"
-                [ngModelOptions]="{standalone: true}">
-          <owl-date-time #dt12></owl-date-time>
-          
-      </label>
-      
-      <label>
-          End Date:
-          
-          <input class="center"
-                [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
-                [(ngModel)]="selectedMoments"
-                [selectMode]="'rangeTo'"
-                [ngModelOptions]="{standalone: true}">
-          <owl-date-time #dt13></owl-date-time>
-          
-      </label> 
-      <button mat-button  #sendButton [disabled] = "!truePolygon" (click)="sendPositions()">Retrieve Positions</button>
-      </mat-card-content>
-      
-   <mat-card-content>
-        <!-- Map -->
-        <div leaflet style="height: 45vh;"
-        (leafletMapReady)="onMapReady($event)"
-        [leafletOptions]="options"
-        [leafletLayers]="layers">
+        <input class="center" [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12" [(ngModel)]="selectedMoments" [selectMode]="'rangeFrom'"
+            [ngModelOptions]="{standalone: true}">
+        <owl-date-time #dt12></owl-date-time>
+
+    </label>
+
+    <label>
+        End Date:
+
+        <input class="center" [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13" [(ngModel)]="selectedMoments" [selectMode]="'rangeTo'"
+            [ngModelOptions]="{standalone: true}">
+        <owl-date-time #dt13></owl-date-time>
+
+    </label>
+    <button mat-button #sendButton [disabled]="!truePolygon" (click)="sendPositions()">Retrieve Positions</button>
+</mat-card-content>
+
+<mat-card-content>
+    <!-- Map -->
+    <div leaflet style="height: 45vh;" (leafletMapReady)="onMapReady($event)" [leafletOptions]="options" [leafletLayers]="layers">
     </div>
-  </mat-card-content>  
-      <mat-card-content>
-          Positions in the Area: {{positionsInArea}}
-          <button mat-button  (click)="cancel()" >Cancel</button>
-          <button mat-button  (click)="buy()" [disabled]="!(positionsInArea > 0)">Buy</button>
-      </mat-card-content> 
-    </mat-card>
- 
-
-
+</mat-card-content>
+<mat-card-content>
+    Positions in the Area: {{positionsInArea}}
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button (click)="buy()" [disabled]="!(positionsInArea > 0)">Buy</button>
+</mat-card-content>

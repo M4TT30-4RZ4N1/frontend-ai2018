@@ -11,7 +11,7 @@ import { Http} from '@angular/http';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { JwtManagementService } from './services/jwt/jwt-management.service';
-import { LogoutComponent } from './components/logout/logout.component';
+import { LogoutComponent} from './components/logout/logout.component';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { NgxPermissionsModule, NgxPermissionsGuard } from 'ngx-permissions';
