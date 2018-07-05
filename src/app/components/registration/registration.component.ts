@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../../models/user';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { CheckDuplicateUsernameService } from '../../services/auth/checkDuplicateUsername.service';
+import { Observable } from 'rxjs';
+import { debounce } from 'rxjs/operators';
+import { timer } from 'rxjs/observable/timer';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +18,8 @@ export class RegistrationComponent implements OnInit {
   public captchaResult: string | null;
   public captchaSolved: boolean;
 
-  constructor() { }
+  constructor(private checkDuplicateUsernameService: CheckDuplicateUsernameService) {
+  }
 
   ngOnInit() {
   }
@@ -30,11 +35,17 @@ export class RegistrationComponent implements OnInit {
   //   }
   // }
   registrationForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
+    username: new FormControl('',[Validators.required],this.validateUsernameNotTaken.bind(this)),
     password: new FormControl(''),
     confirmpassword: new FormControl('')
   });
-
+  validateUsernameNotTaken(control: AbstractControl) {
+    return Observable.timer(500).switchMap(()=>{
+      return this.checkDuplicateUsernameService.check(control.value)
+        .mapTo(null)
+        .catch(err=>Observable.of({usernameTaken: true}));
+    });
+  }
   submit_registration() {
     console.log("Registration parameters inserted:"
       + this.registrationForm.controls.username.value + " | "
@@ -42,7 +53,7 @@ export class RegistrationComponent implements OnInit {
       + this.registrationForm.controls.confirmpassword.value + " | "
       + this.captchaResult);
 
-      this.user = 
+      this.user =
       new User(
         this.registrationForm.controls.username.value,
         this.registrationForm.controls.password.value);
@@ -57,7 +68,7 @@ this.submitted.emit(this.form.value);
   showHide() {
     var element1 = <HTMLInputElement> document.getElementById("pwd");
     var element2 = <HTMLInputElement> document.getElementById("confirmpwd");
-    
+
     if (element1.type === "password" && element2.type === "password") {
       element1.type = "text";
       element2.type = "text";
@@ -65,7 +76,7 @@ this.submitted.emit(this.form.value);
       element1.type = "password";
       element2.type = "password";
     }
-} 
+}
 
 
 

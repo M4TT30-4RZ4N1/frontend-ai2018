@@ -32,6 +32,7 @@ import { UploadModule } from './modules/upload/upload.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { UploadComponent } from './modules/upload/upload.component';
+import { CheckDuplicateUsernameService } from './services/auth/checkDuplicateUsername.service';
 
 @NgModule({
   declarations: [
@@ -62,10 +63,11 @@ import { UploadComponent } from './modules/upload/upload.component';
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
     HttpClient,
     PositionService,
-    AdminService, 
-    UserService, 
-    AuthService, 
-    AuthGuardService, 
+    AdminService,
+    UserService,
+    AuthService,
+    CheckDuplicateUsernameService,
+    AuthGuardService,
     JwtManagementService,
     NoAuthGuardService,
     UserService,

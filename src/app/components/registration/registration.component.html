@@ -3,6 +3,16 @@
 <p>
 <mat-input-container>
   <input type="text" matInput placeholder="Username" formControlName="username"  required>
+  <div *ngIf="registrationForm.get('username').status === 'PENDING'">
+    Checking...
+  </div>
+  <div *ngIf="registrationForm.get('username').status === 'VALID'">
+    😺 Username is available!
+  </div>
+
+  <div *ngIf="registrationForm.get('username').errors && registrationForm.get('username').errors.usernameTaken">
+    😢 Oh noes, this username is already taken!
+  </div>
 </mat-input-container>
 </p>
 <p>
@@ -16,7 +26,7 @@
 </mat-input-container>
 </p>
 
-<input type="checkbox" (click)="showHide()">Show Password 
+<input type="checkbox" (click)="showHide()">Show Password
 
 <p *ngIf="errorMessage" class="loginError">
 {{ errorMessage }}
