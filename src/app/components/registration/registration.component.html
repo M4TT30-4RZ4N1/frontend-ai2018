@@ -3,7 +3,9 @@
 <p>
 <mat-input-container>
   <input type="text" matInput placeholder="Username" formControlName="username"  required>
-  <div *ngIf="registrationForm.get('username').status === 'PENDING'">
+</mat-input-container>
+</p>
+<div *ngIf="registrationForm.get('username').status === 'PENDING'">
     Checking...
   </div>
   <div *ngIf="registrationForm.get('username').status === 'VALID'">
@@ -11,15 +13,18 @@
   </div>
 
   <div *ngIf="registrationForm.get('username').errors && registrationForm.get('username').errors.usernameTaken">
-    😢 Oh noes, this username is already taken!
+    😢 Sorry, this username is already taken!
   </div>
-</mat-input-container>
-</p>
 <p>
-<mat-input-container>
-    <input type="password" id="pwd" matInput placeholder="Password" formControlName="password" required>
+<mat-input-container matTooltip="Password length from 8 to 16">
+    <input type="password" id="pwd" matInput placeholder="Password" formControlName="password" minlength="8" maxlength="16" required>
 </mat-input-container>
 </p>
+<ng2-password-strength-bar 
+          [passwordToCheck]="registrationForm.value.password"
+          [barLabel]="barLabel"
+          [barColors]="myColors">
+</ng2-password-strength-bar>
 <p>
 <mat-input-container>
     <input type="password" id="confirmpwd" matInput placeholder="Confirm Password" formControlName="confirmpassword" required>

@@ -4,6 +4,7 @@ import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/fo
 import { CheckDuplicateUsernameService } from '../../services/auth/checkDuplicateUsername.service';
 import { Observable } from 'rxjs';
 import { RegisterService } from '../../services/auth/register.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,11 +15,13 @@ import { RegisterService } from '../../services/auth/register.service';
 export class RegistrationComponent implements OnInit {
 
   public user: User;
+  public barLabel: string = "Password strength:";
+  public myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
 
-  public captchaResult: string | null;
-  public captchaSolved: boolean;
-
-  constructor(private checkDuplicateUsernameService: CheckDuplicateUsernameService,private registerService:RegisterService) {
+  constructor(
+    private router : Router,
+    private checkDuplicateUsernameService: CheckDuplicateUsernameService,
+    private registerService:RegisterService) {
   }
 
   ngOnInit() {
@@ -26,14 +29,6 @@ export class RegistrationComponent implements OnInit {
 
   @Input() errorMessage: string | null;
 
-  // @Input()
-  // set pending(isPending: boolean) {
-  //   if (isPending) {
-  //     this.registrationForm.disable();
-  //   } else {
-  //     this.registrationForm.enable();
-  //   }
-  // }
   registrationForm: FormGroup = new FormGroup({
     username: new FormControl('',[Validators.required],this.validateUsernameNotTaken.bind(this)),
     password: new FormControl(''),
@@ -50,8 +45,7 @@ export class RegistrationComponent implements OnInit {
     console.log("Registration parameters inserted:"
       + this.registrationForm.controls.username.value + " | "
       + this.registrationForm.controls.password.value + " | "
-      + this.registrationForm.controls.confirmpassword.value + " | "
-      + this.captchaResult);
+      + this.registrationForm.controls.confirmpassword.value + " | ");
 
       this.user =
       new User(
@@ -59,13 +53,22 @@ export class RegistrationComponent implements OnInit {
         this.registrationForm.controls.password.value);
 
         console.log(this.user);
-      this.registerService.register(this.user).subscribe((data)=>{if(!data){
-        this.errorMessage="Errore nella registrazione";
-      }});
 
-    /*  if (this.form.valid) {
-this.submitted.emit(this.form.value);
-} */
+    if (this.registrationForm.valid) {
+      this.registerService.register(this.user).subscribe((data) => {
+        if (!data) {
+          this.errorMessage = "Registration Error";
+        }
+        else{
+          window.localStorage.setItem('ai-registration', 'pending');
+          this.router.navigateByUrl('registrationSuccess');
+        }
+      });
+    }
+
+    
+
+ 
   }
 
   showHide() {

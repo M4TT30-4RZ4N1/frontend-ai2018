@@ -1,0 +1,74 @@
+:host {
+    display: flex;
+    justify-content: center;
+    margin: 20vh 0;
+  }
+  
+  mat-card-title,
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+  }
+  
+  $color: #270;
+  
+  .mybutton {
+   background-color: #fff;
+    padding: 0.75em 2em;
+    text-align: center;
+    text-decoration: none;
+    color: $color;
+    border: 2px solid $color;
+    width: 100%;
+    font-size: 18px;
+    display: inline-block;
+    border-radius: 0.3em;
+    transition: all 0.2s ease-in-out;
+    overflow: hidden;
+    &:before {
+      content: "";
+      background-color: rgba(255,255,255,0.5);
+      height: 100%;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -4.5em;
+      transform: skewX(-45deg) translateX(0);
+      transition: none;
+    }
+    &:hover {
+      background-color: $color;
+      color: #fff;
+      border-bottom: 4px solid darken($color, 10%);
+      &:before {
+        transform: skewX(-45deg) translateX(13.5em);
+       transition: all 0.5s ease-in-out;
+      }
+    }
+  }
+  
+
+  .info-msg,
+  .success-msg,
+  .warning-msg,
+  .error-msg {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+  }
+  .info-msg {
+    color: #059;
+    background-color: #BEF;
+  }
+  .success-msg {
+    color: #270;
+    background-color: #DFF2BF;
+  }
+  .warning-msg {
+    color: #9F6000;
+    background-color: #FEEFB3;
+  }
+  .error-msg {
+    color: #D8000C;
+    background-color: #FFBABA;
+  }

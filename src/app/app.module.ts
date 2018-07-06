@@ -34,6 +34,8 @@ import { SharedModule } from './modules/shared/shared.module';
 import { UploadComponent } from './modules/upload/upload.component';
 import { CheckDuplicateUsernameService } from './services/auth/checkDuplicateUsername.service';
 import { RegisterService } from './services/auth/register.service';
+import { SuccessMessageComponent } from './components/successMessage/successMessage.component';
+import { RegistrationGuardService } from './services/auth/RegistrationGuard.service';
 
 @NgModule({
   declarations: [
@@ -42,12 +44,14 @@ import { RegisterService } from './services/auth/register.service';
     HomeComponent,
     PageNotFoundComponent,
     LogoutComponent,
+    SuccessMessageComponent,
     AdminComponent,
     UserComponent,
     UserDataComponent,
     SearchComponent,
     InsertComponent,
     CustomerDataComponent,
+   
   ],
   imports: [
     AppRoutingModule,
@@ -72,6 +76,7 @@ import { RegisterService } from './services/auth/register.service';
     RegisterService,
     JwtManagementService,
     NoAuthGuardService,
+    RegistrationGuardService,
     UserService,
   ],
   bootstrap: [AppComponent]
