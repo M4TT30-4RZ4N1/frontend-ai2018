@@ -46,7 +46,7 @@ export class RegistrationComponent implements OnInit {
     return g.get('password').value === g.get('confirmpassword').value
        ? null : {'mismatch': true};
  }
- 
+
   submit_registration() {
     console.log("Registration parameters inserted:"
       + this.registrationForm.controls.username.value + " | "
@@ -72,9 +72,6 @@ export class RegistrationComponent implements OnInit {
       });
     }
 
-    
-
- 
   }
 
   showHide() {
