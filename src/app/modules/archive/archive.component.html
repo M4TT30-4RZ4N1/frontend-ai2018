@@ -1,18 +1,70 @@
 <mat-tab-group>
-    <mat-tab label="Owner Archive">
-        <mat-card>  
-            <mat-card-title>List of Owner Archives</mat-card-title>
-            <mat-card-content>
-          
-          </mat-card-content>
-        </mat-card>
-    </mat-tab>
-    <mat-tab label="Purchased Archive">
-        <mat-card>  
-            <mat-card-title>List of Purchased Archives</mat-card-title>
-            <mat-card-content>
-              
-          </mat-card-content>
-        </mat-card>
-    </mat-tab>
-  </mat-tab-group>
+        <mat-tab label="Owner Archive">
+            <mat-card>  
+                <mat-card-title>List of Owner Archives</mat-card-title>
+                <mat-card-content>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th width="40%" >Archive</th>
+                                        <th width="10%">Acquisitions</th>
+                                        <th width="25%">Download</th>
+                                        <th width="25%">Remove</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let item of items">
+                                        <td><strong>file name</strong></td>
+                                        <td class="text-center">
+                                               counter
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-success btn-xs"
+                                                    (click)="download()">
+                                                <span class="glyphicon glyphicon-download"></span> Download
+                                            </button>
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-danger btn-xs"
+                                                    (click)="remove()">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>                   
+              </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Purchased Archive">
+            <mat-card>  
+                <mat-card-title>List of Purchased Archives</mat-card-title>
+                <mat-card-content>
+                        
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th width="50%">Archive</th>
+                                        <th width="50%">Download</th>
+                                    </tr>
+                                   
+                                    </thead>
+                                
+                                    <tbody>
+                                    <tr *ngFor="let item of items">
+                                        <td><strong>file name</strong></td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-success btn-xs"
+                                                    (click)="download()">
+                                                <span class="glyphicon glyphicon-download"></span> Download
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>                   
+                        
+              </mat-card-content>
+            </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    
