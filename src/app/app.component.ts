@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PositionService } from './services/position/position.service';
 import { MenuService} from 'ngx-admin-lte';
-
+import { LogoService } from 'ngx-admin-lte';
 
 @Component({
   selector: 'app-root',
@@ -41,8 +41,12 @@ export class AppComponent implements OnInit {
       'link': ['/logout']
     },
   ];
-  constructor(private menuServ: MenuService) {}
+  constructor(private menuServ: MenuService, private logoServ: LogoService) {}
   ngOnInit(): void {
+    this.logoServ.setCurrent({
+      html_mini: "<b>M</b>",
+      html_lg: "<b>Marketplace</b>"});
+
     this.menuServ.setCurrent(this.mylinks);
   }
   
