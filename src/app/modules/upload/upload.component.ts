@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
+import { environment } from '../../../environments/environment';
  
 // const URL = '/api/';
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = environment.API_URL + '/user/archives';
 
 @Component({
   selector: 'app-upload',
