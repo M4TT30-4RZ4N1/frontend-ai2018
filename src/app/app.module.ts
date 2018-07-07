@@ -36,6 +36,7 @@ import { CheckDuplicateUsernameService } from './services/auth/checkDuplicateUse
 import { RegisterService } from './services/auth/register.service';
 import { SuccessMessageComponent } from './components/successMessage/successMessage.component';
 import { RegistrationGuardService } from './services/auth/RegistrationGuard.service';
+import { ArchiveService } from './services/archive/archive.service';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { RegistrationGuardService } from './services/auth/RegistrationGuard.serv
     NoAuthGuardService,
     RegistrationGuardService,
     UserService,
+    ArchiveService,
   ],
   bootstrap: [AppComponent]
 })

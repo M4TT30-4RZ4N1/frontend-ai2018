@@ -1,0 +1,20 @@
+{
+  "archives": [
+    {
+      "owner": "testuser",
+      "filename": "testuser_filef2917bb2-63ec-43f3-8549-ab2e310766a6",
+      "counter": 0,
+      "deleted": false,
+      "links": [
+        {
+          "rel": "self",
+          "href": "http://localhost:8080/user/archives/testuser_filef2917bb2-63ec-43f3-8549-ab2e310766a6"
+        },
+        {
+          "rel": "archives",
+          "href": "http://localhost:8080/user/archives?ownership=all"
+        }
+      ]
+    }
+  ]
+}

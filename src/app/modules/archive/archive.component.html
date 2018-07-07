@@ -13,20 +13,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr *ngFor="let item of items">
-                                        <td><strong>file name</strong></td>
+                                    <tr *ngFor="let item of ownArchives">
+                                        <td><strong>{{item.filename}}</strong></td>
                                         <td class="text-center">
-                                               counter
+                                               {{item.counter}}
                                         </td>
                                         <td nowrap>
                                             <button type="button" class="btn btn-success btn-xs"
-                                                    (click)="download()">
+                                                    (click)="download(item.filename)">
                                                 <span class="glyphicon glyphicon-download"></span> Download
                                             </button>
                                         </td>
                                         <td nowrap>
                                             <button type="button" class="btn btn-danger btn-xs"
-                                                    (click)="remove()">
+                                                    (click)="remove(item.filename)">
                                                 <span class="glyphicon glyphicon-trash"></span> Remove
                                             </button>
                                         </td>
@@ -51,8 +51,8 @@
                                     </thead>
                                 
                                     <tbody>
-                                    <tr *ngFor="let item of items">
-                                        <td><strong>file name</strong></td>
+                                    <tr *ngFor="let item of purchasedArchives">
+                                        <td><strong>{{item.filename}}</strong></td>
                                         <td nowrap>
                                             <button type="button" class="btn btn-success btn-xs"
                                                     (click)="download()">
