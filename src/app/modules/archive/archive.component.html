@@ -3,7 +3,6 @@
             <mat-card>
                 <mat-card-title>List of Owner Archives</mat-card-title>
                 <mat-card-content>
-                                <div>
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -34,8 +33,6 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                </div>
-                                <div>
                                   <button *ngIf="ownArchives._links!==null&&ownArchives._links.previous!==null&&ownArchives._links.previous!==undefined" type="button" class="btn btn-success btn-xs"
                                   (click)="getOwnPrevious()">
                               <span class="glyphicon glyphicon-backward"></span> Previous
@@ -44,7 +41,6 @@
                             (click)="getOwnNext()">
                               <span class="glyphicon glyphicon-forward"></span> Next
                             </button>
-                              </div>
               </mat-card-content>
             </mat-card>
         </mat-tab>
@@ -74,7 +70,14 @@
                                     </tr>
                                     </tbody>
                                 </table>
-
+                                <button *ngIf="purchasedArchives._links!==null&&purchasedArchives._links.previous!==null&&purchasedArchives._links.previous!==undefined" type="button" class="btn btn-success btn-xs"
+                                (click)="getPurPrevious()">
+                            <span class="glyphicon glyphicon-backward"></span> Previous
+                          </button>
+                          <button *ngIf="purchasedArchives._links!==null&&purchasedArchives._links.next!==null&&purchasedArchives._links.next!==undefined" type="button" class="btn btn-success btn-xs"
+                          (click)="getPurNext()">
+                            <span class="glyphicon glyphicon-forward"></span> Next
+                          </button>
               </mat-card-content>
             </mat-card>
         </mat-tab>
