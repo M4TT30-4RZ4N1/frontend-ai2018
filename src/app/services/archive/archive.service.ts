@@ -42,7 +42,7 @@ export class ArchiveService {
         let newheaders = new Headers( );
         newheaders.append( 'Content-Type', 'application/json' );
         newheaders.append('Authorization','Bearer '+ token);
-        this.http.post(this.serverAddress+"/zip/archive/", body, {
+        this.http.post(this.serverAddress+"/zip/archives/", body, {
             method: RequestMethod.Post,
             responseType: ResponseContentType.Blob,
             headers: newheaders
@@ -71,7 +71,7 @@ export class ArchiveService {
         let newheaders = new Headers( );
         newheaders.append( 'Content-Type', 'application/json' );
         newheaders.append('Authorization','Bearer '+ token);
-        this.http.get(this.serverAddress+"/zip/archive/"+filename,{
+        this.http.get(this.serverAddress+"/zip/archives/"+filename,{
             method: RequestMethod.Get,
             responseType: ResponseContentType.Blob,
             headers: newheaders
