@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { Archive } from '../../models/archive';
 import { ResponseContentType, RequestOptions, RequestMethod } from '@angular/http';
 import { Headers, Http} from '@angular/http';
-import fileSaver = require("file-saver");
+import { saveAs } from 'file-saver/FileSaver';
+import { NavigableArchive} from '../../models/navigablearchive';
 @Injectable()
 export class ArchiveService {
     serverAddress : String = environment.API_URL+"/user";
@@ -13,22 +14,27 @@ export class ArchiveService {
     //resourceAddress : String = "http://localhost:3000/archives";
     ownArchiveParam : String = "?ownership=self";
     purchasedArchiveParam : String = "?ownership=purchased";
-    constructor(private webclient : HttpClient, private http : Http) { 
+    constructor(private webclient : HttpClient, private http : Http) {
 
     }
 
-    getSelfArchives() : Observable<Archive[]>{
-        return this.webclient.get<Archive[]>(this.resourceAddress+""+this.ownArchiveParam);
+    getSelfArchives(page:number,size:number) : Observable<NavigableArchive>{
+        return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.ownArchiveParam+"&page="+page+"&size="+size);
         //return Observable.of([]);
     }
 
-    getPurchasedArchives() : Observable<Archive[]>{
-        return this.webclient.get<Archive[]>(this.resourceAddress+""+this.purchasedArchiveParam);
+    getPurchasedArchives(page:number,size:number) : Observable<NavigableArchive>{
+        return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.purchasedArchiveParam+"&page="+page+"&size="+size);
         //return Observable.of([]);
+    }
+    navigateNext(nav:NavigableArchive):Observable<NavigableArchive>{
+        return this.webclient.get<NavigableArchive>(nav._links.next.href);
+    }
+    navigateBack(nav:NavigableArchive):Observable<NavigableArchive>{
+      return this.webclient.get<NavigableArchive>(nav._links.previous.href);
     }
 
 
-    
     getArchives(filename:string){
         let body : String[] = [];
         body.push(filename);
@@ -45,12 +51,12 @@ export class ArchiveService {
                 console.log("File downloaded");
                 var blob = new Blob([response.blob()], {type: 'application/zip'});
                 var filename = 'file.zip';
-                fileSaver.saveAs(blob, filename);
+                saveAs(blob, filename);
         }, (error) => {
             console.log("File not downloaded");
             var blob = new Blob([error.blob()], {type: 'application/json'});
                 var filename = 'error.json';
-                fileSaver.saveAs(blob, filename);
+                saveAs(blob, filename);
         }
     );
         //return this.webclient.post(this.serverAddress+"/ziparchive", body);
@@ -74,12 +80,12 @@ export class ArchiveService {
                 console.log("File downloaded");
                 var blob = new Blob([response.blob()], {type: 'application/zip'});
                 var filename = 'file.zip';
-                fileSaver.saveAs(blob, filename);
+                saveAs(blob, filename);
         }, (error) => {
             console.log("File not downloaded");
             var blob = new Blob([error.blob()], {type: 'application/json'});
                 var filename = 'error.json';
-                fileSaver.saveAs(blob, filename);
+                saveAs(blob, filename);
         }
     );
         //return this.webclient.post(this.serverAddress+"/ziparchive", body);

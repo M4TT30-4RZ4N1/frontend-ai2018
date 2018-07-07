@@ -1,14 +1,13 @@
-export class Link {
-    private rel:string;
-    private href:String;
-    public constructor(rel:string,href:String){
-        this.rel = rel;
-        this.href = href;
-    }
-    public getRel(){
-        return this.rel;
-    }
-    public getHref():String{
-        return this.href;
-    }
+export class Link{
+  public self:Href;
+  public next: Href;
+  public previous: Href;
+  constructor(self:Href,next:Href=null,previous:Href=null){
+      this.self=self;
+      this.next=next;
+      this.previous=previous;
+  }
+}
+export class Href{
+  public href: string;
 }

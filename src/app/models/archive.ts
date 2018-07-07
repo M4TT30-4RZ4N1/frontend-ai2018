@@ -5,11 +5,16 @@ export class Archive {
     filename:string;
     counter:number;
     deleted:boolean;
-    public constructor(owner:string,filename:string,counter:number,deleted:boolean){
+    _links:Link;
+    public constructor(owner:string,filename:string,counter:number,deleted:boolean,_link:Link){
         this.owner = owner;
         this.filename = filename;
         this.counter = counter;
         this.deleted = deleted;
+        this._links = _link;
+    }
+    public getLink():Link{
+        return this._links;
     }
     public getOwner(){
         return this.owner;

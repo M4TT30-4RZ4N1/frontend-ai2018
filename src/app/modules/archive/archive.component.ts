@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArchiveService } from '../../services/archive/archive.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Archive } from '../../models/archive';
+import { NavigableArchive } from '../../models/navigablearchive';
 
 @Component({
   selector: 'app-archive',
@@ -14,8 +15,8 @@ export class ArchiveComponent implements OnInit {
   purchasedArchiveSub : Subscription;
   deleteSub : Subscription;
   downloadSub : Subscription;
-  ownArchives : Archive[] = [];
-  purchasedArchives : Archive[] = [];
+  ownArchives : NavigableArchive=new NavigableArchive([],null);
+  purchasedArchives : NavigableArchive=new NavigableArchive([],null);
   items : Array<any> = new Array(4);
 
   constructor(private archiveService : ArchiveService) { }
@@ -25,21 +26,15 @@ export class ArchiveComponent implements OnInit {
     this.items.push('Matteo');
     this.items.push('Raffaele');
     this.items.push('Sabrina');
-    this.ownArchiveSub = this.archiveService.getSelfArchives()
-                              .subscribe( (data) => {
-                                                  //console.dir(data); 
-                                                  for(let i = 0; i < data.length; i++){
-                                                    let a : Archive= new Archive(data[i].owner, data[i].filename, data[i].counter, data[i].deleted);
-                                                    this.ownArchives.push(a);
-                                                  }
+    this.ownArchiveSub = this.archiveService.getSelfArchives(0,1)
+                              .subscribe( (navarchive) => {
+                                                console.dir(navarchive);
+                                                this.ownArchives=navarchive;
                               } );
-    this.purchasedArchiveSub = this.archiveService.getPurchasedArchives()
-                              .subscribe( (data) => {
-                                                  //console.dir(data); 
-                                                  for(let i = 0; i < data.length; i++){
-                                                    let a : Archive= new Archive("", data[i].filename, 0, false);
-                                                    this.purchasedArchives.push(data[i]);
-                                                  }
+    this.purchasedArchiveSub = this.archiveService.getPurchasedArchives(0,1)
+                              .subscribe( (navarchive) => {
+                                                console.dir(navarchive);
+                                                this.purchasedArchives=navarchive;
                               } );
   }
 
@@ -53,7 +48,34 @@ export class ArchiveComponent implements OnInit {
     if(this.downloadSub !== null && this.downloadSub !== undefined)
       this.downloadSub.unsubscribe();
   }
-
+  getOwnNext(){
+    this.ownArchiveSub = this.archiveService.navigateNext(this.ownArchives)
+                              .subscribe( (navarchive) => {
+                                                console.dir(navarchive);
+                                                this.ownArchives=navarchive;
+                              } );
+  }
+  getOwnPrevious(){
+    this.ownArchiveSub = this.archiveService.navigateBack(this.ownArchives)
+                              .subscribe( (navarchive) => {
+                                                console.dir(navarchive);
+                                                this.ownArchives=navarchive;
+                              } );
+  }
+  getPurNext(){
+    this.ownArchiveSub = this.archiveService.navigateNext(this.purchasedArchives)
+                              .subscribe( (navarchive) => {
+                                                console.dir(navarchive);
+                                                this.purchasedArchives=navarchive;
+                              } );
+  }
+  getPurPrevious(){
+    this.ownArchiveSub = this.archiveService.navigateBack(this.purchasedArchives)
+                              .subscribe( (navarchive) => {
+                                                console.dir(navarchive);
+                                                this.purchasedArchives=navarchive;
+                              } );
+  }
   download(filename:string){
     console.log('downloading ' + filename);
     this.archiveService.getArchive(filename);
@@ -78,11 +100,11 @@ export class ArchiveComponent implements OnInit {
     console.log('removing ' + filename);
     let removedElement : Archive;
     //rimozione preventiva dell'elemento dalla lista
-    for(let i = 0; i < this.ownArchives.length; i++){
-      let archiveFilename : String = this.ownArchives[i].getFilename();
+    for(let i = 0; i < this.ownArchives.archives.length; i++){
+      let archiveFilename : String = this.ownArchives.archives[i].getFilename();
       if(archiveFilename.localeCompare(filename) == 0){
-        removedElement = this.ownArchives[i];
-        this.ownArchives.splice(i, 1);
+        removedElement = this.ownArchives.archives[i];
+        this.ownArchives.archives.splice(i, 1);
         break;
       }
     }
@@ -92,10 +114,10 @@ export class ArchiveComponent implements OnInit {
                         },
                        (error) => {
                          //se ho avuto errore riaggiungo l'elemento nella lista
-                         this.ownArchives.push(removedElement);
+                         this.ownArchives.archives.push(removedElement);
                          alert("Server error. Unable to delete " + filename)
                        })
-    
+
   }
 
 }
