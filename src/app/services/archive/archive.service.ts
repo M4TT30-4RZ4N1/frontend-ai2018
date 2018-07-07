@@ -29,7 +29,7 @@ export class ArchiveService {
 
 
     
-    getArchive(filename:string){
+    getArchives(filename:string){
         let body : String[] = [];
         body.push(filename);
         let token = window.localStorage.getItem('ai-token');
@@ -42,8 +42,43 @@ export class ArchiveService {
             headers: newheaders
         }).subscribe(
             (response) => {
+                console.log("File downloaded");
                 var blob = new Blob([response.blob()], {type: 'application/zip'});
                 var filename = 'file.zip';
+                fileSaver.saveAs(blob, filename);
+        }, (error) => {
+            console.log("File not downloaded");
+            var blob = new Blob([error.blob()], {type: 'application/json'});
+                var filename = 'error.json';
+                fileSaver.saveAs(blob, filename);
+        }
+    );
+        //return this.webclient.post(this.serverAddress+"/ziparchive", body);
+        //return this.webclient.get(this.resourceAddress+"/"+filename);
+    }
+
+
+    getArchive(filename:string){
+        let body : String[] = [];
+        body.push(filename);
+        let token = window.localStorage.getItem('ai-token');
+        let newheaders = new Headers( );
+        newheaders.append( 'Content-Type', 'application/json' );
+        newheaders.append('Authorization','Bearer '+ token);
+        this.http.get(this.resourceAddress+"/zip/"+filename,{
+            method: RequestMethod.Get,
+            responseType: ResponseContentType.Blob,
+            headers: newheaders
+        }).subscribe(
+            (response) => {
+                console.log("File downloaded");
+                var blob = new Blob([response.blob()], {type: 'application/zip'});
+                var filename = 'file.zip';
+                fileSaver.saveAs(blob, filename);
+        }, (error) => {
+            console.log("File not downloaded");
+            var blob = new Blob([error.blob()], {type: 'application/json'});
+                var filename = 'error.json';
                 fileSaver.saveAs(blob, filename);
         }
     );
