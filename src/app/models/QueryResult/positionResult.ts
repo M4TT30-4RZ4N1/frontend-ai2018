@@ -1,10 +1,10 @@
 import { Point } from "../point";
 
 export class PositionResult{
-    public user : String;
+    public user : string;
     public point : Point;
   
-    constructor( user: String, point : Point){
+    constructor( user: string, point : Point){
       this.point = point;
       this.user = user;
     }

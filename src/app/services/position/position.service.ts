@@ -53,9 +53,10 @@ export class PositionService {
     }
 
 
-    buyPositions(objectToSend : OpaqueTransaction){
+    buyPositions(startDate : number, endDate : number, objectToSend : QueryObj){
         //alert("Sending JSON: " + JSON.stringify(objectToSend));
-        return this.webclient.post(this.serverAddress+""+this.buyPath,JSON.stringify(objectToSend));
+        return this.webclient.post(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
+                                    JSON.stringify(objectToSend));
         
         //let database = new Database();
         //let positions = database.getPositionInsidePolygon(coordinates, startDate, endDate);

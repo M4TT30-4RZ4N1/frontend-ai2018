@@ -29,7 +29,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   geoMap: L.Map;
   layerOfMarkers : L.Layer;
   markerLayers = new Array<any>();
-  userMap : Map<String,String> = new Map();
+  colorMap : Map<string,string> = new Map();
   positionsInArea : number = 0;
   lastOpaqueTransaction : OpaqueTransaction;
   positionsSub : Subscription;
@@ -131,23 +131,24 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       let objectToSend : QueryObj = new QueryObj( _self.shape,  []);
       //evito la sovrapposizione di più richieste
       if( _self.positionsSub !== null &&  _self.positionsSub !== undefined)
-      _self.positionsSub.unsubscribe();
+        _self.positionsSub.unsubscribe();
       _self.positionsSub =  _self.positionService.getPositions(startDate, endDate, objectToSend)
                             .subscribe((data : QueryResult) => {
                               console.dir(data);
                               for(let i=0 ; i< data.byUser.length; i++){
                                 let user = data.byUser[i].user;
                                 let color = data.byUser[i].color;
-                                _self.userMap.set(user, color);
+                                _self.colorMap.set(user, color);
                               }
-                              console.dir( _self.userMap);
+                              console.dir( _self.colorMap);
                               let positionData = data.byPosition;
                               for(let i=0 ; i< positionData.length; i++){
                                 let user = positionData[i].user;
                                 let lat = positionData[i].point.coordinates[0];
                                 let lng = positionData[i].point.coordinates[1];
                                 // add each marker as a layer
-                                _self.markerLayers[i] = L.circle([lat, lng], {radius: 400, color: "red"});
+                                let c : string = this.colorMap.get(user);
+                                _self.markerLayers[i] = L.circle([lat, lng], {radius: 400, color: c});
                               }
                               // add all layers as a single array to layer
                               _self.layerOfMarkers = L.layerGroup( _self.markerLayers);
@@ -201,23 +202,27 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 		this.layers = newLayers;
 
 		return false;
-	}
+  }
+
+  getPolygonWellFormatted(){
+    if(this.vertices > 2){
+      //console.log("Polygon");
+      //first point and last point MUST be equal (closed polygon)
+      return this.formatPolygon(this.polygonTest);
+    }
+    else{
+      //console.log("Bounds");
+      return this.formatPolygon(this.boundsPolygon);
+    }
+  }
+  
+
 	sendPositions(){
 
     // get time in milliseconds
     let startDate = this.selectedMoments[0].getTime();
     let endDate = this.selectedMoments[1].getTime();
-    let polygonWellFormatted;
-    if(this.vertices > 2){
-      //console.log("Polygon");
-      //first point and last point MUST be equal (closed polygon)
-      polygonWellFormatted = this.formatPolygon(this.polygonTest);
-    }
-    else{
-      //console.log("Bounds");
-      polygonWellFormatted = this.formatPolygon(this.boundsPolygon);
-    }
-
+    let polygonWellFormatted = this.getPolygonWellFormatted();
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
     let objectToSend : QueryObj = new QueryObj(this.shape,  []);
     //console.dir(polygonWellFormatted);
@@ -246,8 +251,12 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   buy(){
-    
-    this.buySub = this.positionService.buyPositions(this.lastOpaqueTransaction)
+    let startDate = this.selectedMoments[0].getTime();
+    let endDate = this.selectedMoments[1].getTime();
+    let polygonWellFormatted = this.getPolygonWellFormatted();
+    this.shape = new Shape('Polygon', [polygonWellFormatted]);
+    let objectToSend : QueryObj = new QueryObj(this.shape,  []);
+    this.buySub = this.positionService.buyPositions(startDate, endDate, objectToSend)
                   .subscribe((data) => {
                     
                     console.log(data);

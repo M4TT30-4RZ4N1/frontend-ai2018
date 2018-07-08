@@ -1,8 +1,8 @@
 export class TimestampResult{
-  public user : String;
+  public user : string;
     public timestamp : number;
   
-    constructor( user : String, timestamp : number){
+    constructor( user : string, timestamp : number){
       this.user = user;
       this.timestamp = timestamp;
     }

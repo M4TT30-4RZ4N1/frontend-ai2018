@@ -1,8 +1,8 @@
 export class UserResult{
-    public color : String;
-    public user : String;
+    public color : string;
+    public user : string;
   
-    constructor( user : String, color : String){
+    constructor( user : string, color : string){
       this.user = user;
       this.color = color;
     }
