@@ -95,17 +95,17 @@ export class ArchiveService {
     }
 
     deleteArchives(filenames : string[]){
-        let newbody : String[] = [];
+        let newbody : String[] = filenames;
         let newheaders = new HttpHeaders( );
         let token = window.localStorage.getItem('ai-token');
         newheaders.append( 'Content-Type', 'application/json' );
         newheaders.append('Authorization','Bearer '+ token);
-
-        for(let filename in filenames){
+        console.dir(newbody);
+        /*for(let filename in filenames){
             newbody.push(filename);
-        }
+        }*/
         //http.request('delete', url, { body: { ... } });
-        return this.webclient.request('delete',this.resourceAddress+"", { body:newbody});
+        return this.webclient.request('delete',this.resourceAddress+"", { headers: newheaders, body:newbody});
         
     }
 

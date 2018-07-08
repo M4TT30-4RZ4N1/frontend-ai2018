@@ -101,7 +101,7 @@ export class ArchiveComponent implements OnInit {
     let removedElement : Archive;
     //rimozione preventiva dell'elemento dalla lista
     for(let i = 0; i < this.ownArchives.archives.length; i++){
-      let archiveFilename : String = this.ownArchives.archives[i].getFilename();
+      let archiveFilename : String = this.ownArchives.archives[i].filename;
       if(archiveFilename.localeCompare(filename) == 0){
         removedElement = this.ownArchives.archives[i];
         this.ownArchives.archives.splice(i, 1);
@@ -155,14 +155,37 @@ export class ArchiveComponent implements OnInit {
 
   removeSelected(){
     let elements =  document.getElementsByClassName("mycheck");
-    let filenames = new Array<string>();
+    let filenames : string[] = [];
     for(let i=0; i< elements.length; i++) {
       let htmlElement = <HTMLInputElement> elements[i];
       if(htmlElement.checked){
         filenames.push(htmlElement.value);
       }
     }
-    this.archiveService.deleteArchives(filenames);
+    let removedElements : Archive[] = [];
+    //rimozione preventiva dell'elemento dalla lista
+    for(let j = 0; j < filenames.length; j++){
+      for(let i = 0; i < this.ownArchives.archives.length; i++){
+        if(this.ownArchives.archives[i].filename.localeCompare(filenames[j]) == 0){
+          removedElements.push(this.ownArchives.archives[i]);
+          this.ownArchives.archives.splice(i, 1);
+          break;
+        }
+      }
+    }
+    //let _self = this;
+    this.deleteSub = this.archiveService.deleteArchives(filenames)
+                        .subscribe( (data) => {
+                            alert("Delete successful");
+                        },
+                       (error) => {
+                         //se ho avuto errore riaggiungo gli elementi nella lista
+                         for(let i = 0; i < removedElements.length; i++){
+                          let removedElement : Archive = removedElements[i];
+                          this.ownArchives.archives.push(removedElement);
+                          alert("Server error. Unable to delete " + removedElement.getFilename());
+                         }
+                       });
   }
 
   cancelSelected(){
@@ -181,7 +204,7 @@ export class ArchiveComponent implements OnInit {
 
     for(let i=0; i< elements.length; i++) {
       let htmlElement = <HTMLInputElement> elements[i];
-        htmlElement.checked = true;
+      htmlElement.checked = true;
     }
   }
 
