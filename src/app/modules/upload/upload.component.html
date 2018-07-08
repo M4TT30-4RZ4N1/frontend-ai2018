@@ -1,10 +1,10 @@
- <mat-card-title> Upload new Positions!</mat-card-title>
+ <mat-card-title> Upload new Positions</mat-card-title>
   <mat-card-content>
       <br>
       <br>
           <div class="row">
        
-              <div class="col-md-3">
+              <div class="col-md-4">
        
                   <h4>Upload files:</h4>
        
@@ -17,15 +17,17 @@
                   </div>
                   
                   <h4>OR Click below:</h4>
-                  <input type="file" id="file" class="upload" ng2FileSelect [uploader]="uploader" multiple/><br/>
-                  <label for="file"><img src="assets/cloud.png" height="100" width="150"/></label>
+                  <div class="holder">
+                    <input type="file" id="file" class="upload divcontent" ng2FileSelect [uploader]="uploader" multiple/><br/>
+                    <label for="file" classe="divcontent"><img src="assets/cloud.png" class="divcontent" height="100" width="150"/></label>
+                  </div>
        
               </div>
        
-              <div class="col-md-9" style="margin-bottom: 40px">
+              <div class="col-md-7" style="margin-bottom: 40px">
        
-                  <h3>Upload queue</h3>
-                  <p>Queue length: {{ uploader?.queue?.length }}</p>
+                  <h4>Upload queue</h4>
+                  <p class="pcenter">Queue Length: {{ uploader?.queue?.length }}</p>
        
                   <table class="table">
                       <thead>
@@ -70,24 +72,26 @@
                   </table>
        
                   <div>
-                      <div>
-                          Queue progress:
+                      <div class="progresscontainer">
+                            Progress Queue
                           <div class="progress" >
                               <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                           </div>
                       </div>
-                      <button type="button" class="btn btn-success btn-s"
+                      <div class="holder">
+                      <button type="button" class="btn btn-success btn-s divcenter"
                               (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                           <span class="glyphicon glyphicon-upload"></span> Upload all
                       </button>
-                      <button type="button" class="btn btn-warning btn-s"
+                      <button type="button" class="btn btn-warning btn-s divcenter" 
                               (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
                           <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
                       </button>
-                      <button type="button" class="btn btn-danger btn-s"
+                      <button type="button" class="btn btn-danger btn-s divcenter"
                               (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                           <span class="glyphicon glyphicon-trash"></span> Remove all
                       </button>
+                    </div>
                   </div>
        
               </div>

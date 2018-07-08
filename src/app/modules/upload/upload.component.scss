@@ -1,6 +1,33 @@
 
-.my-drop-zone { border: dotted 3px lightgray; }
-.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+mat-card-title {
+  display: flex;
+  justify-content: center;
+}
+
+h4{ text-align: center;}
+
+.pcenter{
+  text-align: center;
+}
+
+.progresscontainer{
+  text-align: center;
+}
+
+.holder
+{
+	text-align: center
+}
+.divcontent{
+  width: 60%; margin: 0 auto;
+}
+.my-drop-zone { 
+  border: dotted 3px lightgray;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+ }
+.nv-file-over { border: dotted 3px rgb(11, 14, 231); } /* Default class applied to drop zones on over */
 .another-file-over-class { border: dotted 3px green; }
 
 html, body { height: 100%; }
