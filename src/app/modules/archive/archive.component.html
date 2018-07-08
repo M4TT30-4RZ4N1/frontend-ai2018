@@ -1,8 +1,30 @@
 <mat-tab-group>
         <mat-tab label="Owner Archive">
             <mat-card>
+               
                 <mat-card-title>List of Owner Archives</mat-card-title>
-                
+
+                <span class="myButtons">
+                        <button type="button" class="btn btn-primary btn-s"
+                        (click)="selectAll()">
+                        <span class="glyphicon glyphicon-check"></span> Select All
+                        </button>    
+                        <button type="button" class="btn btn-warning btn-s"
+                        (click)="cancelSelected()">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel Selected
+                        </button>
+                        <button type="button" class="btn btn-success btn-s"
+                        (click)="downloadSelected()">
+                        <span class="glyphicon glyphicon-download"></span> Download Selected
+                        </button> 
+                        <button type="button" class="btn btn-danger btn-s"
+                        (click)="removeSelected()">
+                        <span class="glyphicon glyphicon-trash"></span> Remove Selected
+                        </button>
+                    </span>
+                    <br>
+                    <br>
+
                 <mat-card-content>
                                 <table class="table">
                                     <thead>
@@ -15,7 +37,10 @@
                                     </thead>
                                     <tbody>
                                     <tr *ngFor="let item of ownArchives.archives">
-                                        <td><strong>{{item.filename}}</strong></td>
+                                        <td>
+                                            <input class="mycheck" type="checkbox" [value]="item.filename">
+                                            <strong>{{item.filename}}</strong>
+                                        </td>
                                         <td class="text-center">
                                                {{item.counter}}
                                         </td>
@@ -30,19 +55,21 @@
                                                     (click)="remove(item.filename)">
                                                 <span class="glyphicon glyphicon-trash"></span> Remove
                                             </button>
+                                            
                                         </td>
                                     </tr>
                                     </tbody>
-                                </table>                  
+                                </table>             
               </mat-card-content>
 
               <div class="prev-next">
+
                     <span class="select" matTooltip="Number of Items per Page">
                             <select name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
+                                    <option value="5">5 Archives</option>
+                                    <option value="10">10 Archives</option>
+                                    <option value="50">50 Archives</option>
+                                    <option value="100">100 Archives</option>
                                   </select>
                     </span>
                     <button id="element1" [disabled]="ownArchives._links===null||ownArchives._links.previous===null||ownArchives._links.previous===undefined" type="button" class="btn btn-primary btn-s minbutton"
@@ -86,10 +113,10 @@
               <div class="prev-next">
                     <span class="select" matTooltip="Number of Items per Page">
                             <select name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
+                                    <option value="5">5 Archives</option>
+                                    <option value="10">10 Archives</option>
+                                    <option value="50">50 Archives</option>
+                                    <option value="100">100 Archives</option>
                                   </select>
                     </span>
                     <button id="element1" [disabled]="purchasedArchives._links===null||purchasedArchives._links.previous===null||purchasedArchives._links.previous===undefined" type="button" class="btn btn-primary btn-s minbutton"

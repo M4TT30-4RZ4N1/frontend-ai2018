@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import { Archive } from '../../models/archive';
@@ -93,6 +93,21 @@ export class ArchiveService {
 
     deleteArchive(filename:string){
         return this.webclient.delete(this.resourceAddress+"/"+filename);
+    }
+
+    deleteArchives(filenames : string[]){
+        let newbody : String[] = [];
+        let newheaders = new HttpHeaders( );
+        let token = window.localStorage.getItem('ai-token');
+        newheaders.append( 'Content-Type', 'application/json' );
+        newheaders.append('Authorization','Bearer '+ token);
+
+        for(let filename in filenames){
+            newbody.push(filename);
+        }
+        //http.request('delete', url, { body: { ... } });
+        return this.webclient.request('delete',this.resourceAddress+"", { body:newbody});
+        
     }
 
 }

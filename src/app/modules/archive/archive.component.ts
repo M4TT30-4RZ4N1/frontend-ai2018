@@ -20,7 +20,7 @@ export class ArchiveComponent implements OnInit {
   paginationSize : number;
   changeDetectorRefs :ChangeDetectorRef[] = [];
   
-  constructor(private archiveService : ArchiveService, private changeDetectorRef:ChangeDetectorRef, ) { }
+  constructor(private archiveService : ArchiveService, private changeDetectorRef:ChangeDetectorRef) { }
 
   ngOnInit() {
   
@@ -137,6 +137,52 @@ export class ArchiveComponent implements OnInit {
                       this.purchasedArchives=navarchive;
                       this.changeDetectorRef.detectChanges();
     } );
+  }
+
+  downloadSelected(){
+  
+    let elements =  document.getElementsByClassName("mycheck");
+    let filenames = new Array<string>();
+    for(let i=0; i< elements.length; i++) {
+      let htmlElement = <HTMLInputElement> elements[i];
+      if(htmlElement.checked){
+        this.archiveService.getArchives(filenames);
+      }
+    }
+
+  }
+
+  removeSelected(){
+    let elements =  document.getElementsByClassName("mycheck");
+    let filenames = new Array<string>();
+    for(let i=0; i< elements.length; i++) {
+      let htmlElement = <HTMLInputElement> elements[i];
+      if(htmlElement.checked){
+        this.archiveService.deleteArchives(filenames);
+      }
+    }
+  }
+
+  cancelSelected(){
+    let elements =  document.getElementsByClassName("mycheck");
+
+    for(let i=0; i< elements.length; i++) {
+      let htmlElement = <HTMLInputElement> elements[i];
+      if(htmlElement.checked){
+        htmlElement.checked = false;
+      }
+    }
+  }
+
+  selectAll(){
+    let elements =  document.getElementsByClassName("mycheck");
+
+    for(let i=0; i< elements.length; i++) {
+      let htmlElement = <HTMLInputElement> elements[i];
+      if(htmlElement.checked){
+        htmlElement.checked = true;
+      }
+    }
   }
 
 }
