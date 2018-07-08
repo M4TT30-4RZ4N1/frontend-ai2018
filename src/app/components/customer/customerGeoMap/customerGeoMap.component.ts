@@ -134,21 +134,21 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
         _self.positionsSub.unsubscribe();
       _self.positionsSub =  _self.positionService.getPositions(startDate, endDate, objectToSend)
                             .subscribe((data : QueryResult) => {
-                              console.dir(data);
+                              //console.dir(data);
                               for(let i=0 ; i< data.byUser.length; i++){
                                 let user = data.byUser[i].user;
                                 let color = data.byUser[i].color;
                                 _self.colorMap.set(user, color);
                               }
-                              console.dir( _self.colorMap);
+                              //console.dir( _self.colorMap);
                               let positionData = data.byPosition;
-                              console.dir(positionData);
+                              //console.dir(positionData);
                               for(let i=0 ; i< positionData.length; i++){
                                 let user = positionData[i].user;
                                 let lat = positionData[i].point.coordinates[0];
                                 let lng = positionData[i].point.coordinates[1];
                                 // add each marker as a layer
-                                let c : string = this.colorMap.get(user);
+                                let c : string = _self.colorMap.get(user);
                                 _self.markerLayers[i] = L.circle([lat, lng], {radius: 400, color: c});
                               }
                               // add all layers as a single array to layer
