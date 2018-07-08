@@ -8,6 +8,7 @@ import { Coordinate } from '../../models/coordinates';
 import { environment } from '../../../environments/environment';
 import { RequestOptions } from '@angular/http';
 import { OpaqueTransaction } from '../../models/opaqueTransaction';
+import { QueryObj } from '../../models/queryObj';
 
 @Injectable()
 export class PositionService {
@@ -28,8 +29,7 @@ export class PositionService {
     }
 */
 
-    getPositions(startDate : number, endDate : number, coordinates : number[][]){
-        let objectToSend : Shape = new Shape("Polygon", [coordinates]);
+    getPositions(startDate : number, endDate : number, objectToSend : QueryObj){
         alert("Sending JSON: " + JSON.stringify(objectToSend));
    
         return this.webclient.post(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,

@@ -35,9 +35,8 @@ export class ArchiveService {
     }
 
 
-    getArchives(filename:string){
-        let body : String[] = [];
-        body.push(filename);
+    getArchives(filenames:String[]){
+        let body : String[] = filenames;
         let token = window.localStorage.getItem('ai-token');
         let newheaders = new Headers( );
         newheaders.append( 'Content-Type', 'application/json' );
@@ -71,15 +70,15 @@ export class ArchiveService {
         let newheaders = new Headers( );
         newheaders.append( 'Content-Type', 'application/json' );
         newheaders.append('Authorization','Bearer '+ token);
-        this.http.get(this.serverAddress+"/zip/archives/"+filename,{
+        this.http.get(this.serverAddress+"/archives/"+filename,{
             method: RequestMethod.Get,
             responseType: ResponseContentType.Blob,
             headers: newheaders
         }).subscribe(
             (response) => {
                 console.log("File downloaded");
-                var blob = new Blob([response.blob()], {type: 'application/zip'});
-                var filename = 'file.zip';
+                var blob = new Blob([response.blob()], {type: 'application/json'});
+                var filename = 'file.json';
                 saveAs(blob, filename);
         }, (error) => {
             console.log("File not downloaded");

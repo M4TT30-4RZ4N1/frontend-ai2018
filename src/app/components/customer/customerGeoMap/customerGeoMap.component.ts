@@ -7,6 +7,7 @@ import { PositionService } from '../../../services/position/position.service';
 import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { OpaqueTransaction } from '../../../models/opaqueTransaction';
+import { QueryObj } from '../../../models/queryObj';
 
 @Component({
   selector: 'app-geoMap',
@@ -106,10 +107,10 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   changeBounds(map: L.Map){
     let bounds : L.LatLngBounds = map.getBounds();
     this.boundsPolygon = [];
-    this.boundsPolygon.push(bounds.getNorthEast());
-    this.boundsPolygon.push(bounds.getNorthWest());
-    this.boundsPolygon.push(bounds.getSouthWest());
-    this.boundsPolygon.push(bounds.getSouthEast());
+    this.boundsPolygon.push([bounds.getNorthEast().lat,bounds.getNorthEast().lng]);
+    this.boundsPolygon.push([bounds.getNorthWest().lat, bounds.getNorthWest().lng]);
+    this.boundsPolygon.push([bounds.getSouthWest().lat,bounds.getSouthWest().lng]);
+    this.boundsPolygon.push([bounds.getSouthEast().lat,bounds.getSouthEast().lng]);
     //console.dir(this.boundsPolygon);
   }
 
@@ -175,7 +176,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let startDate = this.selectedMoments[0].getTime();
     let endDate = this.selectedMoments[1].getTime();
     let polygonWellFormatted;
-    if(this.vertices > 3){
+    if(this.vertices > 2){
       console.log("Polygon");
       //first point and last point MUST be equal (closed polygon)
       polygonWellFormatted = this.formatPolygon(this.polygonTest);
@@ -186,10 +187,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     }
 
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
+    let objectToSend : QueryObj = new QueryObj(this.shape,  []);
     console.dir(polygonWellFormatted);
     //console.log(startDate + " " + endDate);
     //this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
-    this.positionsSub = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0])
+    this.positionsSub = this.positionService.getPositions(startDate, endDate, objectToSend)
                             .subscribe((data) => {
                               console.log(data);
                               //this.lastOpaqueTransaction = data;
