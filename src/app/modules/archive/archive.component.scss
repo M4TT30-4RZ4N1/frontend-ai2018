@@ -1,3 +1,4 @@
+@import '~pretty-checkbox/src/pretty-checkbox.scss';
 
 mat-card-title,
   mat-card-content {
@@ -220,7 +221,10 @@ body {
     text-align: center;
   }
 
+  button{
+    margin: 0 10px;
+  }
 
+  
 
-
-
+  
