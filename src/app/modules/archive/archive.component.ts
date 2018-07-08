@@ -181,9 +181,7 @@ export class ArchiveComponent implements OnInit {
 
     for(let i=0; i< elements.length; i++) {
       let htmlElement = <HTMLInputElement> elements[i];
-      if(htmlElement.checked){
         htmlElement.checked = true;
-      }
     }
   }
 
