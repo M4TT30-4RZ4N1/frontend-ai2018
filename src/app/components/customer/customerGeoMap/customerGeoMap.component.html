@@ -19,7 +19,7 @@
         <owl-date-time #dt13></owl-date-time>
 
     </label>
-    <button mat-button #sendButton [disabled]="!truePolygon" (click)="sendPositions()">Retrieve Positions</button>
+    <button mat-button #sendButton (click)="sendPositions()">{{buttonText}}</button>
 </mat-card-content>
 
 <mat-card-content>

@@ -33,7 +33,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   buySub : Subscription;
 	vertices : number = 0;
   truePolygon : boolean;
-	shape : Shape;
+  shape : Shape;
+  buttonText : String = "Search in visible area";
   // Open Street Map and Open Cycle Map definitions
   greenIcon = L.icon({
     iconUrl: '/assets/redMarker.png',
@@ -59,6 +60,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 		})
 	};
   polygonTest = [  ];
+  boundsPolygon = [  ];
 	polygon = {
 		id: 'polygon',
 		name: 'Polygon',
@@ -101,8 +103,25 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       this.buySub.unsubscribe();
   }
 
+  changeBounds(map: L.Map){
+    let bounds : L.LatLngBounds = map.getBounds();
+    this.boundsPolygon = [];
+    this.boundsPolygon.push(bounds.getNorthEast());
+    this.boundsPolygon.push(bounds.getNorthWest());
+    this.boundsPolygon.push(bounds.getSouthWest());
+    this.boundsPolygon.push(bounds.getSouthEast());
+    //console.dir(this.boundsPolygon);
+  }
+
   onMapReady(map: L.Map) {
     this.geoMap = map;
+    this.changeBounds(map);
+    let _self = this;
+    map.on('moveend', function(e) {
+      console.log("Bounds changed");
+      //con this non funziona
+      _self.changeBounds(map);
+    });
     map.on('click', (e : LeafletMouseEvent) => {
       //alert(e.latlng);
       //console.log("Adding new point: "+e.latlng);
@@ -119,6 +138,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 				this.vertices++;
       
       }else{
+        this.buttonText = "Search in polygon";
         this.polygonTest.push([e.latlng.lat,e.latlng.lng]);
         let newPolygon : LatLngExpression[] = [];
         this.polygonTest.forEach((n) =>{
@@ -154,19 +174,26 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     // get time in milliseconds
     let startDate = this.selectedMoments[0].getTime();
     let endDate = this.selectedMoments[1].getTime();
-
-    //first point and last point MUST be equal (closed polygon)
-    let polygonWellFormatted = this.formatPolygon(this.polygonTest);
+    let polygonWellFormatted;
+    if(this.vertices > 3){
+      console.log("Polygon");
+      //first point and last point MUST be equal (closed polygon)
+      polygonWellFormatted = this.formatPolygon(this.polygonTest);
+    }
+    else{
+      console.log("Bounds");
+      polygonWellFormatted = this.formatPolygon(this.boundsPolygon);
+    }
 
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
-    
+    console.dir(polygonWellFormatted);
     //console.log(startDate + " " + endDate);
     //this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
     this.positionsSub = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0])
                             .subscribe((data) => {
-                              //console.log(data);
-                              this.lastOpaqueTransaction = data;
-                              this.positionsInArea = data.nPositions;
+                              console.log(data);
+                              //this.lastOpaqueTransaction = data;
+                              //this.positionsInArea = data.nPositions;
                               this.changeDetectorRef.detectChanges();
                             });
     //console.log ("Trovate: " + this.positionsInArea);
@@ -179,6 +206,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       this.geoMap.removeLayer(this.layerOfMarkers);
     }
     this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
+    this.buttonText = "Search in visible area";
     this.polygonTest = [];
     this.vertices = 0;
     this.truePolygon = false;

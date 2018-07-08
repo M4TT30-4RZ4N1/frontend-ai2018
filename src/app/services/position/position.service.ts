@@ -12,10 +12,10 @@ import { OpaqueTransaction } from '../../models/opaqueTransaction';
 @Injectable()
 export class PositionService {
 
-    serverAddress : String = environment.API_URL+"/customers";
+    serverAddress : String = environment.API_URL+"/customer";
     //serverAddress : String = "http://localhost:3000";
-    buyPath : String = "/buyPositions";
-    getPath : String = "/searchPositions";
+    buyPath : String = "/buy";
+    getPath : String = "/search";
     constructor(private webclient : HttpClient) { }
 
     debug(){console.log("Position Service Working");}
@@ -28,17 +28,17 @@ export class PositionService {
     }
 */
 
-    getPositions(startDate : number, endDate : number, coordinates : number[][]) : Observable<OpaqueTransaction>{
+    getPositions(startDate : number, endDate : number, coordinates : number[][]){
         let objectToSend : Shape = new Shape("Polygon", [coordinates]);
-        //alert("Sending JSON: " + JSON.stringify(objectToSend));
+        alert("Sending JSON: " + JSON.stringify(objectToSend));
    
-        return this.webclient.post<OpaqueTransaction>(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
+        return this.webclient.post(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
                                             JSON.stringify(objectToSend),
                                             {
                                                 observe: 'response'
                                             }).pipe(
                                                 map(resp => {
-                                                    //console.dir(resp);
+                                                    console.dir(resp);
                                                    // console.dir(resp.headers);
                                                    // console.dir(resp.headers.keys());
                                                    return resp.body;
