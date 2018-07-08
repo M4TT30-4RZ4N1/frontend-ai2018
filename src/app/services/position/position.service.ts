@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { RequestOptions } from '@angular/http';
 import { OpaqueTransaction } from '../../models/opaqueTransaction';
 import { QueryObj } from '../../models/queryObj';
+import { QueryResult } from '../../models/QueryResult/queryResult';
 
 @Injectable()
 export class PositionService {
@@ -29,16 +30,16 @@ export class PositionService {
     }
 */
 
-    getPositions(startDate : number, endDate : number, objectToSend : QueryObj){
-        alert("Sending JSON: " + JSON.stringify(objectToSend));
+    getPositions(startDate : number, endDate : number, objectToSend : QueryObj) : Observable<QueryResult>{
+        //console.log("Sending JSON: " + JSON.stringify(objectToSend));
    
-        return this.webclient.post(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
+        return this.webclient.post<QueryResult>(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
                                             JSON.stringify(objectToSend),
                                             {
                                                 observe: 'response'
                                             }).pipe(
                                                 map(resp => {
-                                                    console.dir(resp);
+                                                    //console.dir(resp);
                                                    // console.dir(resp.headers);
                                                    // console.dir(resp.headers.keys());
                                                    return resp.body;

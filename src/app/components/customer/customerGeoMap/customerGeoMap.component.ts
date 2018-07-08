@@ -8,6 +8,7 @@ import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { OpaqueTransaction } from '../../../models/opaqueTransaction';
 import { QueryObj } from '../../../models/queryObj';
+import { QueryResult } from '../../../models/QueryResult/queryResult';
 
 @Component({
   selector: 'app-geoMap',
@@ -28,6 +29,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   geoMap: L.Map;
   layerOfMarkers : L.Layer;
   markerLayers = new Array<any>();
+  userMap : Map<String,String> = new Map();
   positionsInArea : number = 0;
   lastOpaqueTransaction : OpaqueTransaction;
   positionsSub : Subscription;
@@ -67,7 +69,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 		name: 'Polygon',
 		enabled: true,
 		layer: L.polygon([
-      [ 45.0642791, 7.65603950000002 ]
+      [ 7.0642791, 7.65603950000002 ]
     ])
 	};
 
@@ -75,7 +77,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 	model = new LeafletLayersModel(
 		[ this.LAYER_OSM, this.LAYER_OCM ],
 		this.LAYER_OSM.id,
-		[ this.polygon]
+		[ this.polygon , this.polygon]
 	);
 
 
@@ -117,11 +119,41 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   onMapReady(map: L.Map) {
     this.geoMap = map;
     this.changeBounds(map);
+    //con this non funziona
     let _self = this;
     map.on('moveend', function(e) {
-      console.log("Bounds changed");
-      //con this non funziona
+      //console.log("Bounds changed");
       _self.changeBounds(map);
+      _self.cancel();
+      let startDate = _self.selectedMoments[0].getTime();
+      let endDate = _self.selectedMoments[1].getTime();
+      _self.shape = new Shape('Polygon', [ _self.boundsPolygon]);
+      let objectToSend : QueryObj = new QueryObj( _self.shape,  []);
+      //evito la sovrapposizione di più richieste
+      if( _self.positionsSub !== null &&  _self.positionsSub !== undefined)
+      _self.positionsSub.unsubscribe();
+      _self.positionsSub =  _self.positionService.getPositions(startDate, endDate, objectToSend)
+                            .subscribe((data : QueryResult) => {
+                              console.dir(data);
+                              for(let i=0 ; i< data.byUser.length; i++){
+                                let user = data.byUser[i].user;
+                                let color = data.byUser[i].color;
+                                _self.userMap.set(user, color);
+                              }
+                              console.dir( _self.userMap);
+                              let positionData = data.byPosition;
+                              for(let i=0 ; i< positionData.length; i++){
+                                let user = positionData[i].user;
+                                let lat = positionData[i].point.coordinates[0];
+                                let lng = positionData[i].point.coordinates[1];
+                                // add each marker as a layer
+                                _self.markerLayers[i] = L.circle([lat, lng], {radius: 400, color: "red"});
+                              }
+                              // add all layers as a single array to layer
+                              _self.layerOfMarkers = L.layerGroup( _self.markerLayers);
+                              _self.geoMap.addLayer( _self.layerOfMarkers);
+                              _self.changeDetectorRef.detectChanges();
+                            });
     });
     map.on('click', (e : LeafletMouseEvent) => {
       //alert(e.latlng);
@@ -177,25 +209,23 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let endDate = this.selectedMoments[1].getTime();
     let polygonWellFormatted;
     if(this.vertices > 2){
-      console.log("Polygon");
+      //console.log("Polygon");
       //first point and last point MUST be equal (closed polygon)
       polygonWellFormatted = this.formatPolygon(this.polygonTest);
     }
     else{
-      console.log("Bounds");
+      //console.log("Bounds");
       polygonWellFormatted = this.formatPolygon(this.boundsPolygon);
     }
 
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
     let objectToSend : QueryObj = new QueryObj(this.shape,  []);
-    console.dir(polygonWellFormatted);
+    //console.dir(polygonWellFormatted);
     //console.log(startDate + " " + endDate);
     //this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
     this.positionsSub = this.positionService.getPositions(startDate, endDate, objectToSend)
-                            .subscribe((data) => {
-                              console.log(data);
-                              //this.lastOpaqueTransaction = data;
-                              //this.positionsInArea = data.nPositions;
+                            .subscribe((data : QueryResult) => {
+                              console.dir(data);
                               this.changeDetectorRef.detectChanges();
                             });
     //console.log ("Trovate: " + this.positionsInArea);
@@ -212,10 +242,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     this.polygonTest = [];
     this.vertices = 0;
     this.truePolygon = false;
-    this.positionsInArea = 0;
-    
-   
+    this.positionsInArea = 0;   
   }
+
   buy(){
     
     this.buySub = this.positionService.buyPositions(this.lastOpaqueTransaction)
