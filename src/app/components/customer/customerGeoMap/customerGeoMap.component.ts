@@ -142,6 +142,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
                               }
                               console.dir( _self.colorMap);
                               let positionData = data.byPosition;
+                              console.dir(positionData);
                               for(let i=0 ; i< positionData.length; i++){
                                 let user = positionData[i].user;
                                 let lat = positionData[i].point.coordinates[0];

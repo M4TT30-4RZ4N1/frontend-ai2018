@@ -3,7 +3,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment';
  
 // const URL = '/api/';
-const URL = environment.API_URL + '/user/archives';
+const URL = environment.API_URL + '/user/upload';
 
 @Component({
   selector: 'app-upload',
@@ -31,6 +31,10 @@ export class UploadComponent implements OnInit {
                     authToken: 'Bearer '+ token,
     });
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader._onErrorItem = (error) => {
+      let errorCause = JSON.parse(error._xhr.responseText);
+      alert("Error during the upload of "+ error.file.name+".\nMessage from server: "+ errorCause.message); 
+    };
   }
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
