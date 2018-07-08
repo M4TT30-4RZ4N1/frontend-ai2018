@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ArchiveService } from '../../services/archive/archive.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Archive } from '../../models/archive';
@@ -7,7 +7,7 @@ import { NavigableArchive } from '../../models/navigablearchive';
 @Component({
   selector: 'app-archive',
   templateUrl: './archive.component.html',
-  styleUrls: ['./archive.component.css']
+  styleUrls: ['./archive.component.scss']
 })
 export class ArchiveComponent implements OnInit {
 
@@ -17,21 +17,21 @@ export class ArchiveComponent implements OnInit {
   downloadSub : Subscription;
   ownArchives : NavigableArchive=new NavigableArchive([],null);
   purchasedArchives : NavigableArchive=new NavigableArchive([],null);
-  items : Array<any> = new Array(4);
-
-  constructor(private archiveService : ArchiveService) { }
+  paginationSize : number;
+  changeDetectorRefs :ChangeDetectorRef[] = [];
+  
+  constructor(private archiveService : ArchiveService, private changeDetectorRef:ChangeDetectorRef, ) { }
 
   ngOnInit() {
-    this.items.push('Antonio');
-    this.items.push('Matteo');
-    this.items.push('Raffaele');
-    this.items.push('Sabrina');
-    this.ownArchiveSub = this.archiveService.getSelfArchives(0,1)
+  
+    this.paginationSize = 5; 
+
+    this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
                               .subscribe( (navarchive) => {
                                                 console.dir(navarchive);
                                                 this.ownArchives=navarchive;
                               } );
-    this.purchasedArchiveSub = this.archiveService.getPurchasedArchives(0,1)
+    this.purchasedArchiveSub = this.archiveService.getPurchasedArchives(0,this.paginationSize)
                               .subscribe( (navarchive) => {
                                                 console.dir(navarchive);
                                                 this.purchasedArchives=navarchive;
@@ -118,6 +118,25 @@ export class ArchiveComponent implements OnInit {
                          alert("Server error. Unable to delete " + filename)
                        })
 
+  }
+
+  changePageSize(value : any){
+  
+    this.paginationSize = value;
+
+    this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
+    .subscribe( (navarchive) => {
+                      console.dir(navarchive);
+                      this.ownArchives=navarchive;
+                      this.changeDetectorRef.detectChanges();
+    } );
+
+    this.purchasedArchiveSub = this.archiveService.getPurchasedArchives(0,this.paginationSize)
+    .subscribe( (navarchive) => {
+                      console.dir(navarchive);
+                      this.purchasedArchives=navarchive;
+                      this.changeDetectorRef.detectChanges();
+    } );
   }
 
 }

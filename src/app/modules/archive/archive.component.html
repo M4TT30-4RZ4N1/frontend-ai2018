@@ -2,6 +2,7 @@
         <mat-tab label="Owner Archive">
             <mat-card>
                 <mat-card-title>List of Owner Archives</mat-card-title>
+                
                 <mat-card-content>
                                 <table class="table">
                                     <thead>
@@ -40,6 +41,14 @@
                           (click)="getOwnPrevious()">
                     <span class="glyphicon glyphicon-backward"></span> Previous
                     </button>
+                    <span class="select" matTooltip="Number of Items per Page">
+                            <select name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                  </select>
+                    </span>
                     <button id="element2" [disabled]="ownArchives._links===null||ownArchives._links.next===null||ownArchives._links.next===undefined" type="button" class="btn btn-primary btn-s minbutton"
                     (click)="getOwnNext()">
                       <span class="glyphicon glyphicon-forward"></span> Next
@@ -73,20 +82,20 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button *ngIf="purchasedArchives._links!==null&&purchasedArchives._links.previous!==null&&purchasedArchives._links.previous!==undefined" type="button" class="btn btn-success btn-xs"
-                                (click)="getPurPrevious()">
-                            <span class="glyphicon glyphicon-backward"></span> Previous
-                          </button>
-                          <button *ngIf="purchasedArchives._links!==null&&purchasedArchives._links.next!==null&&purchasedArchives._links.next!==undefined" type="button" class="btn btn-success btn-xs"
-                          (click)="getPurNext()">
-                            <span class="glyphicon glyphicon-forward"></span> Next
-                          </button>
               </mat-card-content>
               <div class="prev-next">
                     <button id="element1" [disabled]="purchasedArchives._links===null||purchasedArchives._links.previous===null||purchasedArchives._links.previous===undefined" type="button" class="btn btn-primary btn-s minbutton"
                           (click)="getOwnPrevious()">
                     <span class="glyphicon glyphicon-backward"></span> Previous
                     </button>
+                    <span class="select" matTooltip="Number of Items per Page">
+                            <select name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                  </select>
+                    </span>
                     <button id="element2" [disabled]="purchasedArchives._links===null||purchasedArchives._links.next===null||purchasedArchives._links.next===undefined" type="button" class="btn btn-primary btn-s minbutton"
                     (click)="getOwnNext()">
                       <span class="glyphicon glyphicon-forward"></span> Next
