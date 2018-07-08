@@ -146,9 +146,10 @@ export class ArchiveComponent implements OnInit {
     for(let i=0; i< elements.length; i++) {
       let htmlElement = <HTMLInputElement> elements[i];
       if(htmlElement.checked){
-        this.archiveService.getArchives(filenames);
+        filenames.push(htmlElement.value);
       }
     }
+    this.archiveService.getArchives(filenames);
 
   }
 
@@ -158,9 +159,10 @@ export class ArchiveComponent implements OnInit {
     for(let i=0; i< elements.length; i++) {
       let htmlElement = <HTMLInputElement> elements[i];
       if(htmlElement.checked){
-        this.archiveService.deleteArchives(filenames);
+        filenames.push(htmlElement.value);
       }
     }
+    this.archiveService.deleteArchives(filenames);
   }
 
   cancelSelected(){

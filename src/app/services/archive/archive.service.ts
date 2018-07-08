@@ -34,7 +34,6 @@ export class ArchiveService {
       return this.webclient.get<NavigableArchive>(nav._links.previous.href);
     }
 
-
     getArchives(filenames:String[]){
         let body : String[] = filenames;
         let token = window.localStorage.getItem('ai-token');
