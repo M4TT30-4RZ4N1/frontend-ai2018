@@ -2,21 +2,21 @@
         <mat-tab label="Owner Archive">
             <mat-card>
      
-                <mat-card-title>List of Owner Archives</mat-card-title>
+                <mat-card-title class="bold">List of Owner Archives</mat-card-title>
                 <mat-card-title>
-                        <button type="button" class="btn btn-primary btn-s"
+                        <button type="button" class="btn btn-primary btn-s fixbutton"
                         (click)="selectAll()">
                         <span class="glyphicon glyphicon-check"></span> Select All
                         </button>    
-                        <button type="button" class="btn btn-warning btn-s"
+                        <button type="button" class="btn btn-warning btn-s fixbutton"
                         (click)="cancelSelected()">
                         <span class="glyphicon glyphicon-ban-circle"></span> Cancel Selected
                         </button>
-                        <button type="button" class="btn btn-success btn-s"
+                        <button type="button" class="btn btn-success btn-s fixbutton"
                         (click)="downloadSelected()">
                         <span class="glyphicon glyphicon-download"></span> Download Selected
                         </button> 
-                        <button type="button" class="btn btn-danger btn-s"
+                        <button type="button" class="btn btn-danger btn-s fixbutton"
                         (click)="removeSelected()">
                         <span class="glyphicon glyphicon-trash"></span> Remove Selected
                         </button>
@@ -81,19 +81,22 @@
                 </div>
             </mat-card>
         </mat-tab>
+
+
+
         <mat-tab label="Purchased Archive">
             <mat-card>
-                <mat-card-title>List of Purchased Archives</mat-card-title>
+                <mat-card-title class="bold">List of Purchased Archives</mat-card-title>
                 <mat-card-title>
-                        <button type="button" class="btn btn-primary btn-s"
+                        <button type="button" class="btn btn-primary btn-s fixbutton"
                         (click)="selectAll()">
                         <span class="glyphicon glyphicon-check"></span> Select All
                         </button>    
-                        <button type="button" class="btn btn-warning btn-s"
+                        <button type="button" class="btn btn-warning btn-s fixbutton"
                         (click)="cancelSelected()">
                         <span class="glyphicon glyphicon-ban-circle"></span> Cancel Selected
                         </button>
-                        <button type="button" class="btn btn-success btn-s"
+                        <button type="button" class="btn btn-success btn-s fixbutton"
                         (click)="downloadSelected()">
                         <span class="glyphicon glyphicon-download"></span> Download Selected
                         </button> 

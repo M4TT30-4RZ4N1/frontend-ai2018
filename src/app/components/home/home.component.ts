@@ -8,7 +8,8 @@ import { JwtManagementService } from '../../services/jwt/jwt-management.service'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  title = 'Mobile Data Marketplace Application -Group #5';
+  title = 'Mobile Data Marketplace Application';
+  group = 'Group #5';
   
   constructor(private permissionsService: NgxPermissionsService, private jwtManagementService:  JwtManagementService) { }
 

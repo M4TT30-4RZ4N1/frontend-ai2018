@@ -1,4 +1,4 @@
-.center{ text-align: center }
+
 
 mat-card{
     margin-left: 10%;
@@ -71,7 +71,17 @@ mat-card-title,
 
   .link-btn:hover /deep/ .mat-button-focus-overlay {
     background-color: transparent;
+    display: flex;
 }
+
+owl-date-time{
+    display: flex;
+}
+
+.center{ 
+    text-align: center,
+}
+
 
 table th {
     text-align: center;
@@ -79,4 +89,8 @@ table th {
   
   table tr {
     text-align: center;
+  }
+
+  .bold{
+    font-weight: bold;
   }

@@ -1,12 +1,12 @@
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
 
 mat-card-title,
-  mat-card-content {
-    display: flex;
+mat-card-content {
     justify-content: center;
+    display: flex;
   }
 
-html, body { height: 100%; }
+html, body { height: 100%;  }
 
 table a:link {
 	color: #666;
@@ -24,6 +24,7 @@ table a:hover {
 	text-decoration:underline;
 }
 table {
+  
 	font-family:Arial, Helvetica, sans-serif;
 	color:rgb(32, 3, 3);
 	font-size:12px;
@@ -72,6 +73,7 @@ table td:first-child {
 	border-left: 0;
 }
 table td {
+  
 	padding:18px;
 	border-top: 1px solid #ffffff;
 	border-bottom:1px solid #e0e0e0;
@@ -223,6 +225,15 @@ body {
 
   button{
     margin: 0 10px;
+  }
+
+  .bold{
+    font-weight: bold;
+  }
+
+  .fixbutton{
+    min-width: 30vh;
+    
   }
 
   

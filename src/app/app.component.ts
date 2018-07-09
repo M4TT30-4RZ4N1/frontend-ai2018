@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     },
     {
       'title': 'Home',
-      'icon': 'dashboard',
+      'icon': 'home',
       'link': ['/home']
     },
     {
