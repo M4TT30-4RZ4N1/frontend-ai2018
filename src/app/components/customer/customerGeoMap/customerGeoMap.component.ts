@@ -114,10 +114,10 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let changed : boolean = this.boundsPolygon.length == 0;
     let bounds : L.LatLngBounds = map.getBounds();
     let newBoundsPolygon = [];
-    newBoundsPolygon.push([bounds.getNorthEast().lat,bounds.getNorthEast().lng]);
-    newBoundsPolygon.push([bounds.getNorthWest().lat, bounds.getNorthWest().lng]);
-    newBoundsPolygon.push([bounds.getSouthWest().lat,bounds.getSouthWest().lng]);
-    newBoundsPolygon.push([bounds.getSouthEast().lat,bounds.getSouthEast().lng]);
+    newBoundsPolygon.push([bounds.getNorthEast().lng, bounds.getNorthEast().lat]);
+    newBoundsPolygon.push([bounds.getNorthWest().lng, bounds.getNorthWest().lat]);
+    newBoundsPolygon.push([bounds.getSouthWest().lng, bounds.getSouthWest().lat]);
+    newBoundsPolygon.push([bounds.getSouthEast().lng, bounds.getSouthEast().lat]);
     //console.dir(newBoundsPolygon);
     for(let i = 0; i < this.boundsPolygon.length; i++){
       if(newBoundsPolygon[i][0] != this.boundsPolygon[i][0] || 
@@ -130,6 +130,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   elaborateSearchResult(data : QueryResult, _self){
+    _self.cancel();
     for(let i=0 ; i< data.byUser.length; i++){
       let user = data.byUser[i].user;
       let color = data.byUser[i].color;
@@ -144,8 +145,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     _self.markerLayers = [];
     for(let i=0 ; i< positionData.length; i++){
       let user = positionData[i].user;
-      let lat = positionData[i].point.coordinates[0];
-      let lng = positionData[i].point.coordinates[1];
+      let lat = positionData[i].point.coordinates[1];
+      let lng = positionData[i].point.coordinates[0];
       // add each marker as a layer
       let c : string = _self.colorMap.get(user);
       _self.markerLayers[i] = L.circle([lat, lng], {radius: 400, color: c});
@@ -196,22 +197,22 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       //console.log("Adding new point: "+e.latlng);
       map.removeLayer(this.model.overlayLayers[0].layer);
       if(this.vertices == 0 ){
-        this.polygonTest.push([e.latlng.lat,e.latlng.lng]);
+        this.polygonTest.push([e.latlng.lng,e.latlng.lat]);
         this.model.overlayLayers[0].layer = L.circle([e.latlng.lat,e.latlng.lng], { radius: 2 });
         this.model.overlayLayers[0].layer.addTo(map);
         this.vertices++;
       }else if(this.vertices == 1){
-        this.polygonTest.push([e.latlng.lat,e.latlng.lng]);
-        this.model.overlayLayers[0].layer = L.polyline([ this.polygonTest[0],[e.latlng.lat,e.latlng.lng] ], );
+        this.polygonTest.push([e.latlng.lng,e.latlng.lat]);
+        this.model.overlayLayers[0].layer = L.polyline([ [this.polygonTest[0][1], this.polygonTest[0][0]],[e.latlng.lat,e.latlng.lng] ], );
         this.model.overlayLayers[0].layer.addTo(map);
 				this.vertices++;
       
       }else{
         this.buttonText = "Search in polygon";
-        this.polygonTest.push([e.latlng.lat,e.latlng.lng]);
+        this.polygonTest.push([e.latlng.lng,e.latlng.lat]);
         let newPolygon : LatLngExpression[] = [];
         this.polygonTest.forEach((n) =>{
-          newPolygon.push([n[0],n[1]]);
+          newPolygon.push([n[1],n[0]]);
           //console.log("Array of displayed points: "+n);
         });
         this.model.overlayLayers[0].layer = L.polygon(newPolygon);
@@ -418,6 +419,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
         
         if(htmlElement.checked){
           // insert into list
+          this.usersFilter.push(htmlElement.value);
         }  
       }    
 
