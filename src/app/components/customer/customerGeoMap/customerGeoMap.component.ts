@@ -240,7 +240,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   getPolygonWellFormatted(){
-    if(this.vertices > 2){
+    if(this.vertices >= 2){
       //console.log("Polygon");
       //first point and last point MUST be equal (closed polygon)
       return this.formatPolygon(this.polygonTest);
