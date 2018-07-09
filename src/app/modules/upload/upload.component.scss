@@ -16,10 +16,16 @@ h4{ text-align: center;}
 
 .holder
 {
-	text-align: center
+	text-align: center;
 }
 .divcontent{
   width: 60%; margin: 0 auto;
+}
+
+.divider{
+  width:5vh;
+  height:5vh;
+  display:inline-block;
 }
 .my-drop-zone { 
   border: dotted 3px lightgray;

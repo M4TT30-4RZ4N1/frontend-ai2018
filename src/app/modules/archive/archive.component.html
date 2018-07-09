@@ -6,11 +6,11 @@
                 <mat-card-title>
                         <button type="button" class="btn btn-primary btn-s fixbutton"
                         (click)="selectAll()">
-                        <span class="glyphicon glyphicon-check"></span> Select All
+                        <span class="glyphicon glyphicon-check"></span> Check All
                         </button>    
                         <button type="button" class="btn btn-warning btn-s fixbutton"
                         (click)="cancelSelected()">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel Selected
+                        <span class="glyphicon glyphicon-ban-circle"></span> Clear All
                         </button>
                         <button type="button" class="btn btn-success btn-s fixbutton"
                         (click)="downloadSelected()">
@@ -87,20 +87,20 @@
         <mat-tab label="Purchased Archive">
             <mat-card>
                 <mat-card-title class="bold">List of Purchased Archives</mat-card-title>
-                <mat-card-title>
+                <div class="line">
                         <button type="button" class="btn btn-primary btn-s fixbutton"
                         (click)="selectAll()">
-                        <span class="glyphicon glyphicon-check"></span> Select All
+                        <span class="glyphicon glyphicon-check"></span> Check All
                         </button>    
                         <button type="button" class="btn btn-warning btn-s fixbutton"
                         (click)="cancelSelected()">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel Selected
+                        <span class="glyphicon glyphicon-ban-circle"></span> Clear All
                         </button>
                         <button type="button" class="btn btn-success btn-s fixbutton"
                         (click)="downloadSelected()">
                         <span class="glyphicon glyphicon-download"></span> Download Selected
                         </button> 
-                    </mat-card-title>
+                </div> 
                 
                 <mat-card-content>
 

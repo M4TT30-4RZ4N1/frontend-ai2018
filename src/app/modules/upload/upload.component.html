@@ -83,10 +83,12 @@
                               (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                           <span class="glyphicon glyphicon-upload"></span> Upload all
                       </button>
+                      <div class="divider"></div>
                       <button type="button" class="btn btn-warning btn-s divcenter" 
                               (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
                           <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
                       </button>
+                      <div class="divider"></div>
                       <button type="button" class="btn btn-danger btn-s divcenter"
                               (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                           <span class="glyphicon glyphicon-trash"></span> Remove all
