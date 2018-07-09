@@ -10,6 +10,7 @@ import { OpaqueTransaction } from '../../../models/opaqueTransaction';
 import { QueryObj } from '../../../models/queryObj';
 import { QueryResult } from '../../../models/QueryResult/queryResult';
 import { ArchiveTransaction } from '../../../models/QueryResult/archiveTransaction';
+import { UserResult } from '../../../models/QueryResult/userResult';
 
 @Component({
   selector: 'app-geoMap',
@@ -17,8 +18,6 @@ import { ArchiveTransaction } from '../../../models/QueryResult/archiveTransacti
   styleUrls: ['./customerGeoMap.component.css']
 })
 export class GeoMapComponent implements OnInit {
-
-
   
 changeDetectorRefs :ChangeDetectorRef[] = [];
 
@@ -39,7 +38,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 	vertices : number = 0;
   truePolygon : boolean;
   shape : Shape;
-  usersFilter : String[] = [];
+  usersFilter : String[];
   buttonText : String = "Search in visible area";
   // Open Street Map and Open Cycle Map definitions
   greenIcon = L.icon({
@@ -134,6 +133,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     for(let i=0 ; i< data.byUser.length; i++){
       let user = data.byUser[i].user;
       let color = data.byUser[i].color;
+      this.usersFilter = [];
+      this.usersFilter.push(user);
       _self.colorMap.set(user, color);
     }
     //console.dir( _self.colorMap);
@@ -338,6 +339,88 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     polygonWellFormatted.push(polygon[0]);
 
     return polygonWellFormatted;
+  }
+
+  
+  clickAll(){
+    let all = <HTMLInputElement> document.getElementById('checkallusers');
+    let none = <HTMLInputElement> document.getElementById('uncheckallusers');
+    let filter = <HTMLInputElement> document.getElementById('filterusers');
+
+    if(all.checked){ // check all
+      none.checked = false;
+      filter.checked = false;
+      let elements =  document.getElementsByClassName("checkuser");
+
+      for(let i=0; i< elements.length; i++) {
+        let htmlElement = <HTMLInputElement> elements[i];
+        htmlElement.checked = true;
+        htmlElement.disabled = true;
+      }
+
+    }
+    else{
+      all.checked = true;
+    }
+  
+  }
+
+  clickNone(){
+    let none = <HTMLInputElement> document.getElementById('uncheckallusers');
+    let all = <HTMLInputElement> document.getElementById('checkallusers');
+    let filter = <HTMLInputElement> document.getElementById('filterusers');
+
+    if(none.checked){
+       all.checked = false;
+       filter.checked = false;
+       let elements =  document.getElementsByClassName("checkuser");
+
+      for(let i=0; i< elements.length; i++) {
+        let htmlElement = <HTMLInputElement> elements[i];
+        htmlElement.checked = false;
+        htmlElement.disabled = true;
+      }
+    }
+    else{
+      none.checked = true;
+    }
+    
+  }
+
+  clickFilter(){
+    let all = <HTMLInputElement> document.getElementById('checkallusers');
+    let none = <HTMLInputElement> document.getElementById('uncheckallusers');
+    let filter = <HTMLInputElement> document.getElementById('filterusers');
+
+    if(filter.checked){
+      all.checked = false;
+      none.checked = false;
+      let elements =  document.getElementsByClassName("checkuser");
+
+      for(let i=0; i< elements.length; i++) {
+        let htmlElement = <HTMLInputElement> elements[i];
+        htmlElement.disabled = false;
+      }
+
+   }
+   else{
+    filter.checked = true;
+  }
+
+  }
+
+  getCheckedUsers(){
+
+    let elements =  document.getElementsByClassName("checkuser");
+
+      for(let i=0; i< elements.length; i++) {
+        let htmlElement = <HTMLInputElement> elements[i];
+        
+        if(htmlElement.checked){
+          // insert into list
+        }  
+      }    
+
   }
 
 }

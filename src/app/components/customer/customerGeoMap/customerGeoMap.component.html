@@ -1,33 +1,61 @@
 <mat-card-title> Customer Transaction</mat-card-title>
 <br>
-<mat-card-content>
-    <label>
+<mat-card-content class="center-card">
+    <button mat-button class="link-btn">
         Stard Date:
 
         <input class="center" [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12" [(ngModel)]="selectedMoments" [selectMode]="'rangeFrom'"
             [ngModelOptions]="{standalone: true}">
         <owl-date-time #dt12></owl-date-time>
 
-    </label>
+    </button>
 
-    <label>
+    <button mat-button class="link-btn">
         End Date:
 
         <input class="center" [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13" [(ngModel)]="selectedMoments" [selectMode]="'rangeTo'"
             [ngModelOptions]="{standalone: true}">
         <owl-date-time #dt13></owl-date-time>
 
-    </label>
+    </button >
+   
     <button mat-button #sendButton (click)="sendPositions()">{{buttonText}}</button>
+  
+    <button class="usermenu" mat-button [matMenuTriggerFor]="menu">User Filter</button>
+    <mat-menu #menu="matMenu">
+                    <ul class="outlist rectangle-list" (click)="$event.stopPropagation()">
+                            <li mat-menu-item (click)="$event.stopPropagation()">
+                                <input id="checkallusers" type="checkbox" [value]="all" checked  (click)="clickAll()">
+                                <strong>All</strong> 
+                            </li>
+                            <li mat-menu-item (click)="$event.stopPropagation()">
+                                <input id="uncheckallusers" type="checkbox" [value]="none" (click)="clickNone()">
+                                <strong>None</strong>
+                            </li>
+                            <li mat-menu-item (click)="$event.stopPropagation()">
+                            <input id="filterusers" type="checkbox" [value]="none" (click)="clickFilter()">
+                            <strong>Filter:</strong>
+                            </li> 
+                          
+                                <a *ngFor="let user of usersFilter">
+                                    <li (click)="$event.stopPropagation()">
+                                        <input class="checkuser" type="checkbox" [value]="user" checked [disabled]="true">
+                                        <strong>{{user}}</strong>
+                                    </li> 
+                                </a>
+
+                        </ul>
+</mat-menu>
 </mat-card-content>
 
 <mat-card-content>
     <!-- Map -->
-    <div leaflet style="height: 45vh;" (leafletMapReady)="onMapReady($event)" [leafletOptions]="options" [leafletLayers]="layers">
+    <div class="map" leaflet style="height: 45vh;" (leafletMapReady)="onMapReady($event)" [leafletOptions]="options" [leafletLayers]="layers">
     </div>
+    
 </mat-card-content>
-<mat-card-content>
-    Positions in the Area: {{positionsInArea}}
+<mat-card-content class="center-card">
+    <button mat-button class="link-btn">Positions in the Area: {{positionsInArea}}</button>
     <button mat-button (click)="cancel()">Cancel</button>
     <button mat-button (click)="buy()" [disabled]="!(positionsInArea > 0)">Buy</button>
 </mat-card-content>
@@ -38,7 +66,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th width="70%" >Archive</th>
+            <th width="70%">Archive</th>
             <th width="30%">Owned</th>
         </tr>
         </thead>
