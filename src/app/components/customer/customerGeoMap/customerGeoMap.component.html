@@ -13,7 +13,7 @@
 
                 </button>
             </td>
-
+            <br>
             <td>
                 <button mat-button class="link-btn">
                     End Date:
@@ -24,9 +24,11 @@
 
                 </button>
             </td>
+            <br>
             <td>
                 <button mat-button #sendButton (click)="sendPositions()">{{buttonText}}</button>
             </td>
+            <br>
             <td>
                 <button class="usermenu" mat-button [matMenuTriggerFor]="menu">User Filter</button>
             </td>
@@ -65,10 +67,17 @@
 
 </mat-card-content>
 <mat-card-content class="center-card">
-    <button mat-button class="link-btn">Positions in the Area: {{positionsInArea}}</button>
-    <button mat-button (click)="cancel()">Cancel</button>
-    <button mat-button (click)="buy()" [disabled]="!(positionsInArea > 0)">Buy</button>
-    <button mat-button (click)="confirm()" [disabled]="!(archivesToBought.length > 0)">Confirm</button>
+    <table>
+        <tr>   
+        <td><button mat-button class="link-btn">Positions in the Area: {{positionsInArea}}</button></td>
+        <br>
+        <td><button mat-button (click)="cancel()">Cancel</button></td>
+        <br>
+        <td><button mat-button (click)="buy()" [disabled]="!(positionsInArea > 0)">Buy</button></td>
+        <br>
+        <td><button mat-button (click)="confirm()" [disabled]="!(archivesToBought.length > 0)">Confirm</button></td>
+        </tr>
+    </table>
 </mat-card-content>
 <br>
 <mat-card-title>Archives Involved</mat-card-title>

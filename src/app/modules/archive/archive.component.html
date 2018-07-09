@@ -1,150 +1,193 @@
 <mat-tab-group>
-        <mat-tab label="Owner Archive">
-            <mat-card>
-     
-                <mat-card-title class="bold">List of Owner Archives</mat-card-title>
-                <mat-card-title>
-                        <button type="button" class="btn btn-primary btn-s fixbutton"
-                        (click)="selectAll()">
-                        <span class="glyphicon glyphicon-check"></span> Check All
-                        </button>    
-                        <button type="button" class="btn btn-warning btn-s fixbutton"
-                        (click)="cancelSelected()">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Clear All
-                        </button>
-                        <button type="button" class="btn btn-success btn-s fixbutton"
-                        (click)="downloadSelected()">
-                        <span class="glyphicon glyphicon-download"></span> Download Selected
-                        </button> 
-                        <button type="button" class="btn btn-danger btn-s fixbutton"
-                        (click)="removeSelected()">
-                        <span class="glyphicon glyphicon-trash"></span> Remove Selected
-                        </button>
-                    </mat-card-title>
-                
-                <mat-card-content>
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th width="40%" >Archive</th>
-                                        <th width="10%">Acquisitions</th>
-                                        <th width="25%">Download</th>
-                                        <th width="25%">Remove</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr *ngFor="let item of ownArchives.archives">
-                                        <td>                               
-                                            <input class="mycheck" type="checkbox" [value]="item.filename">
-                                            <strong>{{item.filename}}</strong>       
-                                        
-                                        </td>
-                                        <td class="text-center">
-                                               {{item.counter}}
-                                        </td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-success btn-xs"
-                                                    (click)="download(item.filename)">
-                                                <span class="glyphicon glyphicon-download"></span> Download
-                                            </button>
-                                        </td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-danger btn-xs"
-                                                    (click)="remove(item.filename)">
-                                                <span class="glyphicon glyphicon-trash"></span> Remove
-                                            </button>
-                                            
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>             
-              </mat-card-content>
+    <mat-tab label="Owner Archive">
+        <mat-card>
 
-              <div class="prev-next">
+            <mat-card-title class="bold">List of Owner Archives</mat-card-title>
+            <mat-card-title>
+                <table>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-s fixbutton" (click)="selectAll()">
+                                <span class="glyphicon glyphicon-check"></span> Check All
+                            </button>
+                        </td>
+                        <br>
+                        <td>
+                            <button type="button" class="btn btn-warning btn-s fixbutton" (click)="cancelSelected()">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Clear All
+                            </button>
+                        </td>
+                        <br>
+                        <td>
+                            <button type="button" class="btn btn-success btn-s fixbutton" (click)="downloadSelected()">
+                                <span class="glyphicon glyphicon-download"></span> Download Selected
+                            </button>
+                        </td>
+                        <br>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-s fixbutton" (click)="removeSelected()">
+                                <span class="glyphicon glyphicon-trash"></span> Remove Selected
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </mat-card-title>
 
-                    <span class="select" matTooltip="Number of Items per Page">
-                            <select name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
+            <mat-card-content>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="40%">Archive</th>
+                            <th width="10%">Acquisitions</th>
+                            <th width="25%">Download</th>
+                            <th width="25%">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of ownArchives.archives">
+                            <td>
+                                <input class="mycheck" type="checkbox" [value]="item.filename">
+                                <strong>{{item.filename}}</strong>
+
+                            </td>
+                            <td class="text-center">
+                                {{item.counter}}
+                            </td>
+                            <td nowrap>
+                                <button type="button" class="btn btn-success btn-xs" (click)="download(item.filename)">
+                                    <span class="glyphicon glyphicon-download"></span> Download
+                                </button>
+                            </td>
+                            <td nowrap>
+                                <button type="button" class="btn btn-danger btn-xs" (click)="remove(item.filename)">
+                                    <span class="glyphicon glyphicon-trash"></span> Remove
+                                </button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-card-content>
+
+            <mat-card-title>
+                <table>
+                    <tr>
+                        <td>
+                            <span matTooltip="Number of Items per Page">
+                                <select class="select" name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
                                     <option value="5">5 Archives</option>
                                     <option value="10">10 Archives</option>
                                     <option value="50">50 Archives</option>
                                     <option value="100">100 Archives</option>
-                                  </select>
-                    </span>
-                    <button id="element1" [disabled]="ownArchives._links===null||ownArchives._links.previous===null||ownArchives._links.previous===undefined" type="button" class="btn btn-primary btn-s minbutton"
-                          (click)="getOwnPrevious()">
-                    <span class="glyphicon glyphicon-backward"></span> Previous
-                    </button>
-                    <button id="element2" [disabled]="ownArchives._links===null||ownArchives._links.next===null||ownArchives._links.next===undefined" type="button" class="btn btn-primary btn-s minbutton"
-                    (click)="getOwnNext()">
-                      <span class="glyphicon glyphicon-forward"></span> Next
-                    </button>
-                </div>
-            </mat-card>
-        </mat-tab>
+                                </select>
+                            </span>
+                        </td>
+                        <br>
+                        <td>
+                            <button id="element1" [disabled]="ownArchives._links===null||ownArchives._links.previous===null||ownArchives._links.previous===undefined"
+                                type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnPrevious()">
+                                <span class="glyphicon glyphicon-backward"></span> Previous
+                            </button>
+                        </td>
+                        <br>
+                        <td>
+                            <button id="element2" [disabled]="ownArchives._links===null||ownArchives._links.next===null||ownArchives._links.next===undefined"
+                                type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnNext()">
+                                <span class="glyphicon glyphicon-forward"></span> Next
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </mat-card-title>
+        </mat-card>
+    </mat-tab>
 
 
 
-        <mat-tab label="Purchased Archive">
-            <mat-card>
-                <mat-card-title class="bold">List of Purchased Archives</mat-card-title>
-                <div class="line">
-                        <button type="button" class="btn btn-primary btn-s fixbutton"
-                        (click)="selectAll()">
-                        <span class="glyphicon glyphicon-check"></span> Check All
-                        </button>    
-                        <button type="button" class="btn btn-warning btn-s fixbutton"
-                        (click)="cancelSelected()">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Clear All
-                        </button>
-                        <button type="button" class="btn btn-success btn-s fixbutton"
-                        (click)="downloadSelected()">
-                        <span class="glyphicon glyphicon-download"></span> Download Selected
-                        </button> 
-                </div> 
-                
-                <mat-card-content>
+    <mat-tab label="Purchased Archive">
+        <mat-card>
+            <mat-card-title class="bold">List of Purchased Archives</mat-card-title>
+            <mat-card-title>
+                <table>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-s fixbutton" (click)="selectAll()">
+                                <span class="glyphicon glyphicon-check"></span> Check All
+                            </button>
+                        </td>
+                        <br>
+                        <td>
+                            <button type="button" class="btn btn-warning btn-s fixbutton" (click)="cancelSelected()">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Clear All
+                            </button>
+                        </td>
+                        <br>
+                        <td>
+                            <button type="button" class="btn btn-success btn-s fixbutton" (click)="downloadSelected()">
+                                <span class="glyphicon glyphicon-download"></span> Download Selected
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </mat-card-title>
 
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th width="50%">Archive</th>
-                                        <th width="50%">Download</th>
-                                    </tr>
 
-                                    </thead>
+            <mat-card-content>
 
-                                    <tbody>
-                                    <tr *ngFor="let item of purchasedArchives.archives">
-                                        <td><strong>{{item.filename}}</strong></td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-success btn-xs"
-                                                    (click)="download()">
-                                                <span class="glyphicon glyphicon-download"></span> Download
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-              </mat-card-content>
-              <div class="prev-next">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="50%">Archive</th>
+                            <th width="50%">Download</th>
+                        </tr>
 
-                    <span class="select" matTooltip="Number of Items per Page">
-                            <select name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of purchasedArchives.archives">
+                            <td>
+                                <strong>{{item.filename}}</strong>
+                            </td>
+                            <td nowrap>
+                                <button type="button" class="btn btn-success btn-xs" (click)="download()">
+                                    <span class="glyphicon glyphicon-download"></span> Download
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-card-content>
+            <mat-card-title>
+                <table>
+                    <tr>
+                        <td>
+                            <span matTooltip="Number of Items per Page">
+                                <select class="select" name="slct" id="slct" #pages (change)="changePageSize(pages.value)">
                                     <option value="5">5 Archives</option>
                                     <option value="10">10 Archives</option>
                                     <option value="50">50 Archives</option>
                                     <option value="100">100 Archives</option>
-                                  </select>
-                    </span>
-                    <button id="element1" [disabled]="ownArchives._links===null||ownArchives._links.previous===null||ownArchives._links.previous===undefined" type="button" class="btn btn-primary btn-s minbutton"
-                          (click)="getOwnPrevious()">
-                    <span class="glyphicon glyphicon-backward"></span> Previous
-                    </button>
-                    <button id="element2" [disabled]="ownArchives._links===null||ownArchives._links.next===null||ownArchives._links.next===undefined" type="button" class="btn btn-primary btn-s minbutton"
-                    (click)="getOwnNext()">
-                      <span class="glyphicon glyphicon-forward"></span> Next
-                    </button>
-                </div>
-            </mat-card>
-        </mat-tab>
-      </mat-tab-group>
+                                </select>
+                            </span>
+                        </td>
+                        <br>
+                        <td>
+                            <button id="element1" [disabled]="ownArchives._links===null||ownArchives._links.previous===null||ownArchives._links.previous===undefined"
+                                type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnPrevious()">
+                                <span class="glyphicon glyphicon-backward"></span> Previous
+                            </button>
+                        </td>
+                        <br>
+                        <td>
+                            <button id="element2" [disabled]="ownArchives._links===null||ownArchives._links.next===null||ownArchives._links.next===undefined"
+                                type="button" class="btn btn-primary btn-s minbutton" (click)="getOwnNext()">
+                                <span class="glyphicon glyphicon-forward"></span> Next
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </mat-card-title>
+
+        </mat-card>
+    </mat-tab>
+</mat-tab-group>
