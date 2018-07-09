@@ -25,15 +25,15 @@
     <mat-menu #menu="matMenu">
                     <ul class="outlist rectangle-list" (click)="$event.stopPropagation()">
                             <li mat-menu-item (click)="$event.stopPropagation()">
-                                <input id="checkallusers" type="checkbox" [value]="all" checked  (click)="clickAll()">
+                                <input id="checkallusers" type="checkbox" checked  (click)="clickAll()">
                                 <strong>All</strong> 
                             </li>
                             <li mat-menu-item (click)="$event.stopPropagation()">
-                                <input id="uncheckallusers" type="checkbox" [value]="none" (click)="clickNone()">
+                                <input id="uncheckallusers" type="checkbox" (click)="clickNone()">
                                 <strong>None</strong>
                             </li>
                             <li mat-menu-item (click)="$event.stopPropagation()">
-                            <input id="filterusers" type="checkbox" [value]="none" (click)="clickFilter()">
+                            <input id="filterusers" type="checkbox" (click)="clickFilter()">
                             <strong>Filter:</strong>
                             </li> 
                           
@@ -47,7 +47,7 @@
                         </ul>
 </mat-menu>
 </mat-card-content>
-
+<br>
 <mat-card-content>
     <!-- Map -->
     <div class="map" leaflet style="height: 45vh;" (leafletMapReady)="onMapReady($event)" [leafletOptions]="options" [leafletLayers]="layers">
@@ -58,11 +58,12 @@
     <button mat-button class="link-btn">Positions in the Area: {{positionsInArea}}</button>
     <button mat-button (click)="cancel()">Cancel</button>
     <button mat-button (click)="buy()" [disabled]="!(positionsInArea > 0)">Buy</button>
+    <button mat-button (click)="confirm()" [disabled]="!(archivesToBought.length > 0)">Confirm</button>   
 </mat-card-content>
 <br>
-<mat-card-title>Positions archives</mat-card-title>
+<mat-card-title>Archives Involved</mat-card-title>
 <br>
-<mat-card-content>
+<mat-card-content class="center-card">
     <table class="table">
         <thead>
         <tr>
@@ -81,6 +82,5 @@
             </td>
         </tr>
         </tbody>
-    </table>      
-    <button mat-button (click)="confirm()">Confirm</button>     
+    </table>     
 </mat-card-content>
