@@ -71,15 +71,15 @@ mat-card-title,
 
   .link-btn:hover /deep/ .mat-button-focus-overlay {
     background-color: transparent;
-    display: flex;
+    
 }
 
 owl-date-time{
-    display: flex;
+
 }
 
 .center{ 
-    text-align: center,
+    text-align: center;
 }
 
 
