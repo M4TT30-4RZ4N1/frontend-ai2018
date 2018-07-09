@@ -1,5 +1,4 @@
-<mat-card-title>
-    Customer Transaction</mat-card-title>
+<mat-card-title> Customer Transaction</mat-card-title>
 <br>
 <mat-card-content>
     <label>
@@ -31,4 +30,29 @@
     Positions in the Area: {{positionsInArea}}
     <button mat-button (click)="cancel()">Cancel</button>
     <button mat-button (click)="buy()" [disabled]="!(positionsInArea > 0)">Buy</button>
+</mat-card-content>
+<br>
+<mat-card-title>Positions archives</mat-card-title>
+<br>
+<mat-card-content>
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="70%" >Archive</th>
+            <th width="30%">Owned</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of archivesToBought">
+            <td>                               
+                <strong>{{item.filename}}</strong>       
+            
+            </td>
+            <td class="text-center">
+                   {{item.purchased}}
+            </td>
+        </tr>
+        </tbody>
+    </table>      
+    <button mat-button (click)="confirm()">Confirm</button>     
 </mat-card-content>

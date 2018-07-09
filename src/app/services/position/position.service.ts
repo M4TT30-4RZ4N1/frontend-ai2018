@@ -10,6 +10,7 @@ import { RequestOptions } from '@angular/http';
 import { OpaqueTransaction } from '../../models/opaqueTransaction';
 import { QueryObj } from '../../models/queryObj';
 import { QueryResult } from '../../models/QueryResult/queryResult';
+import { ArchiveTransaction } from '../../models/QueryResult/archiveTransaction';
 
 @Injectable()
 export class PositionService {
@@ -18,6 +19,7 @@ export class PositionService {
     //serverAddress : String = "http://localhost:3000";
     buyPath : String = "/buy";
     getPath : String = "/search";
+    confirmPath : String = this.buyPath+"/confirm";
     constructor(private webclient : HttpClient) { }
 
     debug(){console.log("Position Service Working");}
@@ -31,7 +33,7 @@ export class PositionService {
 */
 
     getPositions(startDate : number, endDate : number, objectToSend : QueryObj) : Observable<QueryResult>{
-        //console.log("Sending JSON: " + JSON.stringify(objectToSend));
+        console.log("Sending JSON: " + JSON.stringify(objectToSend));
    
         return this.webclient.post<QueryResult>(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
                                             JSON.stringify(objectToSend),
@@ -53,14 +55,14 @@ export class PositionService {
     }
 
 
-    buyPositions(startDate : number, endDate : number, objectToSend : QueryObj){
+    buyPositions(startDate : number, endDate : number, objectToSend : QueryObj) : Observable<ArchiveTransaction[]>{
         //alert("Sending JSON: " + JSON.stringify(objectToSend));
-        return this.webclient.post(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
+        return this.webclient.post<ArchiveTransaction[]>(this.serverAddress+""+this.buyPath+"?after="+startDate+"&before="+endDate,
                                     JSON.stringify(objectToSend));
-        
-        //let database = new Database();
-        //let positions = database.getPositionInsidePolygon(coordinates, startDate, endDate);
-        //return Observable.of(positions);
+    }
+
+    confirmBuy(objectToSend : ArchiveTransaction[]){
+        return this.webclient.post(this.serverAddress+""+this.confirmPath,JSON.stringify(objectToSend));
     }
 
 }

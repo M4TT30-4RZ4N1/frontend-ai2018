@@ -4,10 +4,8 @@ import { Point } from "./point";
 
 export class TimedPosition {
     point : Point;
-    user : String;
     timestamp : number;
-    public constructor(point : Point, user : String, timestamp: any){
-        this.user=user;
+    public constructor(point : Point, timestamp: any){
         this.point = point;
         if(typeof timestamp === 'number') this.timestamp=timestamp;
         else if(timestamp instanceof Date) this.timestamp=Math.round(timestamp.getTime()/1000);

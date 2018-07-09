@@ -86,7 +86,7 @@ export class InsertComponent implements OnInit {
         // add all layers as a single array to layer
         let timestamp = new Date().getTime();
         let p : Point = new Point("Point", [e.latlng.lat, e.latlng.lng]);
-        let timedPosition : TimedPosition = new TimedPosition(p,"",timestamp);
+        let timedPosition : TimedPosition = new TimedPosition(p,timestamp);
         this.positionToSend.push(timedPosition);
 
         this.markerLayers.push(L.marker(e.latlng, {icon: this.greenIcon}));

@@ -127,10 +127,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       let lat = this.positions[i].point.coordinates[0];
       let lng = this.positions[i].point.coordinates[1];
       let timestamp = this.positions[i].timestamp;
-      let user = this.positions[i].user;
       // add each marker as a layer
       this.markerLayers[i] = L.marker([lat, lng], {icon: this.greenIcon});
-      this.markerLayers[i].bindPopup("<b>User:</b> "+ user + "<br>Timestamp:"+ (new Date(timestamp)).toString());
+      this.markerLayers[i].bindPopup("<b>User:</b> <br>Timestamp:"+ (new Date(timestamp)).toString());
     }
     // add all layers as a single array to layer
     this.layerOfMarkers = L.layerGroup(this.markerLayers);
