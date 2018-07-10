@@ -171,10 +171,10 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 
   elaborateSearchResult(data : QueryResult, _self){
     _self.cancel();
+    _self.usersFilter = [];
     for(let i=0 ; i< data.byUser.length; i++){
       let user = data.byUser[i].user;
       let color = data.byUser[i].color;
-      _self.usersFilter = [];
       _self.usersFilter.push(user);
       _self.colorMap.set(user, color);
     }

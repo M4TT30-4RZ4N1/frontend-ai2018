@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="submit_login()">
   <p>
     <mat-input-container>
-      <input type="text" matInput placeholder="Username" formControlName="username" pattern="/^[a-zA-Z0-9]*$/" required>
+      <input type="text" matInput placeholder="Username" formControlName="username" pattern="^[a-zA-Z0-9_.-]*$" required>
     </mat-input-container>
   </p>
 
