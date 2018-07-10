@@ -26,7 +26,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     new Date(2018, 1, 12, 10, 30),
     new Date(2018, 6, 20, 20, 30)
 ];
-
+  yTimestampValue : number = 0.01;
   geoMap: L.Map;
   layerOfMarkers : L.Layer;
   markerLayers = new Array<any>();
@@ -40,6 +40,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   truePolygon : boolean;
   shape : Shape;
   usersFilter : String[];
+  usersFilterQuery : String[];
+  timestampsMap : Map<string,Object> = new Map();
   buttonText : String = "Search in visible area";
   // Open Street Map and Open Cycle Map definitions
   greenIcon = L.icon({
@@ -100,53 +102,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 
   } 
   ngOnInit() {
-    var chart = new CanvasJS.Chart("chartContainer", {
-      animationEnabled: true,
-      zoomEnabled: true,
-      title:{
-        text: "Real Estate Rates"
-      },
-      axisX: {
-        title:"Area (in sq. ft)",
-        minimum: 790,
-        maximum: 2260
-      },
-      axisY:{
-        title: "Price (in USD)",
-        valueFormatString: "$#,##0k"
-      },
-      data: [{
-        type: "scatter",
-        toolTipContent: "<b>Area: </b>{x} sq.ft<br/><b>Price: </b>${y}k",
-        dataPoints: [
-          { x: 800, y: 350 },
-          { x: 900, y: 450 },
-          { x: 850, y: 450 },
-          { x: 1250, y: 700 },
-          { x: 1100, y: 650 },
-          { x: 1350, y: 850 },
-          { x: 1200, y: 900 },
-          { x: 1410, y: 1250 },
-          { x: 1250, y: 1100 },
-          { x: 1400, y: 1150 },
-          { x: 1500, y: 1050 },
-          { x: 1330, y: 1120 },
-          { x: 1580, y: 1220 },
-          { x: 1620, y: 1400 },
-          { x: 1250, y: 1450 },
-          { x: 1350, y: 1600 },
-          { x: 1650, y: 1300 },
-          { x: 1700, y: 1620 },
-          { x: 1750, y: 1700 },
-          { x: 1830, y: 1800 },
-          { x: 1900, y: 2000 },
-          { x: 2050, y: 2200 },
-          { x: 2150, y: 1960 },
-          { x: 2250, y: 1990 }
-        ]
-      }]
-    });
-    chart.render();    
+    this.timestampsMap = new Map();
+    this.createChart();  
   }
 
   ngOnDestroy() {
@@ -154,8 +111,43 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       this.positionsSub.unsubscribe();
     if(this.buySub !== null && this.buySub !== undefined)
       this.buySub.unsubscribe();
-      if(this.confirmSub !== null && this.confirmSub !== undefined)
-        this.confirmSub.unsubscribe();
+    if(this.confirmSub !== null && this.confirmSub !== undefined)
+      this.confirmSub.unsubscribe();
+  }
+
+  createChart(){ 
+    let queryPoints = [];
+    this.timestampsMap.forEach((value, user) => {
+      queryPoints.push({
+          type: "scatter",
+          toolTipContent: "<span style=\"color:"+ this.colorMap.get(user) + " \"><b>{name}</b></span><br/><b> User:</b> "+ user+"<br/><b>Time:</b></span> {x}",
+          color: this.colorMap.get(user),
+          name: user,
+          showInLegend: true,
+          dataPoints: value
+      });
+    });
+    //console.dir(queryPoints);
+    let chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      axisX: {
+        title:"",
+        labelFormatter: function ( e ) {
+           return new Date(e.value).toLocaleTimeString();  
+           }
+      },
+      axisY:{
+        title: "",
+        labelFormatter: function ( e ) {
+          return "";  
+          },
+        gridThickness: 0,
+        //minimum : 0,
+        //maximum : this.yTimestampValue*2
+      },
+      data: queryPoints
+    });
+    chart.render();
   }
 
   changeBounds(map: L.Map) : boolean{
@@ -182,10 +174,26 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     for(let i=0 ; i< data.byUser.length; i++){
       let user = data.byUser[i].user;
       let color = data.byUser[i].color;
-      this.usersFilter = [];
-      this.usersFilter.push(user);
+      _self.usersFilter = [];
+      _self.usersFilter.push(user);
       _self.colorMap.set(user, color);
     }
+    let timestampData = data.byTimestamp;
+    let displacementMap : Map<string,number> = new Map();
+    let uniqueUser : number = 0;
+    for(let i=0 ; i< timestampData.length; i++){
+      let user = timestampData[i].user;
+      if(_self.timestampsMap.get(user) === null || _self.timestampsMap.get(user) === undefined){
+        _self.timestampsMap.set(user, []);
+        displacementMap.set(user, uniqueUser++);
+      }
+      let timestamp = timestampData[i].timestamp;
+      let timestampToPlot = { x : timestamp , y : _self.yTimestampValue+2*_self.yTimestampValue*displacementMap.get(user)};
+      
+      _self.timestampsMap.get(user).push(timestampToPlot);
+    }
+    //console.dir(_self.timestampsMap);
+    _self.createChart();
     //console.dir( _self.colorMap);
     let positionData = data.byPosition;
     //console.dir(positionData);
@@ -218,8 +226,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     _self.positionsSub = _self.positionService.getPositions(startDate, endDate, objectToSend)
                           .subscribe((data : QueryResult) => {
                               //if(data.byPosition.length > 0)
-                              console.log("Query response");
-                              console.dir(data);
+                              //console.log("Query response");
+                              //console.dir(data);
                             _self.elaborateSearchResult(data, _self);
                           });
   }
@@ -308,13 +316,13 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let endDate = this.selectedMoments[1].getTime();
     let polygonWellFormatted = this.getPolygonWellFormatted();
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
-    let objectToSend : QueryObj = new QueryObj(this.shape,  this.usersFilter);
+    let objectToSend : QueryObj = new QueryObj(this.shape,  this.usersFilterQuery);
     //console.dir(polygonWellFormatted);
     //console.log(startDate + " " + endDate);
     //this.positionsInArea = this.positionService.getPositions(startDate, endDate, this.shape.coordinates[0]);
     this.positionsSub = this.positionService.getPositions(startDate, endDate, objectToSend)
                             .subscribe((data : QueryResult) => {
-                              console.dir(data);
+                              //console.dir(data);
                               this.elaborateSearchResult(data, this);
                               this.changeDetectorRef.detectChanges();
                             });
@@ -341,7 +349,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let endDate = this.selectedMoments[1].getTime();
     let polygonWellFormatted = this.getPolygonWellFormatted();
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
-    let objectToSend : QueryObj = new QueryObj(this.shape,  []);
+    let objectToSend : QueryObj = new QueryObj(this.shape,  this.usersFilterQuery);
     this.buySub = this.positionService.buyPositions(startDate, endDate, objectToSend)
                   .subscribe((data :ArchiveTransaction[]) => {
                     //console.log(data);
@@ -469,12 +477,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
         
         if(htmlElement.checked){
           // insert into list
-          this.usersFilter.push(htmlElement.value);
+          this.usersFilterQuery.push(htmlElement.value);
         }  
       }    
 
   }
-
 }
 
 
