@@ -1,18 +1,21 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { User } from '../../models/user';
 import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import { CheckDuplicateUsernameService } from '../../services/auth/checkDuplicateUsername.service';
 import { Observable } from 'rxjs';
 import { RegisterService } from '../../services/auth/register.service';
 import { Router } from '@angular/router';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
+  private subscription: ISubscription;
+  
   changeDetectorRefs :ChangeDetectorRef[] = [];
   public user: User;
   public barLabel: string = "Password strength:";
@@ -26,6 +29,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription !== null && this.subscription !== undefined){
+       this.subscription.unsubscribe();
+    }
   }
 
   @Input() errorMessage: string | null;
@@ -65,7 +74,7 @@ export class RegistrationComponent implements OnInit {
         console.log(this.user);
 
     if (this.registrationForm.valid) {
-      this.registerService.register(this.user).subscribe((data) => {
+      this.subscription = this.registerService.register(this.user).subscribe((data) => {
         if (!data) {
           this.errorMessage = "Registration Error";
           this.changeDetectorRef.detectChanges();

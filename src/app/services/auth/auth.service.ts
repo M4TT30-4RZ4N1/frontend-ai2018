@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import { Headers, RequestOptions, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnDestroy {
 
+    private subscription: ISubscription;
+    
     basic_url :String;
 
 constructor(private http : Http, private  router: Router) {
@@ -45,7 +48,7 @@ login( username : string, password : string) {
         }
     );
 
-    jsonObservable.subscribe((json) =>{
+    this.subscription = jsonObservable.subscribe((json) =>{
         console.log(json);
         console.log(json.access_token);
         window.localStorage.setItem('ai-token', json.access_token);
@@ -56,6 +59,12 @@ login( username : string, password : string) {
         window.location.reload();
     });
 
+}
+
+ngOnDestroy(): void {
+    if(this.subscription !== null && this.subscription !== undefined){
+        this.subscription.unsubscribe();
+    }
 }
 
 

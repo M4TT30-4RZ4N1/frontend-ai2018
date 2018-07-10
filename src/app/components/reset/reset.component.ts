@@ -1,15 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ResetService } from '../../services/auth/reset.service';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-reset',
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.css']
 })
-export class ResetComponent implements OnInit {
+export class ResetComponent implements OnInit, OnDestroy {
 
+  private subscription: ISubscription;
   username : string | null;
   code : string | null;
   errorMessage : string | null;
@@ -49,8 +51,14 @@ export class ResetComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    if(this.subscription !== null && this.subscription !== undefined){
+      this.subscription.unsubscribe();
+    }
+  }
+
   reset(){
-     this.resetService.postReset(this.username,this.code, this.resetForm.controls.password.value)
+     this.subscription = this.resetService.postReset(this.username,this.code, this.resetForm.controls.password.value)
      .subscribe((success) => {
         this.router.navigateByUrl("/resetComplete");
      }, (error) =>

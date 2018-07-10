@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
@@ -7,8 +7,13 @@ import { ResponseContentType, RequestOptions, RequestMethod } from '@angular/htt
 import { Headers, Http} from '@angular/http';
 import { saveAs } from 'file-saver/FileSaver';
 import { NavigableArchive} from '../../models/navigablearchive';
+import { ISubscription } from 'rxjs/Subscription';
 @Injectable()
-export class ArchiveService {
+export class ArchiveService implements OnDestroy{
+
+    private subscription1: ISubscription;
+    private subscription2: ISubscription;
+
     serverAddress : String = environment.API_URL+"/user";
     resourceAddress : String = environment.API_URL+"/user/archives";
     //resourceAddress : String = "http://localhost:3000/archives";
@@ -40,7 +45,8 @@ export class ArchiveService {
         let newheaders = new Headers( );
         newheaders.append( 'Content-Type', 'application/json' );
         newheaders.append('Authorization','Bearer '+ token);
-        this.http.post(this.serverAddress+"/zip/archives/", body, {
+        
+        this.subscription1 = this.http.post(this.serverAddress+"/zip/archives/", body, {
             method: RequestMethod.Post,
             responseType: ResponseContentType.Blob,
             headers: newheaders
@@ -69,7 +75,8 @@ export class ArchiveService {
         let newheaders = new Headers( );
         newheaders.append( 'Content-Type', 'application/json' );
         newheaders.append('Authorization','Bearer '+ token);
-        this.http.get(this.serverAddress+"/archives/"+filename,{
+        
+        this.subscription2 = this.http.get(this.serverAddress+"/archives/"+filename,{
             method: RequestMethod.Get,
             responseType: ResponseContentType.Blob,
             headers: newheaders
@@ -109,4 +116,8 @@ export class ArchiveService {
         
     }
 
+    ngOnDestroy(): void {
+        this.subscription1.unsubscribe();
+        this.subscription2.unsubscribe();
+    }
 }

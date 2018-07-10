@@ -1,14 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { RegisterService } from '../../services/auth/register.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-activate',
   templateUrl: './activate.component.html',
   styleUrls: ['./activate.component.scss']
 })
-export class ActivateComponent implements OnInit {
+export class ActivateComponent implements OnInit, OnDestroy {
 
+  private subscription: ISubscription;
+  
   username : string | null;
   code : string | null;
   activationResult : boolean = false;
@@ -16,7 +19,7 @@ export class ActivateComponent implements OnInit {
 
   constructor(
     private registerService : RegisterService,
-     private router: Router,
+    private router: Router,
     private route: ActivatedRoute,
     private changeDetectorRef:ChangeDetectorRef) { }
 
@@ -31,7 +34,7 @@ export class ActivateComponent implements OnInit {
     if(l == 2){
       this.username = parameters[0];
       this.code = parameters[1];
-      this.registerService.activate(this.username, this.code).subscribe(
+      this.subscription = this.registerService.activate(this.username, this.code).subscribe(
         (success) => {
           if(success == true){
             this.activationResult = true;
@@ -46,10 +49,17 @@ export class ActivateComponent implements OnInit {
           this.changeDetectorRef.detectChanges();
         }
       );
+
     }
     else{
       console.log("not formatted like: username@code");
       this.router.navigateByUrl("/login");
+    }
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription !== null && this.subscription !== undefined){
+      this.subscription.unsubscribe();
     }
   }
 

@@ -1,15 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ResetService } from '../../services/auth/reset.service';
 import { Router } from '@angular/router';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-resetPassword',
   templateUrl: './resetPassword.component.html',
   styleUrls: ['./resetPassword.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
 
+  private subscription: ISubscription;
   errorMessage: string | null;
   changeDetectorRefs :ChangeDetectorRef[] = [];
 
@@ -22,9 +24,15 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy(): void {
+    if(this.subscription !== null && this.subscription !== undefined){
+      this.subscription.unsubscribe();
+    }
+  }
+
   resetPassword(){
     if(this.form.valid){
-      this.resetService.getReset(this.form.controls.username.value).subscribe((success) =>
+      this.subscription = this.resetService.getReset(this.form.controls.username.value).subscribe((success) =>
     {
       this.router.navigateByUrl("/resetSuccess");
 
