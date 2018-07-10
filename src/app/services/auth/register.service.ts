@@ -15,7 +15,7 @@ constructor(private http : Http) {
  }
 register(user:User){
   let targetUrl = this.basic_url + "/guest/register";
-  console.log(targetUrl);
+  //console.log(targetUrl);
   let res=this.http.post(
       targetUrl,
       user,

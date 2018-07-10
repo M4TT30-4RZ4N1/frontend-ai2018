@@ -22,7 +22,7 @@ export class PositionService {
     confirmPath : String = this.buyPath+"/confirm";
     constructor(private webclient : HttpClient) { }
 
-    debug(){console.log("Position Service Working");}
+    //debug(){console.log("Position Service Working");}
 
 /*
     getAllPositions(){
@@ -33,7 +33,7 @@ export class PositionService {
 */
 
     getPositions(startDate : number, endDate : number, objectToSend : QueryObj) : Observable<QueryResult>{
-        console.log("Sending JSON: " + JSON.stringify(objectToSend));
+        //console.log("Sending JSON: " + JSON.stringify(objectToSend));
    
         return this.webclient.post<QueryResult>(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
                                             JSON.stringify(objectToSend),

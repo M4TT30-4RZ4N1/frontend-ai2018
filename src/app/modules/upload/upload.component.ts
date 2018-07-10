@@ -20,8 +20,8 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     let token = window.localStorage.getItem('ai-token');
     //token = 'Bearer '+ token;
-    console.log(token);
-    console.log(URL);
+    //console.log(token);
+    //console.log(URL);
     this.uploader = new FileUploader({
                     url: URL,
                     isHTML5: true,

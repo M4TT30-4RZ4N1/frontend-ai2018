@@ -45,7 +45,7 @@ export class ResetComponent implements OnInit, OnDestroy {
       //console.log(this.username + " " + this.code);
     }
     else{
-      console.log("not formatted like: username@code");
+      //console.log("not formatted like: username@code");
       this.router.navigateByUrl("/login");
     }
 

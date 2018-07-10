@@ -60,7 +60,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
  }
 
   submit_registration() {
-    console.log("Registration parameters inserted:"
+    //console.log("Registration parameters inserted:"
       + this.registrationForm.controls.username.value + " | "
       + this.registrationForm.controls.password.value + " | "
       + this.registrationForm.controls.confirmpassword.value + " | ");
@@ -71,7 +71,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         this.registrationForm.controls.username.value,
         this.registrationForm.controls.password.value);
 
-        console.log(this.user);
+        //console.log(this.user);
 
     if (this.registrationForm.valid) {
       this.subscription = this.registerService.register(this.user).subscribe((data) => {

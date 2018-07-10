@@ -52,7 +52,7 @@ export class ActivateComponent implements OnInit, OnDestroy {
 
     }
     else{
-      console.log("not formatted like: username@code");
+      //console.log("not formatted like: username@code");
       this.router.navigateByUrl("/login");
     }
   }

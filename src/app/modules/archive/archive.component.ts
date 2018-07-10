@@ -77,7 +77,7 @@ export class ArchiveComponent implements OnInit {
                               } );
   }
   download(filename:string){
-    console.log('downloading ' + filename);
+    //console.log('downloading ' + filename);
     this.archiveService.getArchive(filename);
     /*this.downloadSub = this.archiveService.getArchive(filename)
                       .subscribe(/(data : Response) =>{
@@ -98,7 +98,7 @@ export class ArchiveComponent implements OnInit {
 
   remove(filename:string){
     if(confirm("Are you sure to remove archive: " + filename +" ?")) {
-    console.log('removing ' + filename);
+    //console.log('removing ' + filename);
     let removedElement : Archive;
     //rimozione preventiva dell'elemento dalla lista
     for(let i = 0; i < this.ownArchives.archives.length; i++){

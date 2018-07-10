@@ -118,7 +118,7 @@ export class InsertComponent implements OnInit {
                                                   },
                                                 (error) =>
                                                   {
-                                                    console.log(error);
+                                                    //console.log(error);
                                                     alert("Error during the request");
                                                   } );    
     }

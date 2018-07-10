@@ -52,12 +52,12 @@ export class ArchiveService implements OnDestroy{
             headers: newheaders
         }).subscribe(
             (response) => {
-                console.log("File downloaded");
+                //console.log("File downloaded");
                 var blob = new Blob([response.blob()], {type: 'application/zip'});
                 var filename = 'file.zip';
                 saveAs(blob, filename);
         }, (error) => {
-            console.log("File not downloaded");
+            //console.log("File not downloaded");
             var blob = new Blob([error.blob()], {type: 'application/json'});
                 var filename = 'error.json';
                 saveAs(blob, filename);
@@ -82,12 +82,12 @@ export class ArchiveService implements OnDestroy{
             headers: newheaders
         }).subscribe(
             (response) => {
-                console.log("File downloaded");
+                //console.log("File downloaded");
                 var blob = new Blob([response.blob()], {type: 'application/json'});
                 var filename = 'file.json';
                 saveAs(blob, filename);
         }, (error) => {
-            console.log("File not downloaded");
+            //console.log("File not downloaded");
             var blob = new Blob([error.blob()], {type: 'application/json'});
                 var filename = 'error.json';
                 saveAs(blob, filename);

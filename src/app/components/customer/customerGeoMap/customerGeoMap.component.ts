@@ -344,7 +344,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let objectToSend : QueryObj = new QueryObj(this.shape,  []);
     this.buySub = this.positionService.buyPositions(startDate, endDate, objectToSend)
                   .subscribe((data :ArchiveTransaction[]) => {
-                    console.log(data);
+                    //console.log(data);
                     //this.archivesToBought = data;
                     this.archivesToBought = [];
                     for(let i = 0; i < data.length; i++){
@@ -361,7 +361,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     if(confirm("Are you confirming the transaction?")) {
     this.confirmSub = this.positionService.confirmBuy(this.archivesToBought)
                             .subscribe((data :ArchiveTransaction[]) => {
-                              console.log(data);
+                              //console.log(data);
                               //this.archivesToBought = data;
                               alert("Transaction successful!");
                               this.archivesToBought = [];
