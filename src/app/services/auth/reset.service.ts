@@ -26,8 +26,13 @@ constructor(private http: Http) {
   
  }
 
- postReset(){
-
+ postReset(username : string, code : string, pwd : string){
+  let targetUrl = this.basic_url + "/guest/forgot/"+ username +"/" + code;
+  let body = pwd;
+  
+  return this.http.post(targetUrl, body).map(resp=>{
+    return resp.status===200?true:false
+  });
  }
     
 }

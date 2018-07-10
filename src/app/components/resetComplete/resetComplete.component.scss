@@ -10,7 +10,11 @@
     justify-content: center;
   }
   
-  $color: rgb(136, 134, 134);
+  mat-card-title, h3 {
+    font-weight: bold;
+  }
+  
+  $color: rgb(96, 180, 248);
   
   .mybutton {
    background-color: #fff;
