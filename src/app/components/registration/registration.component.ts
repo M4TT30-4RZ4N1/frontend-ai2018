@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { User } from '../../models/user';
-import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder, EmailValidator } from '@angular/forms';
 import { CheckDuplicateUsernameService } from '../../services/auth/checkDuplicateUsername.service';
 import { Observable } from 'rxjs';
 import { RegisterService } from '../../services/auth/register.service';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
+  changeDetectorRefs :ChangeDetectorRef[] = [];
   public user: User;
   public barLabel: string = "Password strength:";
   public myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
@@ -20,7 +21,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private router : Router,
     private checkDuplicateUsernameService: CheckDuplicateUsernameService,
-    private registerService:RegisterService) {
+    private registerService:RegisterService,
+    private changeDetectorRef:ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class RegistrationComponent implements OnInit {
   @Input() errorMessage: string | null;
 
    registrationForm: FormGroup = new FormGroup({
+    email: new FormControl('',[Validators.required]),
     username: new FormControl('',[Validators.required],this.validateUsernameNotTaken.bind(this)),
     password: new FormControl('', Validators.required),
     confirmpassword: new FormControl('', Validators.required)
@@ -55,6 +58,7 @@ export class RegistrationComponent implements OnInit {
 
       this.user =
       new User(
+        this.registrationForm.controls.email.value,
         this.registrationForm.controls.username.value,
         this.registrationForm.controls.password.value);
 
@@ -64,8 +68,10 @@ export class RegistrationComponent implements OnInit {
       this.registerService.register(this.user).subscribe((data) => {
         if (!data) {
           this.errorMessage = "Registration Error";
+          this.changeDetectorRef.detectChanges();
         }
         else{
+          this.errorMessage = null;
           window.localStorage.setItem('ai-registration', 'pending');
           this.router.navigateByUrl('registrationSuccess');
         }

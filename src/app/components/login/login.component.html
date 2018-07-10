@@ -16,9 +16,14 @@
     {{errorMessage}}
   </p>
 
+  
+  <p class="forgot link-btn">
+      <button type="submit" mat-button (click)="forgotPassword()" > Forgot password? </button>
+  </p>
   <p class="loginButtons">
     <button type="submit" mat-button [disabled]='disableButton || form.invalid'>Login</button>
   </p>
+ 
 
 
 </form>

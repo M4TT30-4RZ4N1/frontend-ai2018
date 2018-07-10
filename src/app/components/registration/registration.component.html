@@ -1,5 +1,10 @@
 
 <form [formGroup]="registrationForm" (ngSubmit)="submit_registration()">
+  <p>
+  <mat-input-container>
+    <input type="email" matInput placeholder="Email" formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" email  required>
+  </mat-input-container>
+  </p>
 
 <p>
 <mat-input-container>

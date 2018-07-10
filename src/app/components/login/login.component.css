@@ -30,3 +30,16 @@
 .message h3{
   margin: 0 0 5px 0;                                                  
 }
+
+.forgot {
+  display: flex;
+  align-self: left;
+  color: rgb(0, 81, 255);
+  text-decoration: underline;
+  text-decoration-color: rgb(0, 81, 255);
+}
+
+.link-btn:hover /deep/ .mat-button-focus-overlay {
+  background-color: transparent;
+  
+}

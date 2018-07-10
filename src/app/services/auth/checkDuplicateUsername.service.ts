@@ -13,7 +13,7 @@ export class CheckDuplicateUsernameService {
   }
   check(username:string){
     let targetUrl = this.basic_url + "/guest/checkUser/"+username;
-    console.log(targetUrl);
+    //console.log(targetUrl);
     return this.http.get(targetUrl).map(resp=>{
       return resp.status===200?true:false
     });

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor(private authService : AuthService) { }
+  constructor(private authService : AuthService, private router : Router) { }
 
   ngOnInit() {  
     this.errorMessage = window.localStorage.getItem('error-login');
@@ -40,6 +41,10 @@ export class LoginComponent implements OnInit {
      this.disableButton = true;
      this.authService.login(this.form.controls.username.value , this.form.controls.password.value);
     }
+}
+
+forgotPassword(){
+  this.router.navigateByUrl("/resetPassword");
 }
 
 }

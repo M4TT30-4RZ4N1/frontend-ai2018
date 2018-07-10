@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from '../../components/login/login.component';
 import { RegistrationComponent } from '../../components/registration/registration.component';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
+import { ResetPasswordComponent } from '../../components/resetPassword/resetPassword.component';
+import { ResetSuccessComponent } from '../../components/resetSuccess/resetSuccess.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
   declarations: [
     AuthComponent, 
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ResetPasswordComponent,
+    ResetSuccessComponent
   ]
 })
 export class AuthModule { }

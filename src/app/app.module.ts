@@ -37,6 +37,8 @@ import { RegisterService } from './services/auth/register.service';
 import { SuccessMessageComponent } from './components/successMessage/successMessage.component';
 import { RegistrationGuardService } from './services/auth/RegistrationGuard.service';
 import { ArchiveService } from './services/archive/archive.service';
+import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
+import { ResetService } from './services/auth/reset.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,6 @@ import { ArchiveService } from './services/archive/archive.service';
     SearchComponent,
     InsertComponent,
     CustomerDataComponent,
-   
   ],
   imports: [
     AppRoutingModule,
@@ -80,6 +81,7 @@ import { ArchiveService } from './services/archive/archive.service';
     RegistrationGuardService,
     UserService,
     ArchiveService,
+    ResetService
   ],
   bootstrap: [AppComponent]
 })

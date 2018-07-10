@@ -22,6 +22,8 @@ import { BuyComponent } from './modules/buy/buy.component';
 import { AuthComponent } from './modules/auth/auth.component';
 import { SuccessMessageComponent } from './components/successMessage/successMessage.component';
 import { RegistrationGuardService } from './services/auth/RegistrationGuard.service';
+import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
+import { ResetSuccessComponent } from './components/resetSuccess/resetSuccess.component';
 
 
 const routes: Routes = [
@@ -72,6 +74,8 @@ const routes: Routes = [
   { path:'', pathMatch: 'full', redirectTo:'login'},
   { path: 'login', component: AuthComponent, canActivate:[NoAuthGuardService], pathMatch: 'full'},
   { path: 'registrationSuccess', component: SuccessMessageComponent, canActivate:[NoAuthGuardService, RegistrationGuardService], pathMatch: 'full'},
+  { path: 'resetPassword', component: ResetPasswordComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
+  { path: 'resetSuccess', component: ResetSuccessComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
   { path: '404NotFound', component: PageNotFoundComponent, pathMatch: 'full'},
   { path: '**', redirectTo: '404NotFound', pathMatch: 'full'},
 ];
