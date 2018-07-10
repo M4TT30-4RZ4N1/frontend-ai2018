@@ -14,18 +14,19 @@
                 Drop files here!
             </div>
 
-            <h4>OR Click below:</h4>
-            <div class="holder">
+            <h4>OR Click below:
+            
                 <input type="file" id="file" class="upload divcontent" ng2FileSelect [uploader]="uploader" multiple/>
                 <br/>
                 <label for="file" classe="divcontent">
                     <img src="assets/cloud.png" class="divcontent" height="100" width="150" />
                 </label>
-            </div>
+            
+        </h4>
 
         </div>
 
-        <div class="col-md-7" style="margin-bottom: 40px">
+        <div class="col-md-8" style="margin-bottom: 40px">
 
             <h4>Upload queue</h4>
             <p class="pcenter">Queue Length: {{ uploader?.queue?.length }}</p>
@@ -81,7 +82,7 @@
                 </tbody>
             </table>
 
-            <div>
+           
                 <div class="progresscontainer">
                     Progress Queue
                     <div class="progress">
@@ -119,6 +120,5 @@
 
         </div>
 
-    </div>
 
 </mat-card-content>
