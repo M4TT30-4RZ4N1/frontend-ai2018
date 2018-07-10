@@ -15,6 +15,10 @@
     justify-content: center;
   }
 
+  mat-card-title{
+    font-weight: bold;
+  }
+
 
   .loginButtons {
     display: flex;
@@ -25,6 +29,7 @@
 .error{
   background-color: #de4343;
   border-color: #c43d3d;
+  text-align: center;
 }
 
 .message h3{
@@ -42,4 +47,9 @@
 .link-btn:hover /deep/ .mat-button-focus-overlay {
   background-color: transparent;
   
+}
+
+h5{
+    text-align: center;
+    font-weight: bold;
 }

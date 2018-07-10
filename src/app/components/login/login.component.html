@@ -1,4 +1,3 @@
-
 <form [formGroup]="form" (ngSubmit)="submit_login()">
   <p>
     <mat-input-container>
@@ -16,15 +15,12 @@
     {{errorMessage}}
   </p>
 
-  
-  <p class="forgot link-btn">
-      <button type="submit" mat-button (click)="forgotPassword()" > Forgot password? </button>
-  </p>
-  <p class="loginButtons">
+  <p class="loginButtons ">
     <button type="submit" mat-button [disabled]='disableButton || form.invalid'>Login</button>
   </p>
  
-
-
+  <p class="forgot link-btn">
+      <button type="submit" mat-button (click)="forgotPassword()" > Forgot password? </button>
+  </p>
 </form>
 

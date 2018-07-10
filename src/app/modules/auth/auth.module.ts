@@ -8,6 +8,8 @@ import { RegistrationComponent } from '../../components/registration/registratio
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 import { ResetPasswordComponent } from '../../components/resetPassword/resetPassword.component';
 import { ResetSuccessComponent } from '../../components/resetSuccess/resetSuccess.component';
+import { ResetComponent } from '../../components/reset/reset.component';
+import { ResetCompleteComponent } from '../../components/resetComplete/resetComplete.component';
 
 @NgModule({
   imports: [
@@ -22,7 +24,9 @@ import { ResetSuccessComponent } from '../../components/resetSuccess/resetSucces
     LoginComponent,
     RegistrationComponent,
     ResetPasswordComponent,
-    ResetSuccessComponent
+    ResetSuccessComponent,
+    ResetComponent,
+    ResetCompleteComponent
   ]
 })
 export class AuthModule { }

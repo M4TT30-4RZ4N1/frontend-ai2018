@@ -1,0 +1,40 @@
+
+<mat-card>
+  <mat-card-title>Reset Password</mat-card-title>
+<form [formGroup]="resetForm" (ngSubmit)="reset()">
+  
+  <h5> Hi {{username}}</h5>
+  <p>
+  <mat-input-container matTooltip="Password length from 8 to 16">
+      <input type="password" id="pwd" matInput placeholder="Password" formControlName="password" minlength="8" maxlength="16" required>
+  </mat-input-container>
+  </p>
+  <ng2-password-strength-bar 
+            [passwordToCheck]="resetForm.value.password"
+            [barLabel]="barLabel"
+            [barColors]="myColors">
+  </ng2-password-strength-bar>
+  <br>
+  <p>
+  <mat-input-container matTooltip="Confirm password must be equal to Password">
+      <input type="password" id="confirmpwd" matInput placeholder="Confirm Password" formControlName="confirmpassword" required validateEqual="password">
+  </mat-input-container>
+  </p>
+  <br>
+  <input type="checkbox" (click)="showHide()">Show Password
+  
+  <p *ngIf="errorMessage" class="loginError">
+  {{ errorMessage }}
+  </p>
+  
+  <p class="loginButtons">
+  <button type="submit" mat-button [disabled]="!resetForm.valid">Change Password</button>
+  </p>
+  
+  </form>
+
+</mat-card>
+  
+  
+  
+  
