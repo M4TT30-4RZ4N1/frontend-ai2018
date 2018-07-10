@@ -97,6 +97,7 @@ export class ArchiveComponent implements OnInit {
   }
 
   remove(filename:string){
+    if(confirm("Are you sure to remove archive: " + filename +" ?")) {
     console.log('removing ' + filename);
     let removedElement : Archive;
     //rimozione preventiva dell'elemento dalla lista
@@ -119,6 +120,7 @@ export class ArchiveComponent implements OnInit {
                        })
 
   }
+}
 
   changePageSize(value : any){
   
@@ -149,43 +151,55 @@ export class ArchiveComponent implements OnInit {
         filenames.push(htmlElement.value);
       }
     }
-    this.archiveService.getArchives(filenames);
+    if(filenames.length >0){
+      this.archiveService.getArchives(filenames);
+    }
 
   }
 
   removeSelected(){
-    let elements =  document.getElementsByClassName("mycheck");
-    let filenames : string[] = [];
-    for(let i=0; i< elements.length; i++) {
-      let htmlElement = <HTMLInputElement> elements[i];
-      if(htmlElement.checked){
-        filenames.push(htmlElement.value);
-      }
-    }
-    let removedElements : Archive[] = [];
-    //rimozione preventiva dell'elemento dalla lista
-    for(let j = 0; j < filenames.length; j++){
-      for(let i = 0; i < this.ownArchives.archives.length; i++){
-        if(this.ownArchives.archives[i].filename.localeCompare(filenames[j]) == 0){
-          removedElements.push(this.ownArchives.archives[i]);
-          this.ownArchives.archives.splice(i, 1);
-          break;
+
+    if(confirm("Are you sure to remove all selected archives?")) {
+      let elements =  document.getElementsByClassName("mycheck");
+      let filenames : string[] = [];
+      for(let i=0; i< elements.length; i++) {
+        let htmlElement = <HTMLInputElement> elements[i];
+        if(htmlElement.checked){
+          filenames.push(htmlElement.value);
         }
       }
+      let removedElements : Archive[] = [];
+      //rimozione preventiva dell'elemento dalla lista
+      for(let j = 0; j < filenames.length; j++){
+        for(let i = 0; i < this.ownArchives.archives.length; i++){
+          if(this.ownArchives.archives[i].filename.localeCompare(filenames[j]) == 0){
+            removedElements.push(this.ownArchives.archives[i]);
+            this.ownArchives.archives.splice(i, 1);
+            break;
+          }
+        }
+      }
+      //let _self = this;
+      if(filenames.length > 0){
+        this.deleteSub = this.archiveService.deleteArchives(filenames)
+                            .subscribe( (data) => {
+                                alert("Delete successful");
+                            },
+                          (error) => {
+                            //se ho avuto errore riaggiungo gli elementi nella lista
+                            for(let i = 0; i < removedElements.length; i++){
+                              let removedElement : Archive = removedElements[i];
+                              this.ownArchives.archives.push(removedElement);
+                              alert("Server error. Unable to delete " + removedElement.getFilename());
+                            }
+                          });
+        }
+      }
+      else{
+        
     }
-    //let _self = this;
-    this.deleteSub = this.archiveService.deleteArchives(filenames)
-                        .subscribe( (data) => {
-                            alert("Delete successful");
-                        },
-                       (error) => {
-                         //se ho avuto errore riaggiungo gli elementi nella lista
-                         for(let i = 0; i < removedElements.length; i++){
-                          let removedElement : Archive = removedElements[i];
-                          this.ownArchives.archives.push(removedElement);
-                          alert("Server error. Unable to delete " + removedElement.getFilename());
-                         }
-                       });
+
+   
   }
 
   cancelSelected(){
