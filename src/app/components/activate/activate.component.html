@@ -1,0 +1,16 @@
+<mat-card>
+    <mat-card-title> <h3>Mobile Data Marketplace Application </h3></mat-card-title>
+    <div *ngIf="activationResult"  class="success-msg">
+      <i class="fa fa-check"></i>
+       Account activated with success! Congratulations {{username}}, you are welcome! 
+      </div>
+      <div *ngIf="!activationResult" class="error-msg">
+          <i class="fa fa-check"></i>
+           An error occured durign activation process! Please retry or contact our staff! 
+      </div>
+      <div>
+          <button class="mybutton" (click)="redirectToLogin()">
+            Go to Login 
+          </button>
+      </div>
+    </mat-card>

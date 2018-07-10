@@ -26,6 +26,7 @@ import { ResetPasswordComponent } from './components/resetPassword/resetPassword
 import { ResetSuccessComponent } from './components/resetSuccess/resetSuccess.component';
 import { ResetComponent } from './components/reset/reset.component';
 import { ResetCompleteComponent } from './components/resetComplete/resetComplete.component';
+import { ActivateComponent } from './components/activate/activate.component';
 
 
 const routes: Routes = [
@@ -76,6 +77,7 @@ const routes: Routes = [
   { path:'', pathMatch: 'full', redirectTo:'login'},
   { path: 'login', component: AuthComponent, canActivate:[NoAuthGuardService], pathMatch: 'full'},
   { path: 'registrationSuccess', component: SuccessMessageComponent, canActivate:[NoAuthGuardService, RegistrationGuardService], pathMatch: 'full'},
+  { path: 'activate/:id', component:ActivateComponent,  canActivate:[NoAuthGuardService]},
   { path: 'resetPassword', component: ResetPasswordComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
   { path: 'resetSuccess', component: ResetSuccessComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
   { path: 'reset/:id', component: ResetComponent, canActivate:[NoAuthGuardService]},

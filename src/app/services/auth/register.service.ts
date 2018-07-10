@@ -27,4 +27,12 @@ register(user:User){
   ).catch((e)=>{return Observable.of(false)});
   return res;
 }
+
+activate(username : string, code : string){
+  let targetUrl = this.basic_url + "/guest/activate/"+ username+"/" +code;
+
+  return this.http.get(targetUrl).map(resp=>{
+    return resp.status===200?true:false
+  });
+}
 }

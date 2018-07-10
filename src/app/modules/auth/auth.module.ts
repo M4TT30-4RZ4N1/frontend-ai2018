@@ -10,6 +10,7 @@ import { ResetPasswordComponent } from '../../components/resetPassword/resetPass
 import { ResetSuccessComponent } from '../../components/resetSuccess/resetSuccess.component';
 import { ResetComponent } from '../../components/reset/reset.component';
 import { ResetCompleteComponent } from '../../components/resetComplete/resetComplete.component';
+import { ActivateComponent } from '../../components/activate/activate.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { ResetCompleteComponent } from '../../components/resetComplete/resetComp
     AuthComponent, 
     LoginComponent,
     RegistrationComponent,
+    ActivateComponent,
     ResetPasswordComponent,
     ResetSuccessComponent,
     ResetComponent,
