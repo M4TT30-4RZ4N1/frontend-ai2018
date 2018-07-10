@@ -358,6 +358,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   confirm(){
+    if(confirm("Are you confirming the transaction?")) {
     this.confirmSub = this.positionService.confirmBuy(this.archivesToBought)
                             .subscribe((data :ArchiveTransaction[]) => {
                               console.log(data);
@@ -369,6 +370,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
                                 alert("Transaction Error!");
                                 console.dir(error);   
                             });
+                          }
 
   }
 
