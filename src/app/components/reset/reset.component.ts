@@ -14,6 +14,8 @@ export class ResetComponent implements OnInit {
   code : string | null;
   errorMessage : string | null;
   changeDetectorRefs : ChangeDetectorRef[] = [];
+  public barLabel: string = "Password strength:";
+  public myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
   
   resetForm: FormGroup = new FormGroup({
     password: new FormControl('', Validators.required),
