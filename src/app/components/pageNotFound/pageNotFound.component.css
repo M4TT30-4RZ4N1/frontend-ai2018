@@ -63,6 +63,12 @@ a.button2:hover {
     box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
 }
 
+mat-card-title,
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+  }
+
 
    
 
