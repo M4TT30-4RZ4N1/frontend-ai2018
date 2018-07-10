@@ -56,7 +56,7 @@ const routes: Routes = [
       ],
     component: LayoutAuthComponent,
     data: [{
-      'skin': 'skin-black',
+      'skin': 'skin-blue',
       'display_tasks': false,
       'display_notifications': false,
       'display_menu_search': false,

@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico",
+        "world.png",
         { "glob": "**/*", "input": "../node_modules/ngx-admin-lte/public/assets", "output": "./assets" }
       ],
       "scripts": [
