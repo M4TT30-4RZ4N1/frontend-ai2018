@@ -17,6 +17,7 @@ export class PositionService {
 
     serverAddress : String = environment.API_URL+"/customer";
     //serverAddress : String = "http://localhost:3000";
+    usersPath : String = "/users";
     buyPath : String = "/buy";
     getPath : String = "/search";
     confirmPath : String = this.buyPath+"/confirm";
@@ -32,6 +33,10 @@ export class PositionService {
     }
 */
 
+    getUsers() : Observable<String[]>{
+        return this.webclient.get<String[]>(this.serverAddress+""+this.usersPath);
+    
+    }
     getPositions(startDate : number, endDate : number, objectToSend : QueryObj) : Observable<QueryResult>{
         //console.log("Sending JSON: " + JSON.stringify(objectToSend));
         //console.log(startDate + " to " + endDate);

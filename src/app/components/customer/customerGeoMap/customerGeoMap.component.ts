@@ -36,6 +36,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   positionsSub : Subscription;
   buySub : Subscription;
   confirmSub : Subscription;
+  usersSub : Subscription;
 	vertices : number = 0;
   truePolygon : boolean;
   shape : Shape;
@@ -105,6 +106,10 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   } 
   ngOnInit() {
     this.timestampsMap = new Map();
+    this.usersSub = this.positionService.getUsers()
+                                        .subscribe((data) =>{
+                                            this.usersFilter = data;
+                                        });
     this.createChart();  
   }
 
@@ -115,6 +120,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       this.buySub.unsubscribe();
     if(this.confirmSub !== null && this.confirmSub !== undefined)
       this.confirmSub.unsubscribe();
+    if(this.usersSub !== null && this.usersSub !== undefined)
+      this.usersSub.unsubscribe();
   }
 
   createChart(){ 
@@ -174,11 +181,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 
   elaborateSearchResult(data : QueryResult, _self){
     _self.cancel();
-    _self.usersFilter = [];
+    //_self.usersFilter = [];
     for(let i=0 ; i< data.byUser.length; i++){
       let user = data.byUser[i].user;
       let color = data.byUser[i].color;
-      _self.usersFilter.push(user);
+      //_self.usersFilter.push(user);
       _self.colorMap.set(user, color);
     }
     let timestampData = data.byTimestamp;
