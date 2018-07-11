@@ -33,8 +33,8 @@ export class PositionService {
 */
 
     getPositions(startDate : number, endDate : number, objectToSend : QueryObj) : Observable<QueryResult>{
-        //console.log("Sending JSON: " + JSON.stringify(objectToSend));
-   
+        console.log("Sending JSON: " + JSON.stringify(objectToSend));
+        console.log(startDate + " to " + endDate);
         return this.webclient.post<QueryResult>(this.serverAddress+""+this.getPath+"?after="+startDate+"&before="+endDate,
                                             JSON.stringify(objectToSend),
                                             {

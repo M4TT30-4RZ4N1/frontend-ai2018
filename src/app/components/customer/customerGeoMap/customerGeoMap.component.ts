@@ -215,8 +215,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 
   mapChangeCallback(_self){
     _self.cancel();
-    let startDate = _self.selectedMoments[0].getTime();
-    let endDate = _self.selectedMoments[1].getTime();
+    let startDate = this.convertDate(_self.selectedMoments[0].getTime());
+    let endDate = this.convertDate(_self.selectedMoments[1].getTime());
     _self.shape = new Shape('Polygon', [ _self.boundsPolygon]);
     let objectToSend : QueryObj = new QueryObj( _self.shape,  []);
     //evito la sovrapposizione di più richieste
@@ -312,8 +312,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 	sendPositions(){
 
     // get time in milliseconds
-    let startDate = this.selectedMoments[0].getTime();
-    let endDate = this.selectedMoments[1].getTime();
+    let startDate = this.convertDate(this.selectedMoments[0].getTime());
+    let endDate = this.convertDate(this.selectedMoments[1].getTime());
     let polygonWellFormatted = this.getPolygonWellFormatted();
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
     let objectToSend : QueryObj = new QueryObj(this.shape,  this.usersFilterQuery);
@@ -345,8 +345,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   buy(){
-    let startDate = this.selectedMoments[0].getTime();
-    let endDate = this.selectedMoments[1].getTime();
+    let startDate = this.convertDate(this.selectedMoments[0].getTime());
+    let endDate = this.convertDate(this.selectedMoments[1].getTime());
     let polygonWellFormatted = this.getPolygonWellFormatted();
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
     let objectToSend : QueryObj = new QueryObj(this.shape,  this.usersFilterQuery);
