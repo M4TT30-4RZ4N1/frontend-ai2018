@@ -39,6 +39,7 @@ import { RegistrationGuardService } from './services/auth/RegistrationGuard.serv
 import { ArchiveService } from './services/archive/archive.service';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { ResetService } from './services/auth/reset.service';
+import { ConnectionErrrorComponent } from './components/connectionErrror/connectionErrror.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ResetService } from './services/auth/reset.service';
     SearchComponent,
     InsertComponent,
     CustomerDataComponent,
+    ConnectionErrrorComponent
   ],
   imports: [
     AppRoutingModule,

@@ -27,6 +27,7 @@ import { ResetSuccessComponent } from './components/resetSuccess/resetSuccess.co
 import { ResetComponent } from './components/reset/reset.component';
 import { ResetCompleteComponent } from './components/resetComplete/resetComplete.component';
 import { ActivateComponent } from './components/activate/activate.component';
+import { ConnectionErrrorComponent } from './components/connectionErrror/connectionErrror.component';
 
 
 const routes: Routes = [
@@ -83,6 +84,7 @@ const routes: Routes = [
   { path: 'reset/:id', component: ResetComponent, canActivate:[NoAuthGuardService]},
   { path: 'resetComplete', component: ResetCompleteComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
   { path: '404NotFound', component: PageNotFoundComponent, pathMatch: 'full'},
+  { path: 'connectionError', component: ConnectionErrrorComponent, pathMatch: 'full'},
   { path: '**', redirectTo: '404NotFound', pathMatch: 'full'},
 ];
 
