@@ -44,6 +44,7 @@ login( username : string, password : string) {
 
     let jsonObservable: Observable<any> = postObservable.map(
         ( response ) => {
+            console.log(response);
             return response.json();
         }
     );
@@ -53,11 +54,9 @@ login( username : string, password : string) {
         //console.log(json.access_token);
         window.localStorage.setItem('ai-token', json.access_token);
         this.router.navigate(['/home']);
-    }, error => {
-        //console.log('error!!!');
-        window.localStorage.setItem('error-login','Invalid Credentials');
-        window.location.reload();
     });
+
+    return jsonObservable;
 
 }
 

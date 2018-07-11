@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  changeDetectorRefs : ChangeDetectorRef[] = [];
 
   disableButton : boolean = false;
   @Input()
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor(private authService : AuthService, private router : Router) { }
+  constructor(private authService : AuthService, private router : Router, private changeDetectorRef:ChangeDetectorRef) { }
 
   ngOnInit() {  
     this.errorMessage = window.localStorage.getItem('error-login');
@@ -39,7 +41,22 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
      this.form.disable();
      this.disableButton = true;
-     this.authService.login(this.form.controls.username.value , this.form.controls.password.value);
+     this.authService.login(this.form.controls.username.value , this.form.controls.password.value).subscribe(
+        () => {}, error => { 
+  
+          if(error.status == 400){
+            this.errorMessage = JSON.parse(error._body).error_description;
+           
+          }
+          else{
+             this.errorMessage = "Error, please try later."
+          }
+
+          this.form.enable();
+          this.disableButton = false;
+          this.changeDetectorRef.detectChanges();
+        } 
+     );
     }
 }
 

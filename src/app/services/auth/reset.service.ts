@@ -22,7 +22,7 @@ constructor(private http: Http) {
  }
 
  postReset(username : string, code : string, pwd : string){
-  let targetUrl = this.basic_url + "/guest/forgot/"+ username +"/" + code;
+  let targetUrl = this.basic_url + "/guest/reset/"+ username +"/" + code;
   let body = pwd;
   
   return this.http.post(targetUrl, body).map(resp=>{
