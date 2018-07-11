@@ -283,7 +283,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       }
       //console.log(this.truePolygon);
     });
-
+    this.sendPositions();
   }
 	apply() {
 
