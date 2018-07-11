@@ -200,7 +200,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     //console.dir( _self.colorMap);
     let positionData = data.byPosition;
     //console.dir(positionData);
-    _self.positionsInArea = positionData.length;
+    _self.positionsInArea = data.byTotal;
     _self.markerLayers = [];
     for(let i=0 ; i< positionData.length; i++){
       let user = positionData[i].user;
@@ -435,7 +435,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     else{
       all.checked = true;
     }
-  
+    this.sendPositions();
   }
 
   clickNone(){
@@ -458,7 +458,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     else{
       none.checked = true;
     }
-    
+    this.sendPositions();
   }
 
   clickFilter(){
@@ -475,18 +475,19 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
         let htmlElement = <HTMLInputElement> elements[i];
         htmlElement.disabled = false;
         this.selectedUsers.set(htmlElement.value, htmlElement.checked);
+        filter.checked = true;
       }
-
    }
    else{
     filter.checked = true;
   }
-
+    this.sendPositions();
   }
   selectUser(event){
     let user = event.srcElement.value;
     let checked = event.srcElement.checked;
     this.selectedUsers.set(user, checked);
+    this.sendPositions();
   }
 
   getCheckedUsers(){
