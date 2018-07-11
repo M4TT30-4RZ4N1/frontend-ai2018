@@ -28,7 +28,7 @@
                     [min]="selectedMoments[0]"
                     [owlDateTimeTrigger]="dt13" 
                     [owlDateTime]="dt13" [(ngModel)]="selectedMoments" [selectMode]="'rangeTo'"
-                        [ngModelOptions]="{standalone: true}">
+                        [ngModelOptions]="{standalone: true}" (dateTimeChange)="sendPositions()">
                     <owl-date-time #dt13></owl-date-time>
 
                 </button>

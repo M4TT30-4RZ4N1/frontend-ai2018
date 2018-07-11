@@ -191,6 +191,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
         displacementMap.set(user, uniqueUser++);
       }
       let timestamp = timestampData[i].timestamp;
+      console.log("Timestamp: " + timestamp);
       let timestampToPlot = { x : timestamp , y : _self.yTimestampValue+2*_self.yTimestampValue*displacementMap.get(user)};
       
       _self.timestampsMap.get(user).push(timestampToPlot);
@@ -314,7 +315,6 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   
 
 	sendPositions(){
-
     // get time in milliseconds
     let startDate = this.convertDate(this.selectedMoments[0].getTime());
     let endDate = this.convertDate(this.selectedMoments[1].getTime());
