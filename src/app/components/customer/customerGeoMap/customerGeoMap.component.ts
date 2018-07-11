@@ -122,6 +122,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     this.timestampsMap.forEach((value, user) => {
       queryPoints.push({
           type: "scatter",
+          xValueFormatString:"DD-MMM-YYYY HH:mm",
           toolTipContent: "<span style=\"color:"+ this.colorMap.get(user) + " \"><b>{name}</b></span><br/><b> User:</b> "+ user+"<br/><b>Time:</b></span> {x}",
           color: this.colorMap.get(user),
           name: user,
@@ -134,9 +135,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       animationEnabled: true,
       axisX: {
         title:"",
-        labelFormatter: function ( e ) {
-           return new Date(e.value).toLocaleTimeString();  
-           }
+        /*labelFormatter: function ( e ) {
+           return new Date(e.value).toLocaleTimeString().slice(0,-3);  
+           }*/
       },
       axisY:{
         title: "",
@@ -191,8 +192,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
         displacementMap.set(user, uniqueUser++);
       }
       let timestamp = timestampData[i].timestamp;
-      console.log("Timestamp: " + timestamp);
-      let timestampToPlot = { x : timestamp , y : _self.yTimestampValue+2*_self.yTimestampValue*displacementMap.get(user)};
+      let timestampToPlot = { x : /*timestamp*1000*/ new Date(timestamp*1000) , y : _self.yTimestampValue+2*_self.yTimestampValue*displacementMap.get(user)};
       
       _self.timestampsMap.get(user).push(timestampToPlot);
     }
@@ -221,9 +221,10 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     _self.cancel();
     let startDate = this.convertDate(_self.selectedMoments[0].getTime());
     let endDate = this.convertDate(_self.selectedMoments[1].getTime());
-    _self.shape = new Shape('Polygon', [ _self.boundsPolygon]);
-    this.getCheckedUsers();
-    let objectToSend : QueryObj = new QueryObj( _self.shape,  this.usersFilterQuery);
+    let polygonWellFormatted = this.getPolygonWellFormatted();
+    _self.shape = new Shape('Polygon', [polygonWellFormatted]);
+    _self.getCheckedUsers();
+    let objectToSend : QueryObj = new QueryObj( _self.shape,  _self.usersFilterQuery);
     //evito la sovrapposizione di più richieste
     if( _self.positionsSub !== null &&  _self.positionsSub !== undefined)
       _self.positionsSub.unsubscribe();
@@ -339,17 +340,21 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     
   }
 
+  clear(){
+    this.cancel();
+    this.buttonText = "Search in visible area";
+    this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
+    this.polygonTest = [];
+    this.vertices = 0;
+  }
+
   cancel(){
     //console.log("Cancel map");
     if(this.layerOfMarkers !== null && this.layerOfMarkers !== undefined){
       this.geoMap.removeLayer(this.layerOfMarkers);
     }
-    this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
     this.timestampsMap = new Map();
     this.createChart();
-    this.buttonText = "Search in visible area";
-    this.polygonTest = [];
-    this.vertices = 0;
     this.truePolygon = false;
     this.positionsInArea = 0;
     this.archivesToBought = [];   
