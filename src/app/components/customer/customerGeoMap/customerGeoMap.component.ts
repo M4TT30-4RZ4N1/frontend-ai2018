@@ -41,6 +41,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   shape : Shape;
   usersFilter : String[];
   usersFilterQuery : String[];
+  userNone : boolean = false;
+  selectedUsers : Map<string,boolean> = new Map();
   timestampsMap : Map<string,Object> = new Map();
   buttonText : String = "Search in visible area";
   // Open Street Map and Open Cycle Map definitions
@@ -181,6 +183,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let timestampData = data.byTimestamp;
     let displacementMap : Map<string,number> = new Map();
     let uniqueUser : number = 0;
+    _self.timestampsMap = new Map();
     for(let i=0 ; i< timestampData.length; i++){
       let user = timestampData[i].user;
       if(_self.timestampsMap.get(user) === null || _self.timestampsMap.get(user) === undefined){
@@ -218,7 +221,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let startDate = this.convertDate(_self.selectedMoments[0].getTime());
     let endDate = this.convertDate(_self.selectedMoments[1].getTime());
     _self.shape = new Shape('Polygon', [ _self.boundsPolygon]);
-    let objectToSend : QueryObj = new QueryObj( _self.shape,  []);
+    this.getCheckedUsers();
+    let objectToSend : QueryObj = new QueryObj( _self.shape,  this.usersFilterQuery);
     //evito la sovrapposizione di più richieste
     if( _self.positionsSub !== null &&  _self.positionsSub !== undefined)
       _self.positionsSub.unsubscribe();
@@ -316,6 +320,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let endDate = this.convertDate(this.selectedMoments[1].getTime());
     let polygonWellFormatted = this.getPolygonWellFormatted();
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
+    this.getCheckedUsers();
+    if(this.userNone){
+      this.cancel();
+      return;
+    }
     let objectToSend : QueryObj = new QueryObj(this.shape,  this.usersFilterQuery);
     //console.dir(polygonWellFormatted);
     //console.log(startDate + " " + endDate);
@@ -336,6 +345,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       this.geoMap.removeLayer(this.layerOfMarkers);
     }
     this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
+    this.timestampsMap = new Map();
+    this.createChart();
     this.buttonText = "Search in visible area";
     this.polygonTest = [];
     this.vertices = 0;
@@ -348,6 +359,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let startDate = this.convertDate(this.selectedMoments[0].getTime());
     let endDate = this.convertDate(this.selectedMoments[1].getTime());
     let polygonWellFormatted = this.getPolygonWellFormatted();
+    this.getCheckedUsers();
     this.shape = new Shape('Polygon', [polygonWellFormatted]);
     let objectToSend : QueryObj = new QueryObj(this.shape,  this.usersFilterQuery);
     this.buySub = this.positionService.buyPositions(startDate, endDate, objectToSend)
@@ -405,7 +417,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let all = <HTMLInputElement> document.getElementById('checkallusers');
     let none = <HTMLInputElement> document.getElementById('uncheckallusers');
     let filter = <HTMLInputElement> document.getElementById('filterusers');
-
+    this.userNone = false;
+    this.usersFilterQuery = [];
+    this.selectedUsers = new Map();
     if(all.checked){ // check all
       none.checked = false;
       filter.checked = false;
@@ -428,7 +442,8 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let none = <HTMLInputElement> document.getElementById('uncheckallusers');
     let all = <HTMLInputElement> document.getElementById('checkallusers');
     let filter = <HTMLInputElement> document.getElementById('filterusers');
-
+    this.userNone = true;
+    this.usersFilterQuery = [];
     if(none.checked){
        all.checked = false;
        filter.checked = false;
@@ -450,15 +465,16 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     let all = <HTMLInputElement> document.getElementById('checkallusers');
     let none = <HTMLInputElement> document.getElementById('uncheckallusers');
     let filter = <HTMLInputElement> document.getElementById('filterusers');
-
+    this.userNone = false;
+    this.usersFilterQuery = [];
     if(filter.checked){
       all.checked = false;
       none.checked = false;
       let elements =  document.getElementsByClassName("checkuser");
-
       for(let i=0; i< elements.length; i++) {
         let htmlElement = <HTMLInputElement> elements[i];
         htmlElement.disabled = false;
+        this.selectedUsers.set(htmlElement.value, htmlElement.checked);
       }
 
    }
@@ -467,20 +483,19 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
   }
 
   }
+  selectUser(event){
+    let user = event.srcElement.value;
+    let checked = event.srcElement.checked;
+    this.selectedUsers.set(user, checked);
+  }
 
   getCheckedUsers(){
-
-    let elements =  document.getElementsByClassName("checkuser");
-
-      for(let i=0; i< elements.length; i++) {
-        let htmlElement = <HTMLInputElement> elements[i];
-        
-        if(htmlElement.checked){
-          // insert into list
-          this.usersFilterQuery.push(htmlElement.value);
-        }  
-      }    
-
+      //console.dir(this.selectedUsers);
+      this.usersFilterQuery = [];
+      this.selectedUsers.forEach((value, user) => {
+        if(value) this.usersFilterQuery.push(user);
+      });
+      //console.dir(this.usersFilterQuery); 
   }
 }
 

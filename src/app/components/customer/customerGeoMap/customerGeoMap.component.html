@@ -54,7 +54,7 @@
 
             <a *ngFor="let user of usersFilter">
                 <li (click)="$event.stopPropagation()">
-                    <input class="checkuser" type="checkbox" [value]="user" checked [disabled]="true">
+                    <input class="checkuser" type="checkbox" (click)="selectUser($event)" [value]="user" checked [disabled]="true">
                     <strong>{{user}}</strong>
                 </li>
             </a>
