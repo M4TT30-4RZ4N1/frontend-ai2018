@@ -111,7 +111,12 @@ export class ArchiveComponent implements OnInit {
     }
     this.deleteSub = this.archiveService.deleteArchive(filename)
                         .subscribe( (data) => {
-
+                          this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
+                              .subscribe( (navarchive) => {
+                                                console.dir(navarchive);
+                                                this.ownArchives=navarchive;
+                                                this.changeDetectorRef.detectChanges();
+                              } );
                         },
                        (error) => {
                          //se ho avuto errore riaggiungo l'elemento nella lista
@@ -184,6 +189,12 @@ export class ArchiveComponent implements OnInit {
         this.deleteSub = this.archiveService.deleteArchives(filenames)
                             .subscribe( (data) => {
                                 alert("Delete successful");
+                                this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
+                                                  .subscribe( (navarchive) => {
+                                                          console.dir(navarchive);
+                                                          this.ownArchives=navarchive;
+                                                          this.changeDetectorRef.detectChanges();
+                                                  } );
                             },
                           (error) => {
                             //se ho avuto errore riaggiungo gli elementi nella lista

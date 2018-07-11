@@ -7,12 +7,12 @@ import { ResponseContentType, RequestOptions, RequestMethod } from '@angular/htt
 import { Headers, Http} from '@angular/http';
 import { saveAs } from 'file-saver/FileSaver';
 import { NavigableArchive} from '../../models/navigablearchive';
-import { ISubscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 @Injectable()
 export class ArchiveService implements OnDestroy{
 
-    private subscription1: ISubscription;
-    private subscription2: ISubscription;
+    private subscription1: Subscription;
+    private subscription2: Subscription;
 
     serverAddress : String = environment.API_URL+"/user";
     resourceAddress : String = environment.API_URL+"/user/archives";
@@ -58,9 +58,10 @@ export class ArchiveService implements OnDestroy{
                 saveAs(blob, filename);
         }, (error) => {
             //console.log("File not downloaded");
-            var blob = new Blob([error.blob()], {type: 'application/json'});
-                var filename = 'error.json';
-                saveAs(blob, filename);
+            //var blob = new Blob([error.blob()], {type: 'application/json'});
+               // var filename = 'error.json';
+                //saveAs(blob, filename);
+                alert("Error during the download. Retry later!");
         }
     );
         //return this.webclient.post(this.serverAddress+"/ziparchive", body);
@@ -88,9 +89,10 @@ export class ArchiveService implements OnDestroy{
                 saveAs(blob, filename);
         }, (error) => {
             //console.log("File not downloaded");
-            var blob = new Blob([error.blob()], {type: 'application/json'});
-                var filename = 'error.json';
-                saveAs(blob, filename);
+            //var blob = new Blob([error.blob()], {type: 'application/json'});
+                //var filename = 'error.json';
+                //saveAs(blob, filename);
+                alert("Error during the download. Retry later!");
         }
     );
         //return this.webclient.post(this.serverAddress+"/ziparchive", body);
@@ -117,7 +119,9 @@ export class ArchiveService implements OnDestroy{
     }
 
     ngOnDestroy(): void {
-        this.subscription1.unsubscribe();
-        this.subscription2.unsubscribe();
+        if(this.subscription1 !== null && this.subscription1 !== undefined)
+            this.subscription1.unsubscribe();
+        if(this.subscription2 !== null && this.subscription2 !== undefined)
+            this.subscription2.unsubscribe();
     }
 }

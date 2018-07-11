@@ -205,7 +205,7 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       let lng = positionData[i].point.coordinates[0];
       // add each marker as a layer
       let c : string = _self.colorMap.get(user);
-      _self.markerLayers[i] = L.circle([lat, lng], {radius: 400, color: c});
+      _self.markerLayers[i] = L.circle([lat, lng], {radius: 1000, color: c});
     }
     // add all layers as a single array to layer
     _self.layerOfMarkers = L.layerGroup( _self.markerLayers);
