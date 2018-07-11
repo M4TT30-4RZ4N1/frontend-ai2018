@@ -23,6 +23,14 @@
         flex-shrink: 0;
       }
   </style>
+  <script>
+    window.onload = function(e) {
+      let element = document.getElementsByClassName("main-footer");
+      //console.dir(element);
+      element[0].hidden = true;
+      element[0].outerHTML = "";
+    };
+  </script>
 </head>
 <body>
   <app-root style="height: 100%; background-color: #222D33;"></app-root>
