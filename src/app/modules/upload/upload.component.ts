@@ -33,7 +33,7 @@ export class UploadComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader._onErrorItem = (error) => {
       let errorCause = JSON.parse(error._xhr.responseText);
-      alert("Error during the upload of "+ error.file.name+".\nMessage from server: "+ errorCause.message); 
+      alert("Error during the upload of "+ error.file.name+".\nCheck file format.\n"); 
     };
   }
   public fileOverBase(e:any):void {
