@@ -1,3 +1,4 @@
-html{
+:host { 
+    min-height: 100vh;  /*save me dude */
     
 }
