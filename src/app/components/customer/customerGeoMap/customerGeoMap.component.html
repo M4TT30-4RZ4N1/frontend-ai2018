@@ -10,7 +10,10 @@
                 <button mat-button class="link-btn">
                     Stard Date:
 
-                    <input class="center" [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12" [(ngModel)]="selectedMoments" [selectMode]="'rangeFrom'"
+                    <input class="center" 
+                    [max]="selectedMoments[1]"
+                    [owlDateTimeTrigger]="dt12" 
+                    [owlDateTime]="dt12" [(ngModel)]="selectedMoments" [selectMode]="'rangeFrom'"
                         [ngModelOptions]="{standalone: true}">
                     <owl-date-time #dt12></owl-date-time>
 
@@ -21,7 +24,10 @@
                 <button mat-button class="link-btn">
                     End Date:
 
-                    <input class="center" [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13" [(ngModel)]="selectedMoments" [selectMode]="'rangeTo'"
+                    <input class="center" 
+                    [min]="selectedMoments[0]"
+                    [owlDateTimeTrigger]="dt13" 
+                    [owlDateTime]="dt13" [(ngModel)]="selectedMoments" [selectMode]="'rangeTo'"
                         [ngModelOptions]="{standalone: true}">
                     <owl-date-time #dt13></owl-date-time>
 
