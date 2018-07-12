@@ -83,9 +83,10 @@ export class ArchiveService implements OnDestroy{
             headers: newheaders
         }).subscribe(
             (response) => {
-                //console.log("File downloaded");
+                let elements = response.url.split("/");
+                let l = elements.length;
                 var blob = new Blob([response.blob()], {type: 'application/json'});
-                var filename = 'file.json';
+                var filename = elements[l-1];
                 saveAs(blob, filename);
         }, (error) => {
             //console.log("File not downloaded");
