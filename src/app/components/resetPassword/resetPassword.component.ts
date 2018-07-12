@@ -34,6 +34,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     if(this.form.valid){
       this.subscription = this.resetService.getReset(this.form.controls.username.value).subscribe((success) =>
     {
+      window.localStorage.setItem('ai-reset','pending');
       this.router.navigateByUrl("/resetSuccess");
 
     }, (error) =>{

@@ -3,7 +3,6 @@ import { AppComponent } from './app.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { AppRoutingModule } from './/app-routing.module';
 import { LoginComponent } from './components/login/login.component';
-import { AuthService } from './services/auth/auth.service';
 import { Http} from '@angular/http';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
@@ -23,11 +22,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { UploadComponent } from './modules/upload/upload.component';
 import { CheckDuplicateUsernameService } from './services/auth/checkDuplicateUsername.service';
-import { RegisterService } from './services/auth/register.service';
 import { SuccessMessageComponent } from './components/successMessage/successMessage.component';
-import { RegistrationGuardService } from './services/auth/RegistrationGuard.service';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
-import { ResetService } from './services/auth/reset.service';
 import { ConnectionErrrorComponent } from './components/connectionErrror/connectionErrror.component';
 
 @NgModule({
@@ -53,14 +49,9 @@ import { ConnectionErrrorComponent } from './components/connectionErrror/connect
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
     HttpClient,
-    AuthService,
-    CheckDuplicateUsernameService,
     AuthGuardService,
-    RegisterService,
-    JwtManagementService,
     NoAuthGuardService,
-    RegistrationGuardService,
-    ResetService
+    JwtManagementService,
   ],
   bootstrap: [AppComponent]
 })

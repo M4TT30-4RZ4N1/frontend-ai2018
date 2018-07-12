@@ -60,6 +60,7 @@ export class ResetComponent implements OnInit, OnDestroy {
   reset(){
      this.subscription = this.resetService.postReset(this.username,this.code, this.resetForm.controls.password.value)
      .subscribe((success) => {
+        window.localStorage.setItem('ai-reset-complete','complete');
         this.router.navigateByUrl("/resetComplete");
      }, (error) =>
     {

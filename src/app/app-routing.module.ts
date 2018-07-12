@@ -22,6 +22,8 @@ import { ResetComponent } from './components/reset/reset.component';
 import { ResetCompleteComponent } from './components/resetComplete/resetComplete.component';
 import { ActivateComponent } from './components/activate/activate.component';
 import { ConnectionErrrorComponent } from './components/connectionErrror/connectionErrror.component';
+import { ResetGuardianService } from './services/auth/resetGuardian.service';
+import { ResetCompleteGuardianService } from './services/auth/resetCompleteGuardian.service';
 
 
 const routes: Routes = [
@@ -60,9 +62,9 @@ const routes: Routes = [
   { path: 'registrationSuccess', component: SuccessMessageComponent, canActivate:[NoAuthGuardService, RegistrationGuardService], pathMatch: 'full'},
   { path: 'activate/:id', component:ActivateComponent,  canActivate:[NoAuthGuardService]},
   { path: 'resetPassword', component: ResetPasswordComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
-  { path: 'resetSuccess', component: ResetSuccessComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
+  { path: 'resetSuccess', component: ResetSuccessComponent, canActivate:[NoAuthGuardService, ResetGuardianService], pathMatch: 'full' },
   { path: 'reset/:id', component: ResetComponent, canActivate:[NoAuthGuardService]},
-  { path: 'resetComplete', component: ResetCompleteComponent, canActivate:[NoAuthGuardService], pathMatch: 'full' },
+  { path: 'resetComplete', component: ResetCompleteComponent, canActivate:[NoAuthGuardService, ResetCompleteGuardianService], pathMatch: 'full' },
   { path: '404NotFound', component: PageNotFoundComponent, pathMatch: 'full'},
   { path: 'connectionError', component: ConnectionErrrorComponent, pathMatch: 'full'},
   { path: '**', redirectTo: '404NotFound', pathMatch: 'full'},
