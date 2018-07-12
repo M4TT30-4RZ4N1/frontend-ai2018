@@ -5,9 +5,9 @@ import { MaterialModule } from '../shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeoMapComponent } from '../../components/customer/customerGeoMap/customerGeoMap.component';
 import { CustomerComponent } from '../../components/customer/customer.component';
-import { CustomerDataComponent } from '../../components/admin/customer-data/customer-data.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { PositionService } from '../../services/position/position.service';
 
 
 @NgModule({
@@ -25,6 +25,9 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     GeoMapComponent,
     CustomerComponent,
   
+  ],
+  providers: [
+    PositionService,
   ]
 })
 export class BuyModule { }

@@ -1,17 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './components/admin/admin.component';
-import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/login/login.component';
 import { GeoMapComponent } from './components/customer/customerGeoMap/customerGeoMap.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
-import { UserDataComponent } from './components/admin/user-data/user-data.component';
-import { CustomerDataComponent } from './components/admin/customer-data/customer-data.component';
-import { SearchComponent } from './components/user/search/search.component';
-import { InsertComponent } from './components/user/insert/insert.component';
 import { PageNotFoundComponent } from './components/pageNotFound/pageNotFound.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
@@ -40,20 +34,6 @@ const routes: Routes = [
       { path: 'archive', component: ArchiveComponent, canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: ['ROLE_USER', 'ROLE_CUSTOMER'], redirectTo: 'home'}, pathMatch: 'full'}},
       { path: 'upload', component: UploadComponent, canActivate:[AuthGuardService, NgxPermissionsGuard],data: {permissions: {only: ['ROLE_USER', 'ROLE_CUSTOMER'], redirectTo: 'home'}, pathMatch: 'full'}},
       { path: 'buy', component: BuyComponent, canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: ['ROLE_USER', 'ROLE_CUSTOMER'], redirectTo: 'home'}, pathMatch: 'full'}},
-
-      // OLD PATHS
-      { path: 'admin', component: AdminComponent, 
-      canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_ADMIN', redirectTo: 'home'}
-      , pathMatch: 'full'},
-      },
-      { path: 'user', component: UserComponent, 
-        canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_USER', redirectTo: 'home'}
-        , pathMatch: 'full'},
-      },
-      { path: 'customer', component: CustomerComponent, 
-        canActivate:[AuthGuardService, NgxPermissionsGuard], data: {permissions: {only: 'ROLE_CUSTOMER', redirectTo: 'home'}
-        , pathMatch: 'full'}
-      },
       ],
     component: LayoutAuthComponent,
     data: [{

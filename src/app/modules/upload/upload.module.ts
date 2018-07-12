@@ -4,6 +4,7 @@ import { UploadComponent } from './upload.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
+import { UploadService } from '../../services/upload/upload.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     ReactiveFormsModule,
     FileUploadModule
   ],
-  declarations: [UploadComponent]
+  declarations: [UploadComponent],
+  providers:[UploadService]
 })
 export class UploadModule { }

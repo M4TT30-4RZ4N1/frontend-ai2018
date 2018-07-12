@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Shape } from '../../models/shape';
-import { Database } from '../../mock/database';
 import { Observable } from 'rxjs/Rx';
 import { map } from 'rxjs/operators';
 import { Coordinate } from '../../models/coordinates';

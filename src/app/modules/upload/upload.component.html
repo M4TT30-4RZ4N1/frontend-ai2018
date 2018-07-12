@@ -39,15 +39,11 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th width="50%">Name</th>
-                        <!-->
-                        <th>Size</th>
-                        <-->
-                            <!-->
-                            <th>Progress</th>
-                            <-->
-                                <th>Status</th>
-                                <th>Actions</th>
+                        <th width="45%">Name</th>
+                        <th width="10%">Size</th>
+                        <th width="15%">Progress</th>
+                        <th width="5%">Status</th>
+                        <th width="25%">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,8 +51,8 @@
                         <td>
                             <strong>{{ item?.file?.name }}</strong>
                         </td>
-                        <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                        <td *ngIf="uploader.isHTML5">
+                        <td >{{ item?.file?.size/1024 | number:'.2-2' }} MB</td>
+                        <td >
                             <div class="progress" style="margin-bottom: 0;">
                                 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
                             </div>
@@ -89,7 +85,7 @@
 
            
                 <div class="progresscontainer">
-                    Progress Queue
+                    Global Progress Queue
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                     </div>

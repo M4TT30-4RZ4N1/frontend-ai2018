@@ -50,7 +50,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of ownArchives.archives">
-                            <td>
+                            <td style="text-align: left;">
                                 <input class="mycheck" type="checkbox" [value]="item.filename">
                                 <strong>{{item.filename}}</strong>
 
@@ -147,15 +147,15 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th width="50%">Archive</th>
-                            <th width="50%">Download</th>
+                            <th width="70%">Archive</th>
+                            <th width="30%">Download</th>
                         </tr>
 
                     </thead>
 
                     <tbody>
                         <tr *ngFor="let item of purchasedArchives.archives">
-                            <td>
+                            <td style="text-align: left;">
                                 <input class="mycheck" type="checkbox" [value]="item.filename">
                                 <strong>{{item.filename}}</strong>
                             </td>

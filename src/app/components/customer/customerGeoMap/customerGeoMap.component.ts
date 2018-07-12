@@ -353,6 +353,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
     this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
     this.polygonTest = [];
     this.vertices = 0;
+    this.truePolygon = false;
+    this.positionsInArea = 0;
+    this.archivesToBought = []; 
   }
 
   cancel(){

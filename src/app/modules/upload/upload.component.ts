@@ -31,10 +31,11 @@ export class UploadComponent implements OnInit {
                     authToken: 'Bearer '+ token,
     });
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader._onErrorItem = (error) => {
+
+    /* this.uploader._onErrorItem = (error) => {
       let errorCause = JSON.parse(error._xhr.responseText);
       alert("Error during the upload of "+ error.file.name+".\nCheck file format, please.\n"); 
-    };
+    }; */
   }
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;

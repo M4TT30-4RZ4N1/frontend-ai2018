@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { PositionService } from './services/position/position.service';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { AppRoutingModule } from './/app-routing.module';
 import { LoginComponent } from './components/login/login.component';
-import { AdminComponent } from './components/admin/admin.component';
-import { UserComponent } from './components/user/user.component';
 import { AuthService } from './services/auth/auth.service';
 import { Http} from '@angular/http';
 import { HomeComponent } from './components/home/home.component';
@@ -15,13 +12,6 @@ import { LogoutComponent} from './components/logout/logout.component';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor/interceptor.service';
 import { NgxPermissionsModule, NgxPermissionsGuard } from 'ngx-permissions';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { UserDataComponent } from './components/admin/user-data/user-data.component';
-import { CustomerDataComponent } from './components/admin/customer-data/customer-data.component';
-import { SearchComponent } from './components/user/search/search.component';
-import { InsertComponent } from './components/user/insert/insert.component';
-import { AdminService } from './services/admin/admin.service';
-import { UserService } from './services/user/user.service';
 import { PageNotFoundComponent } from './components/pageNotFound/pageNotFound.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { NoAuthGuardService } from './services/auth/no-auth-guard.service';
@@ -36,7 +26,6 @@ import { CheckDuplicateUsernameService } from './services/auth/checkDuplicateUse
 import { RegisterService } from './services/auth/register.service';
 import { SuccessMessageComponent } from './components/successMessage/successMessage.component';
 import { RegistrationGuardService } from './services/auth/RegistrationGuard.service';
-import { ArchiveService } from './services/archive/archive.service';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { ResetService } from './services/auth/reset.service';
 import { ConnectionErrrorComponent } from './components/connectionErrror/connectionErrror.component';
@@ -44,17 +33,10 @@ import { ConnectionErrrorComponent } from './components/connectionErrror/connect
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
     HomeComponent,
     PageNotFoundComponent,
     LogoutComponent,
     SuccessMessageComponent,
-    AdminComponent,
-    UserComponent,
-    UserDataComponent,
-    SearchComponent,
-    InsertComponent,
-    CustomerDataComponent,
     ConnectionErrrorComponent
   ],
   imports: [
@@ -71,9 +53,6 @@ import { ConnectionErrrorComponent } from './components/connectionErrror/connect
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService , multi: true },
     HttpClient,
-    PositionService,
-    AdminService,
-    UserService,
     AuthService,
     CheckDuplicateUsernameService,
     AuthGuardService,
@@ -81,8 +60,6 @@ import { ConnectionErrrorComponent } from './components/connectionErrror/connect
     JwtManagementService,
     NoAuthGuardService,
     RegistrationGuardService,
-    UserService,
-    ArchiveService,
     ResetService
   ],
   bootstrap: [AppComponent]
