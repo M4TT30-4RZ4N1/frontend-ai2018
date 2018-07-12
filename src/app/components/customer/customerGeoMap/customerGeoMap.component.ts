@@ -186,7 +186,9 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
       let user = data.byUser[i].user;
       let color = data.byUser[i].color;
       //_self.usersFilter.push(user);
-      _self.colorMap.set(user, color);
+      if(_self.colorMap.get(user) === null || _self.colorMap.get(user) === undefined){
+       _self.colorMap.set(user, color);
+      }
     }
     let timestampData = data.byTimestamp;
     let displacementMap : Map<string,number> = new Map();
@@ -349,13 +351,11 @@ changeDetectorRefs :ChangeDetectorRef[] = [];
 
   clear(){
     this.cancel();
+    this.colorMap = new Map();
     this.buttonText = "Search in visible area";
     this.geoMap.removeLayer(this.model.overlayLayers[0].layer);
     this.polygonTest = [];
     this.vertices = 0;
-    this.truePolygon = false;
-    this.positionsInArea = 0;
-    this.archivesToBought = []; 
   }
 
   cancel(){
