@@ -150,6 +150,7 @@ export class ArchiveComponent implements OnInit {
   
     let elements =  document.getElementsByClassName("mycheck");
     let filenames = new Array<string>();
+
     for(let i=0; i< elements.length; i++) {
       let htmlElement = <HTMLInputElement> elements[i];
       if(htmlElement.checked){
@@ -159,20 +160,26 @@ export class ArchiveComponent implements OnInit {
     if(filenames.length >0){
       this.archiveService.getArchives(filenames);
     }
+    else{
+      alert("No archive selected!");
+    }
 
   }
 
   removeSelected(){
+    let elements =  document.getElementsByClassName("mycheck");
+    let filenames : string[] = [];
 
-    if(confirm("Are you sure to remove all selected archives?")) {
-      let elements =  document.getElementsByClassName("mycheck");
-      let filenames : string[] = [];
-      for(let i=0; i< elements.length; i++) {
-        let htmlElement = <HTMLInputElement> elements[i];
-        if(htmlElement.checked){
-          filenames.push(htmlElement.value);
-        }
+    for(let i=0; i< elements.length; i++) {
+      let htmlElement = <HTMLInputElement> elements[i];
+      if(htmlElement.checked){
+        filenames.push(htmlElement.value);
       }
+    }
+
+    if(filenames.length>0){
+    if(confirm("Are you sure to remove all selected archives?")) {
+   
       let removedElements : Archive[] = [];
       //rimozione preventiva dell'elemento dalla lista
       for(let j = 0; j < filenames.length; j++){
@@ -206,8 +213,9 @@ export class ArchiveComponent implements OnInit {
                           });
         }
       }
-      else{
-        
+    }
+    else{
+      alert("No archive selected!");
     }
 
    
