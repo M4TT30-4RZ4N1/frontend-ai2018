@@ -5,6 +5,7 @@ import { Headers, RequestOptions, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { ISubscription } from 'rxjs/Subscription';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService implements OnDestroy {
@@ -40,7 +41,7 @@ login( username : string, password : string) {
         targetUrl,
         body.toString(),
         opts
-    );
+    ).pipe(retry(3));
 
     let jsonObservable: Observable<any> = postObservable.map(
         ( response ) => {

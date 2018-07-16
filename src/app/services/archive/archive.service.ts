@@ -8,6 +8,7 @@ import { Headers, Http} from '@angular/http';
 import { saveAs } from 'file-saver/FileSaver';
 import { NavigableArchive} from '../../models/navigablearchive';
 import { Subscription } from 'rxjs/Subscription';
+import { retry } from 'rxjs/operators';
 @Injectable()
 export class ArchiveService implements OnDestroy{
 
@@ -24,19 +25,19 @@ export class ArchiveService implements OnDestroy{
     }
 
     getSelfArchives(page:number,size:number) : Observable<NavigableArchive>{
-        return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.ownArchiveParam+"&page="+page+"&size="+size);
+        return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.ownArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
         //return Observable.of([]);
     }
 
     getPurchasedArchives(page:number,size:number) : Observable<NavigableArchive>{
-        return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.purchasedArchiveParam+"&page="+page+"&size="+size);
+        return this.webclient.get<NavigableArchive>(this.resourceAddress+""+this.purchasedArchiveParam+"&page="+page+"&size="+size).pipe(retry(3));
         //return Observable.of([]);
     }
     navigateNext(nav:NavigableArchive):Observable<NavigableArchive>{
-        return this.webclient.get<NavigableArchive>(nav._links.next.href);
+        return this.webclient.get<NavigableArchive>(nav._links.next.href).pipe(retry(3));
     }
     navigateBack(nav:NavigableArchive):Observable<NavigableArchive>{
-      return this.webclient.get<NavigableArchive>(nav._links.previous.href);
+      return this.webclient.get<NavigableArchive>(nav._links.previous.href).pipe(retry(3));
     }
 
     getArchives(filenames:String[]){
@@ -50,7 +51,9 @@ export class ArchiveService implements OnDestroy{
             method: RequestMethod.Post,
             responseType: ResponseContentType.Blob,
             headers: newheaders
-        }).subscribe(
+        }).pipe(
+            retry(3)
+        ).subscribe(
             (response) => {
                 //console.log("File downloaded");
                 var blob = new Blob([response.blob()], {type: 'application/zip'});
@@ -81,7 +84,9 @@ export class ArchiveService implements OnDestroy{
             method: RequestMethod.Get,
             responseType: ResponseContentType.Blob,
             headers: newheaders
-        }).subscribe(
+        }).pipe(
+            retry(3)
+        ).subscribe(
             (response) => {
                 let elements = response.url.split("/");
                 let l = elements.length;
@@ -101,7 +106,7 @@ export class ArchiveService implements OnDestroy{
     }
 
     deleteArchive(filename:string){
-        return this.webclient.delete(this.resourceAddress+"/"+filename);
+        return this.webclient.delete(this.resourceAddress+"/"+filename).pipe(retry(3));
     }
 
     deleteArchives(filenames : string[]){
@@ -110,12 +115,12 @@ export class ArchiveService implements OnDestroy{
         let token = window.localStorage.getItem('ai-token');
         newheaders.append( 'Content-Type', 'application/json' );
         newheaders.append('Authorization','Bearer '+ token);
-        console.dir(newbody);
+        //console.dir(newbody);
         /*for(let filename in filenames){
             newbody.push(filename);
         }*/
         //http.request('delete', url, { body: { ... } });
-        return this.webclient.request('delete',this.resourceAddress+"", { headers: newheaders, body:newbody});
+        return this.webclient.request('delete',this.resourceAddress+"", { headers: newheaders, body:newbody}).pipe(retry(3));
         
     }
 

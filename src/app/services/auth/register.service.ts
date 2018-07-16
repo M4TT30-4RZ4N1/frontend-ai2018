@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { Http } from '@angular/http';
 import { User } from '../../models/user';
 import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class RegisterService {
@@ -19,7 +20,7 @@ register(user:User){
   let res=this.http.post(
       targetUrl,
       user,
-  ).map(resp=>{if(resp.status===201){
+  ).pipe(retry(3)).map(resp=>{if(resp.status===201){
       return true;
     }
     return false;
@@ -31,7 +32,7 @@ register(user:User){
 activate(username : string, code : string){
   let targetUrl = this.basic_url + "/guest/activate/"+ username+"/" +code;
 
-  return this.http.get(targetUrl).map(resp=>{
+  return this.http.get(targetUrl).pipe(retry(3)).map(resp=>{
     return resp.status===200?true:false
   });
 }

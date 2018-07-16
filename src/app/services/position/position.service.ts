@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Shape } from '../../models/shape';
 import { Observable } from 'rxjs/Rx';
-import { map } from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 import { Coordinate } from '../../models/coordinates';
 import { environment } from '../../../environments/environment';
 import { RequestOptions } from '@angular/http';
@@ -33,7 +33,10 @@ export class PositionService {
 */
 
     getUsers() : Observable<String[]>{
-        return this.webclient.get<String[]>(this.serverAddress+""+this.usersPath);
+        return this.webclient.get<String[]>(this.serverAddress+""+this.usersPath)
+                                .pipe(
+                                    retry(3)
+                                );
     
     }
     getPositions(startDate : number, endDate : number, objectToSend : QueryObj) : Observable<QueryResult>{
@@ -44,6 +47,7 @@ export class PositionService {
                                             {
                                                 observe: 'response'
                                             }).pipe(
+                                                retry(3),
                                                 map(resp => {
                                                     //console.dir(resp);
                                                    // console.dir(resp.headers);

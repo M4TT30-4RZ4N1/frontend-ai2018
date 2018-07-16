@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { environment } from '../../../environments/environment';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class ResetService {
@@ -15,7 +16,7 @@ constructor(private http: Http) {
     let targetUrl = this.basic_url + "/guest/forgot/"+username +"/";
  
 
-    return this.http.get(targetUrl).map(resp=>{
+    return this.http.get(targetUrl).pipe(retry(3)).map(resp=>{
       return resp.status===200?true:false
     });
   
@@ -25,7 +26,7 @@ constructor(private http: Http) {
   let targetUrl = this.basic_url + "/guest/reset/"+ username +"/" + code;
   let body = pwd;
   
-  return this.http.post(targetUrl, body).map(resp=>{
+  return this.http.post(targetUrl, body).pipe(retry(3)).map(resp=>{
     return resp.status===200?true:false
   });
  }

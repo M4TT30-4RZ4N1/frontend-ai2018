@@ -28,12 +28,12 @@ export class ArchiveComponent implements OnInit {
 
     this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
                               .subscribe( (navarchive) => {
-                                                console.dir(navarchive);
+                                                //console.dir(navarchive);
                                                 this.ownArchives=navarchive;
                               } );
     this.purchasedArchiveSub = this.archiveService.getPurchasedArchives(0,this.paginationSize)
                               .subscribe( (navarchive) => {
-                                                console.dir(navarchive);
+                                                //console.dir(navarchive);
                                                 this.purchasedArchives=navarchive;
                               } );
   }
@@ -51,28 +51,28 @@ export class ArchiveComponent implements OnInit {
   getOwnNext(){
     this.ownArchiveSub = this.archiveService.navigateNext(this.ownArchives)
                               .subscribe( (navarchive) => {
-                                                console.dir(navarchive);
+                                                //console.dir(navarchive);
                                                 this.ownArchives=navarchive;
                               } );
   }
   getOwnPrevious(){
     this.ownArchiveSub = this.archiveService.navigateBack(this.ownArchives)
                               .subscribe( (navarchive) => {
-                                                console.dir(navarchive);
+                                                //console.dir(navarchive);
                                                 this.ownArchives=navarchive;
                               } );
   }
   getPurNext(){
     this.ownArchiveSub = this.archiveService.navigateNext(this.purchasedArchives)
                               .subscribe( (navarchive) => {
-                                                console.dir(navarchive);
+                                                //console.dir(navarchive);
                                                 this.purchasedArchives=navarchive;
                               } );
   }
   getPurPrevious(){
     this.ownArchiveSub = this.archiveService.navigateBack(this.purchasedArchives)
                               .subscribe( (navarchive) => {
-                                                console.dir(navarchive);
+                                                //console.dir(navarchive);
                                                 this.purchasedArchives=navarchive;
                               } );
   }
@@ -113,7 +113,7 @@ export class ArchiveComponent implements OnInit {
                         .subscribe( (data) => {
                           this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
                               .subscribe( (navarchive) => {
-                                                console.dir(navarchive);
+                                                //console.dir(navarchive);
                                                 this.ownArchives=navarchive;
                                                 this.changeDetectorRef.detectChanges();
                               } );
@@ -133,14 +133,14 @@ export class ArchiveComponent implements OnInit {
 
     this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
     .subscribe( (navarchive) => {
-                      console.dir(navarchive);
+                      //console.dir(navarchive);
                       this.ownArchives=navarchive;
                       this.changeDetectorRef.detectChanges();
     } );
 
     this.purchasedArchiveSub = this.archiveService.getPurchasedArchives(0,this.paginationSize)
     .subscribe( (navarchive) => {
-                      console.dir(navarchive);
+                      //console.dir(navarchive);
                       this.purchasedArchives=navarchive;
                       this.changeDetectorRef.detectChanges();
     } );
@@ -198,7 +198,7 @@ export class ArchiveComponent implements OnInit {
                                 alert("Delete successful");
                                 this.ownArchiveSub = this.archiveService.getSelfArchives(0,this.paginationSize)
                                                   .subscribe( (navarchive) => {
-                                                          console.dir(navarchive);
+                                                          //console.dir(navarchive);
                                                           this.ownArchives=navarchive;
                                                           this.changeDetectorRef.detectChanges();
                                                   } );
