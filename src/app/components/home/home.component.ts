@@ -19,12 +19,6 @@ export class HomeComponent implements OnInit {
     window.localStorage.setItem('ai-roles', roles);
     this.permissionsService.loadPermissions(roles); //ROLE_ADMIN, ROLE_USER, ROLE_CUSTOMER
     
-    let element =  document.getElementsByClassName("main-footer");
-    //console.dir(element);
-    if(element[0] != null && element[0] != undefined){
-          let e = <HTMLInputElement> element[0];
-          e.hidden = true;
-          e.outerHTML = "";
     }
   }
 
