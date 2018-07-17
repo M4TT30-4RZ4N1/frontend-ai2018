@@ -6,13 +6,3 @@ before_script:
 script:
 - ng build --prod
 - cp Staticfile dist/Staticfile
-deploy:
-  provider: cloudfoundry
-  api: https://api.eu-de.bluemix.net
-  username: raffysommy@hotmail.it
-  password:
-    secure: cYdYhoDPFDeq/uZVCsE7J6UPiQr8O5NJUChoRV1z2A0O/aOirJYd28w+FUtyirO/Q53zFFVL2EJLP+E+eMlyuuw+jzEpE8XWGBKQFSKmYRaXvGI/oxebzegtP3R6WyvmGe6E7c26pQty2krmnjpC552ZFmjZvJrDSwOtdsGCy3fIy77ecQY4ruMy7OHetE+mqaBG83cw5c8U/RDINtjsVPQArkm6GEKShr8Wd9C2abi0h8VONbQ3fjuqd/Pb5CWyWwa5J8U14HRVFmq1M0ctVOIZhTXdjybQrML2n07lyRoBLQiuYyLhl73GVoGq7/cr/aNwAT8AUaC2+Qb8TX9JnG70cdwg8qrCpgWUljc3m3A+yGtjP27VYerhWxrnhfp5zwjCy/XH5cryZ0B3qNS/nVIUmO741PPRtDAGaA8Dygoyc0P9sTNmZ6pkwiEAzlFf74B7a9FHl8H8gHu7VODInWWTA+OQ7ipm/iRhb9qtd37BLjmm56mEt/Uh8rBnEnVRGGu56N5Cosf9ehWebZhoQiCDCvHFV4j0LtagCF4ujKq1/Sh5zmstBUCm82ya8K/p7pJLfHUEXs7HPjB/dACrVRX+5PnNsoXdzN6G/J3iuTJ0n4cx/crRGcyj+gvbN/MzZvPYMnnspuIYGvj+WsJDm5NH74zkBllMddpHrNzHJi4=
-  organization: raffysommy
-  space: dev
-notifications:
-  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify?secret=marcondirondirondello
