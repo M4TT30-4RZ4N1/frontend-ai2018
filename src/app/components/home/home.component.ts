@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
     window.localStorage.setItem('ai-roles', roles);
     this.permissionsService.loadPermissions(roles); //ROLE_ADMIN, ROLE_USER, ROLE_CUSTOMER
     
-    }
+    
   }
 
 }
